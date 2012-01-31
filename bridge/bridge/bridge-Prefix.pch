@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'bridge' target in the 'bridge' project
+//
+
+#ifdef __OBJC__
+  #import <Foundation/Foundation.h>
+#endif
