@@ -8,6 +8,23 @@
 
 #import <Foundation/Foundation.h>
 
-@interface BridgeReference : NSObject
+@interface BridgeReference : NSObject {
+  NSString* routingPrefix;
+  NSString* routingId;
+  NSString* serviceName;
+  NSString* methodName;
+}
+
+@property(nonatomic, copy) NSString* routingPrefix;
+@property(nonatomic, copy) NSString* routingId;
+@property(nonatomic, copy) NSString* serviceName;
+@property(nonatomic, copy) NSString* methodName;
+
+- (id)initWithRoutingPrefix:(NSString*)routingPrefix andRoutingId:(NSString*)routingId andServiceName:(NSString*)serviceName andMethodName:(NSString*)methodName;
+- (NSDictionary*) dictionaryFromReference;
+
++ (BridgeReference*) referenceFromArray:(NSArray*) array;
++ (BridgeReference*) referenceFromCopyOfReference: (BridgeReference*) reference;
++ (BridgeReference*) referenceWithRoutingPrefix:(NSString*)routingPrefix andRoutingId:(NSString*)routingId andServiceName:(NSString*)serviceName andMethodName:(NSString*)methodName;
 
 @end

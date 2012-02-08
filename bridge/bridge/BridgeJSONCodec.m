@@ -11,49 +11,48 @@
 
 @implementation BridgeJSONCodec
 
-+ (NSString *)constructConnectMessage {
++ (NSDictionary*) parseRequestString:(NSString*)bridgeRequestString
+{
+  
+}
+
++ (NSData*) constructConnectMessage 
+{
   return [self constructConnectMessageWithId:NULL secret:NULL];
 }
 
++ (NSData*) constructMessageWithWorkerpool:(NSString *)workerpool
+{
+  NSDictionary* data = [NSDictionary dictionaryWithObjectsAndKeys: workerpool, @"name", nil];
+  NSDictionary* root = [NSDictionary dictionaryWithObjectsAndKeys:@"JOINWORKERPOOL", @"command", data, @"data", nil];
+  return [root JSONData];
+}
 
-+ (NSString*) constructConnectMessageWithId:(NSString *)sessionId secret:(NSString *)secret {
++ (NSData*) constructMessageWithChannel:(NSString *)channel handler:(BridgeReference *)handler callback:(BridgeReference *)callback
+{
+  NSDictionary* data = [NSDictionary dictionaryWithObjectsAndKeys: channel, @"name", [handler dictionaryFromReference], @"handler", [callback dictionaryFromReference], @"callback", nil];
+  NSDictionary* root = [NSDictionary dictionaryWithObjectsAndKeys:@"JOINCHANNEL", @"command", data, @"data", nil];
+  return [root JSONData];
+}
+
++ (NSData*) constructConnectMessageWithId:(NSString *)sessionId secret:(NSString *)secret {
   NSMutableDictionary* root = [NSMutableDictionary dictionary];
   [root setValue:@"CONNECT" forKey:@"command"];
   
   NSMutableDictionary* dataObject = [NSMutableDictionary dictionary];
-  
-  [dataObject setObject:[NSNull null] forKey:@"sessionid"];
-  [dataObject setObject:[NSNull null] forKey:@"secret"];
-  
+  NSNumber* zero = [NSNumber numberWithInt:0];
+  NSMutableArray* session = [NSMutableArray arrayWithObjects:zero, zero, nil];
+    
   if(sessionId != NULL && secret != NULL) {
-    [dataObject setObject:sessionId forKey:@"sessionid"];
-    [dataObject setObject:secret forKey:@"secret"];
+    [session replaceObjectAtIndex:0 withObject:session];
+    [session replaceObjectAtIndex:1 withObject:secret];
   }
+  
+  [dataObject setObject:session forKey:@"session"];
   
   [root setObject:dataObject forKey:@"data"];
-  
-  [self typifyObject:root];
-  
-  return [root JSONString];
-}
-
-+ (NSArray*) typifyObject:(NSObject *)root
-{
-  NSArray* rtn = [NSArray array];
-  
-  if([root isKindOfClass:[NSDictionary class]]){
     
-  } else if ([root isKindOfClass:[NSArray class]]) {
-    
-  } else if ([root isKindOfClass:[NSString class]]) {
-    
-  } else if ([root isKindOfClass:[NSNumber class]]){
-    
-  } else if ([root isKindOfClass:[NSNull class]]) {
-    
-  }
-  
-  return rtn;
+  return [root JSONData];
 }
 
 @end

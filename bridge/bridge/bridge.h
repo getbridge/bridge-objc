@@ -8,16 +8,32 @@
 
 #import <Foundation/Foundation.h>
 #import "GCDAsyncSocket.h"
+#import "BridgeDispatcher.h"
 
-@interface bridge : NSObject {
+@interface Bridge : NSObject {
   
 @private
+  //Networking stuff
   GCDAsyncSocket* sock;
   NSString* host;
   int port;
+  
+  NSString* clientId;
+  NSString* secret;
+  
+  BridgeDispatcher* dispatcher;
+  id delegate;
 }
 
--(id) initWithHost:(NSString*)hostName andPort:(int) port;
+-(id) initWithHost:(NSString*)hostName andPort:(int) port withDelegate:(id) theDelegate;
 -(void) connect;
+-(void) socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag;
+-(void) publishServiceWithName:(NSString*)serviceName withHandler:(BridgeService* )handler;
+-(void) publishServiceWithName:(NSString*)serviceName withHandler:(BridgeService* )handler;
+-(void) joinChannelWithName:(NSString*)serviceName withHandler:(BridgeService* )handler andOnJoinCallback:(BridgeService*) callback;
+
+-(void) _frameAndSendData:(NSData*)rawData;
+
++ (NSData*) appendLengthHeaderToData:(NSData*) messageData;
 
 @end
