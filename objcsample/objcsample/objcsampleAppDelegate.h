@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "bridge.h"
 
 @class objcsampleViewController;
 
-@interface objcsampleAppDelegate : NSObject <UIApplicationDelegate>
+@interface objcsampleAppDelegate : NSObject <UIApplicationDelegate> {
+  Bridge* bridge;
+}
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 

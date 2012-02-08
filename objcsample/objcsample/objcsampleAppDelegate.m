@@ -7,7 +7,6 @@
 //
 
 #import "objcsampleAppDelegate.h"
-
 #import "objcsampleViewController.h"
 
 @implementation objcsampleAppDelegate
@@ -18,10 +17,24 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   // Override point for customization after application launch.
-   
+  
   self.window.rootViewController = self.viewController;
   [self.window makeKeyAndVisible];
-    return YES;
+  
+  bridge = [[Bridge alloc] initWithHost:@"localhost" andPort:8090 withDelegate:self];
+  [bridge connect];
+  
+  return YES;
+}
+
+-(void) bridgeDidBecomeReady
+{
+  BridgeService* dummyService = [BridgeService serviceWithBlock:^(NSObject* foo, ...){
+    NSLog(@"HARRO");
+  }];
+  
+  [bridge publishServiceWithName:@"FOO" withHandler:dummyService];
+  [bridge joinChannelWithName:@"4chan" withHandler:dummyService andOnJoinCallback:dummyService];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -67,7 +80,7 @@
 {
   [_window release];
   [_viewController release];
-    [super dealloc];
+  [super dealloc];
 }
 
 @end

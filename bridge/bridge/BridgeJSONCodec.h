@@ -7,17 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "BridgeReference.h"
 
 @interface BridgeJSONCodec : NSObject
 
-+ (NSObject*) decodeBridgeRequest:(NSString*) bridgeRequestString;
++ (NSDictionary*) parseRequestString:(NSString*) bridgeRequestString;
 
-+ (NSString*) constructMessageWithWorkerpool:(NSString*) workerpool handlerId: (NSString*) handlerId;
-+ (NSString*) constructMessageWithChannel: (NSString*) channel handlerId: (NSString*) handlerId;
-+ (NSString*) constructConnectMessageWithId: (NSString*) sessionId secret: (NSString*) secret;
-+ (NSString*) constructConnectMessage;
-
-+ (NSArray*) typifyObject: (NSObject*) root;
-
++ (NSData*) constructMessageWithWorkerpool:(NSString*)workerpool;
++ (NSData*) constructMessageWithChannel: (NSString*)channel handler: (BridgeReference*) handler callback:(BridgeReference*) callback;
++ (NSData*) constructConnectMessageWithId: (NSString*)sessionId secret: (NSString*) secret;
++ (NSData*) constructConnectMessage;
 
 @end
