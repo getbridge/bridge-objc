@@ -9,6 +9,7 @@
 #import "bridge.h"
 #import "BridgeJSONCodec.h"
 #import "BridgeReference.h"
+#import "BridgeSystemService.h"
 
 #define CONNECT_HEADER 10
 #define CONNECT_BODY 11
@@ -35,6 +36,8 @@
     port = hostPort;
     dispatcher = [[BridgeDispatcher alloc] init];
     delegate = theDelegate;
+    
+    [dispatcher registerService:[[BridgeSystemService alloc] init] withName:@"system"];
   }
   
   return self;
