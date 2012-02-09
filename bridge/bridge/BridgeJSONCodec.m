@@ -13,7 +13,7 @@
 
 + (NSDictionary*) parseRequestString:(NSString*)bridgeRequestString
 {
-  
+  return [bridgeRequestString objectFromJSONString];
 }
 
 + (NSData*) constructConnectMessage 
