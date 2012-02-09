@@ -23,6 +23,8 @@
   
   BridgeDispatcher* dispatcher;
   id delegate;
+  
+  float reconnectBackoff;
 }
 
 -(id) initWithHost:(NSString*)hostName andPort:(int) port withDelegate:(id) theDelegate;

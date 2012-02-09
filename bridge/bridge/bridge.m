@@ -38,6 +38,7 @@
     delegate = theDelegate;
     
     [dispatcher registerService:[[BridgeSystemService alloc] init] withName:@"system"];
+    reconnectBackoff = 0.1;
   }
   
   return self;
@@ -120,7 +121,22 @@
   }
 }
 
-- (void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag
+- (void) socketDidDisconnect:(GCDAsyncSocket*)sock withError:(NSError *)err
+{
+  if(err != nil){
+    NSLog([err localizedDescription]);
+    
+    SEL connectSelector = @selector(connect);
+    NSInvocation* inv = [NSInvocation invocationWithMethodSignature:[self methodSignatureForSelector:connectSelector]];
+    [inv setSelector:connectSelector];
+    [inv setTarget:self];
+    [NSTimer scheduledTimerWithTimeInterval:reconnectBackoff invocation:inv repeats:NO];
+    
+    reconnectBackoff *= 2;
+  }
+}
+
+- (void)socket:(GCDAsyncSocket*)sock didWriteDataWithTag:(long)tag
 {
   NSLog(@"Wrote tag: %ld", tag);
 }
