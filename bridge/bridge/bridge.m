@@ -126,11 +126,13 @@
   }
 }
 
-- (void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag {
+- (void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag
+{
   NSLog(@"Wrote tag: %ld", tag);
 }
 
--(void) publishServiceWithName:(NSString*)serviceName withHandler:(BridgeService* )handler{
+-(void) publishServiceWithName:(NSString*)serviceName withHandler:(BridgeService* )handler
+{
   BridgeReference* handlerRef = [dispatcher registerService:handler withName:serviceName];
   NSData* rawMessageData = [BridgeJSONCodec constructMessageWithWorkerpool:serviceName];
   [self _frameAndSendData:rawMessageData];
