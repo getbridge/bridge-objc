@@ -47,6 +47,15 @@
   
   SEL selector = NSSelectorFromString(selectorString);
   NSMethodSignature* signature = [service methodSignatureForSelector:selector];
+  NSInvocation* invocation = [NSInvocation invocationWithMethodSignature:signature];
+  [invocation setSelector:selector];
+  [invocation setTarget:service];
+  
+  for(int argIdx = 0; argIdx < [arguments count]; argIdx++){
+    [invocation setArgument:[arguments objectAtIndex:argIdx] atIndex:argIdx+2];
+  }
+
+  [invocation invoke];
 }
 
 @end
