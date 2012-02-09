@@ -105,7 +105,7 @@
       uint32_t bodyLength = CFSwapInt32BigToHost(*bytesPointer);
       
       NSLog(@"Body length: %u", bodyLength);
-      [sock readDataToLength:bodyLength withTimeout:-1 tag:CONNECT_HEADER];
+      [sock readDataToLength:bodyLength withTimeout:-1 tag:MESSAGE_BODY];
       break;
     }
       
