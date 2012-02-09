@@ -15,7 +15,7 @@
     self = [super init];
     if (self) {
         // Initialization code here.
-      _block = [[block copy] autorelease];
+      _block = [block copy];
     }
     
     return self;
