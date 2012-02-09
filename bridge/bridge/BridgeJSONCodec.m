@@ -16,11 +16,6 @@
   return [bridgeRequestString objectFromJSONString];
 }
 
-+ (NSData*) constructConnectMessage 
-{
-  return [self constructConnectMessageWithId:NULL secret:NULL];
-}
-
 + (NSData*) constructMessageWithWorkerpool:(NSString *)workerpool
 {
   NSDictionary* data = [NSDictionary dictionaryWithObjectsAndKeys: workerpool, @"name", nil];
@@ -35,6 +30,11 @@
   return [root JSONData];
 }
 
++ (NSData*) constructConnectMessage 
+{
+  return [self constructConnectMessageWithId:nil secret:nil];
+}
+
 + (NSData*) constructConnectMessageWithId:(NSString *)sessionId secret:(NSString *)secret {
   NSMutableDictionary* root = [NSMutableDictionary dictionary];
   [root setValue:@"CONNECT" forKey:@"command"];
@@ -43,7 +43,7 @@
   NSNumber* zero = [NSNumber numberWithInt:0];
   NSMutableArray* session = [NSMutableArray arrayWithObjects:zero, zero, nil];
     
-  if(sessionId != NULL && secret != NULL) {
+  if(sessionId != nil && secret != nil) {
     [session replaceObjectAtIndex:0 withObject:session];
     [session replaceObjectAtIndex:1 withObject:secret];
   }
