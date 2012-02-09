@@ -52,19 +52,13 @@
   } else {
     NSLog(@"Didn't fail. May work");
     // Send a connect message
-    NSData* rawMessageData = [BridgeJSONCodec constructConnectMessage];
+    NSData* rawMessageData = [BridgeJSONCodec constructConnectMessageWithId:clientId secret:secret];
     [self _frameAndSendData:rawMessageData];
-        
+    
     // Read the client id message
     [sock readDataToLength:4 withTimeout:-1 tag:CONNECT_HEADER];
     return;
   }
-  
-}
-
-- (void)socket:(GCDAsyncSocket *)sender didConnectToHost:(NSString *)host port:(UInt16)port
-{
-  NSLog(@"Cool, I'm connected! That was easy.");
 }
 
 -(void) socket:(GCDAsyncSocket*)send didReadData:(NSData *)data withTag:(long)tag
