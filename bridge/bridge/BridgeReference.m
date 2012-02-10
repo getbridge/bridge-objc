@@ -25,7 +25,8 @@
     return self;
 }
 
-- (NSArray*) dictionaryFromReference {
+- (NSArray*) dictionaryFromReference 
+{
   NSArray* ref = [NSArray arrayWithObjects:routingPrefix, routingId, serviceName, methodName, nil];
   return [NSDictionary dictionaryWithObject:ref forKey:@"ref"];
 }
@@ -34,7 +35,10 @@
   NSString* routingPrefix = [array objectAtIndex:0];
   NSString* routingId = [array objectAtIndex:1];
   NSString* serviceName = [array objectAtIndex:2];
-  NSString* methodName = [array objectAtIndex:3];
+  NSString* methodName = nil;
+  if([array count] == 4){
+     methodName = [array objectAtIndex:3];
+  }
   
   return [BridgeReference referenceWithRoutingPrefix:routingPrefix andRoutingId:routingId
  andServiceName:serviceName andMethodName:methodName];
