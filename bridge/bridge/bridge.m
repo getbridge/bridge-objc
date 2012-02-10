@@ -109,7 +109,7 @@
       NSString* message = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
       NSDictionary* root = [BridgeJSONCodec parseRequestString:message];
       
-      BridgeReference* destination = [BridgeReference referenceFromArray:[[root objectForKey:@"destination"] objectForKey:@"ref"] ];
+      BridgeReference* destination = [root objectForKey:@"destination"];
       NSArray* arguments = [root objectForKey:@"args"];
       [dispatcher executeUsingReference:destination withArguments:arguments];
       
