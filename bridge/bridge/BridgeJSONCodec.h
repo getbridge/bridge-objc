@@ -18,4 +18,6 @@
 + (NSData*) constructConnectMessageWithId: (NSString*)sessionId secret: (NSString*) secret;
 + (NSData*) constructConnectMessage;
 
++ (id) replaceReferencesInObject:(id)object;
+
 @end
