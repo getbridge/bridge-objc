@@ -25,6 +25,11 @@
     return self;
 }
 
+- (void) setBridge:(Bridge*) bridge
+{
+  _bridge = bridge; // No retaining or anything. This is a ref to a grandparent
+}
+
 - (NSArray*) dictionaryFromReference 
 {
   NSArray* ref = [NSArray arrayWithObjects:routingPrefix, routingId, serviceName, methodName, nil];
