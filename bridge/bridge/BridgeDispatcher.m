@@ -8,6 +8,8 @@
 
 #import "BridgeDispatcher.h"
 
+NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
 @implementation BridgeDispatcher
 
 @synthesize clientId;
@@ -31,7 +33,12 @@
 
 -(BridgeReference*) registerRandomlyNamedService:(BridgeService*)service
 {
-  NSString* randomString = @"IAMRANDOM";
+  NSMutableString *randomString = [NSMutableString stringWithCapacity: 10];
+  
+  for (int i=0; i<10; i++) {
+    [randomString appendFormat: @"%c", [letters characterAtIndex: rand()%[letters length]]];
+  }
+
   return [self registerService:service withName:randomString];
 }
 
@@ -40,22 +47,27 @@
   BridgeService* service = [services objectForKey:[reference serviceName]];
   
   NSMutableString* selectorString = [NSMutableString stringWithString:[reference methodName]];
-  for(int argIdx = 0; argIdx < [arguments count]; argIdx++){
+  
+  for(int argIdx = 0, argLength = [arguments count]; argIdx < argLength; argIdx++){
     // Stupid cross-compatibility hack. Keyword arguments would be a great fix
     [selectorString appendString:@":"];
   }
   
   SEL selector = NSSelectorFromString(selectorString);
   NSMethodSignature* signature = [service methodSignatureForSelector:selector];
-  NSInvocation* invocation = [NSInvocation invocationWithMethodSignature:signature];
-  [invocation setSelector:selector];
-  [invocation setTarget:service];
   
-  for(int argIdx = 0; argIdx < [arguments count]; argIdx++){
-    [invocation setArgument:[arguments objectAtIndex:argIdx] atIndex:argIdx+2];
+  if(signature != nil){
+    NSInvocation* invocation = [NSInvocation invocationWithMethodSignature:signature];
+    [invocation setSelector:selector];
+    [invocation setTarget:service];
+    
+    for(int argIdx = 0, argLength = [arguments count]; argIdx < argLength; argIdx++){
+      id arg = [arguments objectAtIndex:argIdx];
+      [invocation setArgument:&arg atIndex:argIdx+2];
+    }
+    
+    [invocation invoke];
   }
-
-  [invocation invoke];
 }
 
 @end
