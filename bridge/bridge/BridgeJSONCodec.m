@@ -11,19 +11,20 @@
 
 @implementation BridgeJSONCodec
 
-+ (NSDictionary*) parseRequestString:(NSString*)bridgeRequestString
++ (NSDictionary*) parseRequestString:(NSString*)bridgeRequestString withReferenceArray:(NSArray**) references
 {
-  return [BridgeJSONCodec replaceReferencesInObject:[bridgeRequestString objectFromJSONString]];
+  (*references) = [NSMutableArray array];
+  return [BridgeJSONCodec decodeReferencesInObject:[bridgeRequestString objectFromJSONString] withReferenceArray:(*references)];
 }
 
-+ (NSData*) constructMessageWithWorkerpool:(NSString *)workerpool
++ (NSData*) constructJoinMessageWithWorkerpool:(NSString *)workerpool
 {
   NSDictionary* data = [NSDictionary dictionaryWithObjectsAndKeys: workerpool, @"name", nil];
   NSDictionary* root = [NSDictionary dictionaryWithObjectsAndKeys:@"JOINWORKERPOOL", @"command", data, @"data", nil];
   return [root JSONData];
 }
 
-+ (NSData*) constructMessageWithChannel:(NSString *)channel handler:(BridgeReference *)handler callback:(BridgeReference *)callback
++ (NSData*) constructJoinMessageWithChannel:(NSString *)channel handler:(BridgeReference *)handler callback:(BridgeReference *)callback
 {
   NSDictionary* data = [NSDictionary dictionaryWithObjectsAndKeys: channel, @"name", [handler dictionaryFromReference], @"handler", [callback dictionaryFromReference], @"callback", nil];
   NSDictionary* root = [NSDictionary dictionaryWithObjectsAndKeys:@"JOINCHANNEL", @"command", data, @"data", nil];
@@ -55,23 +56,28 @@
   return [root JSONData];
 }
 
-+ (id) replaceReferencesInObject:(id)object
++ (NSData*) constructSendMessageWithDestination:(BridgeReference *)destination andArgs:(NSArray *)args withReferenceArray:(NSArray **)references
+{
+  (*references) = [NSMutableArray array];
+  
+  NSDictionary* data = [NSDictionary dictionaryWithObjectsAndKeys: destination, @"destination", args, @"args", nil];
+  NSDictionary* root = [NSDictionary dictionaryWithObjectsAndKeys:@"SEND", @"command", data, @"data", nil];
+  
+  NSDictionary* encodedRoot = [BridgeJSONCodec encodeReferencesInObject:root withReferenceArray:(*references)];
+  return [encodedRoot JSONData];
+}
+
++ (id) encodeReferencesInObject:(id)object withReferenceArray:(NSMutableArray*) references
 {
   if([object isKindOfClass:[NSDictionary class]]){
     NSMutableDictionary* result = [NSMutableDictionary dictionaryWithDictionary:object];
-    
-    NSArray* ref;
-    if(nil != (ref = [result objectForKey:@"ref"])) {
-      // This is a reference
-      return [BridgeReference referenceFromArray:ref];
-    }
     
     // Just a regular dictionary
     NSArray* keys = [result allKeys];
     for(int keysIdx = 0; keysIdx < [keys count]; keysIdx++){
       NSString* key = [keys objectAtIndex:keysIdx];
       id oldValue = [result objectForKey:key];
-      [result setObject:[BridgeJSONCodec replaceReferencesInObject:oldValue] forKey:key];
+      [result setObject:[BridgeJSONCodec encodeReferencesInObject:oldValue withReferenceArray:references] forKey:key];
     }
     return result;
     
@@ -80,7 +86,45 @@
     
     for(int arrayIdx = 0; arrayIdx < [res count]; arrayIdx++){
       id oldValue = [res objectAtIndex:arrayIdx];
-      [res replaceObjectAtIndex:arrayIdx withObject:[BridgeJSONCodec replaceReferencesInObject:oldValue]];
+      [res replaceObjectAtIndex:arrayIdx withObject:[BridgeJSONCodec encodeReferencesInObject:oldValue withReferenceArray:references]];
+    }
+    return res;
+  } else if ([object isKindOfClass:[BridgeReference class]]){
+    return [((BridgeReference*) object) dictionaryFromReference];
+  } else {
+    // Leaf node
+    return object;
+  }
+}
+
++ (id) decodeReferencesInObject:(id)object withReferenceArray:(NSMutableArray*) references
+{
+  if([object isKindOfClass:[NSDictionary class]]){
+    NSMutableDictionary* result = [NSMutableDictionary dictionaryWithDictionary:object];
+    
+    NSArray* ref;
+    if(nil != (ref = [result objectForKey:@"ref"])) {
+      // This is a reference
+      BridgeReference* reference = [BridgeReference referenceFromArray:ref];
+      [references addObject:reference];
+      return reference;
+    }
+    
+    // Just a regular dictionary
+    NSArray* keys = [result allKeys];
+    for(int keysIdx = 0; keysIdx < [keys count]; keysIdx++){
+      NSString* key = [keys objectAtIndex:keysIdx];
+      id oldValue = [result objectForKey:key];
+      [result setObject:[BridgeJSONCodec decodeReferencesInObject:oldValue withReferenceArray:references] forKey:key];
+    }
+    return result;
+    
+  } else if ([object isKindOfClass:[NSArray class]]){
+    NSMutableArray* res = [NSMutableArray arrayWithArray:object];
+    
+    for(int arrayIdx = 0; arrayIdx < [res count]; arrayIdx++){
+      id oldValue = [res objectAtIndex:arrayIdx];
+      [res replaceObjectAtIndex:arrayIdx withObject:[BridgeJSONCodec decodeReferencesInObject:oldValue withReferenceArray:references]];
     }
     return res;
   } else {

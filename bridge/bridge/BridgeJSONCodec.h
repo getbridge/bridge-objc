@@ -11,13 +11,15 @@
 
 @interface BridgeJSONCodec : NSObject
 
-+ (NSDictionary*) parseRequestString:(NSString*) bridgeRequestString;
++ (NSDictionary*) parseRequestString:(NSString*)bridgeRequestString withReferenceArray:(NSArray**) references;
 
-+ (NSData*) constructMessageWithWorkerpool:(NSString*)workerpool;
-+ (NSData*) constructMessageWithChannel: (NSString*)channel handler: (BridgeReference*) handler callback:(BridgeReference*) callback;
++ (NSData*) constructJoinMessageWithWorkerpool:(NSString*)workerpool;
++ (NSData*) constructJoinMessageWithChannel: (NSString*)channel handler: (BridgeReference*) handler callback:(BridgeReference*) callback;
++ (NSData*) constructSendMessageWithDestination:(BridgeReference*)destination andArgs:(NSArray*) args withReferenceArray:(NSArray**) references;
 + (NSData*) constructConnectMessageWithId: (NSString*)sessionId secret: (NSString*) secret;
 + (NSData*) constructConnectMessage;
 
-+ (id) replaceReferencesInObject:(id)object;
++ (id) decodeReferencesInObject:(id)object withReferenceArray:(NSArray*) references;
++ (id) encodeReferencesInObject:(id)object withReferenceArray:(NSArray*) references;
 
 @end
