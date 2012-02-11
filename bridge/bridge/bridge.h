@@ -34,6 +34,7 @@
 -(void) publishServiceWithName:(NSString*)serviceName withHandler:(BridgeService* )handler;
 -(void) joinChannelWithName:(NSString*)serviceName withHandler:(BridgeService* )handler andOnJoinCallback:(BridgeService*) callback;
 
+-(void) _sendMessageWithDestination:(BridgeReference*)destination andArgs:(NSArray*) args;
 -(void) _frameAndSendData:(NSData*)rawData;
 
 + (NSData*) appendLengthHeaderToData:(NSData*) messageData;

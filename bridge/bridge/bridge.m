@@ -62,6 +62,24 @@
   }
 }
 
+-(void) publishServiceWithName:(NSString*)serviceName withHandler:(BridgeService* )handler
+{
+  BridgeReference* handlerRef = [dispatcher registerService:handler withName:serviceName];
+  NSData* rawMessageData = [BridgeJSONCodec constructJoinMessageWithWorkerpool:serviceName];
+  [self _frameAndSendData:rawMessageData];
+}
+
+-(void) joinChannelWithName:(NSString*)channelName withHandler:(BridgeService* )handler andOnJoinCallback:(BridgeService*) callback
+{
+  NSString* prefixedChannelName = [NSString stringWithFormat:@"channel:%@", channelName];
+  BridgeReference* handlerRef = [dispatcher registerRandomlyNamedService:handler];
+  BridgeReference* callbackRef = [dispatcher registerRandomlyNamedService:callback];
+  NSData* rawMessageData = [BridgeJSONCodec constructJoinMessageWithChannel:prefixedChannelName handler:handlerRef callback:callbackRef];
+  [self _frameAndSendData:rawMessageData];
+}
+
+/* Delegate methods and other internal methods*/
+
 -(void) socket:(GCDAsyncSocket*)send didReadData:(NSData *)data withTag:(long)tag
 {
   switch (tag) {  
@@ -107,7 +125,14 @@
     case MESSAGE_BODY:
     {
       NSString* message = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
-      NSDictionary* root = [BridgeJSONCodec parseRequestString:message];
+      
+      NSArray* references;
+      NSDictionary* root = [BridgeJSONCodec parseRequestString:message withReferenceArray:&references];
+      
+      for(int refIdx = 0, refLen = [references count]; refIdx < refLen; refIdx++){
+        BridgeReference* ref = [references objectAtIndex:refIdx];
+        [ref setBridge:self];
+      }
       
       BridgeReference* destination = [root objectForKey:@"destination"];
       NSArray* arguments = [root objectForKey:@"args"];
@@ -136,25 +161,12 @@
   }
 }
 
-- (void)socket:(GCDAsyncSocket*)sock didWriteDataWithTag:(long)tag
+-(void) _sendMessageWithDestination:(BridgeReference *)destination andArgs:(NSArray *)args
 {
-  NSLog(@"Wrote tag: %ld", tag);
-}
-
--(void) publishServiceWithName:(NSString*)serviceName withHandler:(BridgeService* )handler
-{
-  BridgeReference* handlerRef = [dispatcher registerService:handler withName:serviceName];
-  NSData* rawMessageData = [BridgeJSONCodec constructMessageWithWorkerpool:serviceName];
-  [self _frameAndSendData:rawMessageData];
-}
-
--(void) joinChannelWithName:(NSString*)channelName withHandler:(BridgeService* )handler andOnJoinCallback:(BridgeService*) callback
-{
-  NSString* prefixedChannelName = [NSString stringWithFormat:@"channel:%@", channelName];
-  BridgeReference* handlerRef = [dispatcher registerRandomlyNamedService:handler];
-  BridgeReference* callbackRef = [dispatcher registerRandomlyNamedService:callback];
-  NSData* rawMessageData = [BridgeJSONCodec constructMessageWithChannel:prefixedChannelName handler:handlerRef callback:callbackRef];
-  [self _frameAndSendData:rawMessageData];
+  NSArray* references;
+  NSData* rawData = [BridgeJSONCodec constructSendMessageWithDestination:destination andArgs:args withReferenceArray:&references];
+  
+  [self _frameAndSendData:rawData];
 }
 
 -(void) _frameAndSendData:(NSData*)rawData
@@ -162,7 +174,6 @@
   NSData* framedData = [Bridge appendLengthHeaderToData:rawData];
   [sock writeData:framedData withTimeout:-1 tag:OUTGOING];
 }
-
 
 + (NSData*) appendLengthHeaderToData:(NSData*) messageData
 {
