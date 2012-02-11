@@ -27,6 +27,8 @@
 - (id)initWithRoutingPrefix:(NSString*)routingPrefix andRoutingId:(NSString*)routingId andServiceName:(NSString*)serviceName andMethodName:(NSString*)methodName;
 - (NSDictionary*) dictionaryFromReference;
 
+- (NSMethodSignature*)methodSignatureForSelector:(SEL)selector;
+- (void) forwardInvocation:(NSInvocation *)anInvocation;
 - (void) setBridge:(Bridge*) bridge;
 
 + (BridgeReference*) referenceFromArray:(NSArray*) array;
