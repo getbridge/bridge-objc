@@ -36,6 +36,46 @@
   return [NSDictionary dictionaryWithObject:ref forKey:@"ref"];
 }
 
+- (NSMethodSignature *)methodSignatureForSelector:(SEL)selector {
+  // This is complete BS. We just need to return something to please ObjC runtime
+  return [NSMethodSignature signatureWithObjCTypes:"@^v^ci"];
+}
+
+- (void) forwardInvocation:(NSInvocation *)anInvocation
+{
+  NSString* selectorString = NSStringFromSelector([anInvocation selector]);
+  NSString* methodName = selectorString; // True for 0 args methods
+  
+  // number of colons in selector = number of args. ghettotastic but it should work
+  NSUInteger argsCount = 0, length = [selectorString length];
+  NSRange range = NSMakeRange(0, length); 
+  while(range.location != NSNotFound)
+  {
+    range = [selectorString rangeOfString: @":" options:0 range:range];
+    if(range.location != NSNotFound)
+    {
+      if(argsCount == 0){
+        methodName = [selectorString substringToIndex:range.location];
+      }
+      range = NSMakeRange(range.location + range.length, length - (range.location + range.length));
+      argsCount++; 
+    }
+  }
+  
+  // Transfer args from NSInvocation to NSArray. This and the above loop can be combined someday
+  NSMutableArray* args = [NSMutableArray array];
+  for(int argsIdx = 2; argsIdx < argsCount+2; argsIdx++){
+    id theArg;
+    [anInvocation getArgument:&theArg atIndex:argsIdx];
+    [args addObject:theArg];
+  }
+  
+  BridgeReference* destination = [BridgeReference referenceFromCopyOfReference:self];
+  [destination setMethodName:methodName];
+  
+  [_bridge _sendMessageWithDestination:destination andArgs:args];
+}
+
 + (BridgeReference*) referenceFromArray:(NSArray*) array {
   NSString* routingPrefix = [array objectAtIndex:0];
   NSString* routingId = [array objectAtIndex:1];
