@@ -71,10 +71,9 @@
 
 -(void) joinChannelWithName:(NSString*)channelName withHandler:(BridgeService* )handler andOnJoinCallback:(BridgeService*) callback
 {
-  NSString* prefixedChannelName = [NSString stringWithFormat:@"channel:%@", channelName];
   BridgeReference* handlerRef = [dispatcher registerRandomlyNamedService:handler];
   BridgeReference* callbackRef = [dispatcher registerRandomlyNamedService:callback];
-  NSData* rawMessageData = [BridgeJSONCodec constructJoinMessageWithChannel:prefixedChannelName handler:handlerRef callback:callbackRef];
+  NSData* rawMessageData = [BridgeJSONCodec constructJoinMessageWithChannel:channelName handler:handlerRef callback:callbackRef];
   [self _frameAndSendData:rawMessageData];
 }
 
