@@ -9,7 +9,7 @@
 #import "BridgeService.h"
 
 @interface BridgeBlockCallback : BridgeService {
-  void (^ _block)(NSObject*, ...);
+  void (^ _block)(NSArray*);
 }
 
 -(id) initWithBlock:(bridge_block) block;

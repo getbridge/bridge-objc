@@ -21,8 +21,8 @@
     return self;
 }
 
--(void) callback {
-  _block(@"HELLO");
+-(void) callback:(NSArray*)array {
+  _block(array);
 }
 
 @end

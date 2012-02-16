@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void(^bridge_block)(NSObject*,...);
+typedef void(^bridge_block)(NSArray*);
 
 @interface BridgeService : NSObject
 
