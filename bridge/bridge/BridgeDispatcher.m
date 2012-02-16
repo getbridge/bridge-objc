@@ -9,6 +9,7 @@
 #import "BridgeDispatcher.h"
 #import "BridgeReference.h"
 #import "BridgeService.h"
+#import "BridgeBlockCallback.h"
 
 NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
@@ -18,13 +19,13 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
 
 - (id)init
 {
-    self = [super init];
-    if (self) {
-        // Initialization code here.
-      services = [[NSMutableDictionary dictionary] retain];
-    }
-    
-    return self;
+  self = [super init];
+  if (self) {
+    // Initialization code here.
+    services = [[NSMutableDictionary dictionary] retain];
+  }
+  
+  return self;
 }
 
 -(BridgeReference*) registerExistingService:(NSString*)oldName withName:(NSString*)name {
@@ -44,18 +45,23 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
   for (int i=0; i<10; i++) {
     [randomString appendFormat: @"%c", [letters characterAtIndex: rand()%[letters length]]];
   }
-
+  
   return [self registerService:service withName:randomString];
 }
 
 -(void) executeUsingReference:(BridgeReference*)reference withArguments:(NSArray*) arguments
 {
   BridgeService* service = [services objectForKey:[reference serviceName]];
+  BOOL isCallback = [service isKindOfClass:[BridgeBlockCallback class]];
   
   NSMutableString* selectorString = [NSMutableString stringWithString:[reference methodName]];
   
-  for(int argIdx = 0, argLength = [arguments count]; argIdx < argLength; argIdx++){
-    // Stupid cross-compatibility hack. Keyword arguments would be a great fix
+  if(!isCallback){
+    for(int argIdx = 0, argLength = [arguments count]; argIdx < argLength; argIdx++){
+      // Stupid cross-compatibility hack. Keyword arguments would be a great fix
+      [selectorString appendString:@":"];
+    }
+  } else {
     [selectorString appendString:@":"];
   }
   
@@ -67,9 +73,14 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
     [invocation setSelector:selector];
     [invocation setTarget:service];
     
-    for(int argIdx = 0, argLength = [arguments count]; argIdx < argLength; argIdx++){
-      id arg = [arguments objectAtIndex:argIdx];
-      [invocation setArgument:&arg atIndex:argIdx+2];
+    if(isCallback){
+      // Don't expand the arguments
+      [invocation setArgument:&arguments atIndex:2];
+    } else {
+      for(int argIdx = 0, argLength = [arguments count]; argIdx < argLength; argIdx++){
+        id arg = [arguments objectAtIndex:argIdx];
+        [invocation setArgument:&arg atIndex:argIdx+2];
+      }
     }
     
     [invocation invoke];
