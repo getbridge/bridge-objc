@@ -15,12 +15,22 @@
 
 @implementation BridgeJSONCodec
 
+/*
+  @brief Take a string from the connection and parse as JSON, traversing the structure for references
+  This method parses JSON and passes the given references pointer to decodeReferences
+  @param bridgeRequestString A JSON string
+  @param references A pointer to an NSArray pointer
+ */
 + (NSDictionary*) parseRequestString:(NSString*)bridgeRequestString withReferenceArray:(NSArray**) references
 {
   (*references) = [NSMutableArray array];
   return [BridgeJSONCodec decodeReferencesInObject:[bridgeRequestString objectFromJSONString] withReferenceArray:(*references)];
 }
 
+/*
+ @brief Constructs a command message of type "JOINWORKERPOOL" according to the Bridge specification 
+ @param workerpool Name of worker pool to join
+*/
 + (NSData*) constructJoinMessageWithWorkerpool:(NSString *)workerpool
 {
   NSDictionary* data = [NSDictionary dictionaryWithObjectsAndKeys: workerpool, @"name", nil];
@@ -28,6 +38,10 @@
   return [root JSONData];
 }
 
+/*
+ @brief Constructs a command message of type "JOINCHANNEL" according to the Bridge specification 
+ @param channel Name of channel to join
+ */
 + (NSData*) constructJoinMessageWithChannel:(NSString *)channel handler:(BridgeReference *)handler callback:(BridgeReference *)callback
 {
   NSDictionary* data = [NSDictionary dictionaryWithObjectsAndKeys: channel, @"name", [handler dictionaryFromReference], @"handler", [callback dictionaryFromReference], @"callback", nil];
@@ -35,6 +49,9 @@
   return [root JSONData];
 }
 
+/*
+ @brief Constructs a command message of type "CONNECT" according to the Bridge specification 
+ */
 + (NSData*) constructConnectMessage 
 {
   return [self constructConnectMessageWithId:nil secret:nil];
@@ -60,6 +77,13 @@
   return [root JSONData];
 }
 
+/*
+ @brief Constructs a command message of type "SEND" according to the Bridge specification
+ Creates the appropriate JSON structure and calls encodeReferences method on the arguments
+ @param destination A four-part destination references that points to a remote method
+ @param args Arguments to the remote procedure call
+ @param dispatcher The Bridge object's dispatcher with which to register any BridgeService objects that are encountered
+*/
 + (NSData*) constructSendMessageWithDestination:(BridgeReference *)destination andArgs:(NSArray *)args withDispatcher:(BridgeDispatcher *)dispatcher
 {
   
@@ -70,6 +94,10 @@
   return [encodedRoot JSONData];
 }
 
+/*
+ Traverses the structure for BridgeService objects and replaces them with BridgeReference objects.
+ All BridgeService objects are registered with the provided dispatcher
+*/
 + (id) encodeReferencesInObject:(id)object withDispatcher:(BridgeDispatcher *)dispatcher
 {
   if([object isKindOfClass:[NSDictionary class]]){
@@ -96,6 +124,8 @@
     return [((BridgeReference*) object) dictionaryFromReference];
   } else if ([object isKindOfClass:[BridgeService class]]) {
     BridgeReference* ref = [dispatcher registerRandomlyNamedService:object];
+    NSArray* methods = [((BridgeService*) object) getMethods];
+    [ref setMethods:methods];
     return [self encodeReferencesInObject:ref withDispatcher:dispatcher];
   } else {
     // Leaf node
@@ -103,6 +133,10 @@
   }
 }
 
+/*
+ Traverses the structure for any objects and replaces any objects of format '{ref:[Array]}'with a BridgeReference. These references are also inserted
+ into an array the caller provides
+*/
 + (id) decodeReferencesInObject:(id)object withReferenceArray:(NSMutableArray*) references
 {
   if([object isKindOfClass:[NSDictionary class]]){
