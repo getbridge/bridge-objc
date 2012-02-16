@@ -13,7 +13,6 @@
 #import "BridgeService.h"
 
 @class BridgeDispatcher;
-@class BridgeReference;
 
 @interface Bridge : NSObject {
   
@@ -38,6 +37,8 @@
 -(void) publishServiceWithName:(NSString*)serviceName withHandler:(BridgeService* )handler;
 -(void) publishServiceWithName:(NSString*)serviceName withHandler:(BridgeService* )handler;
 -(void) joinChannelWithName:(NSString*)serviceName withHandler:(BridgeService* )handler andOnJoinCallback:(BridgeService*) callback;
+-(BridgeReference*) getService:(NSString*)serviceName;
+-(BridgeReference*) getChannel:(NSString*)channelName;
 
 -(void) _sendMessageWithDestination:(BridgeReference*)destination andArgs:(NSArray*) args;
 -(void) _frameAndSendData:(NSData*)rawData;

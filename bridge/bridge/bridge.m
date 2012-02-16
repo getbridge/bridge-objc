@@ -77,6 +77,17 @@
   [self _frameAndSendData:rawMessageData];
 }
 
+-(BridgeReference*) getService:(NSString*)serviceName
+{
+  return [BridgeReference referenceWithRoutingPrefix:@"named" andRoutingId:serviceName andServiceName:serviceName andMethodName:nil];
+}
+
+-(BridgeReference*) getChannel:(NSString*)channelName
+{
+  NSString* prefixedChannelName = [NSString stringWithFormat:@"channel:%@", channelName];
+  return [BridgeReference referenceWithRoutingPrefix:@"channel" andRoutingId:prefixedChannelName andServiceName:prefixedChannelName andMethodName:nil];
+}
+
 /* Delegate methods and other internal methods*/
 
 -(void) socket:(GCDAsyncSocket*)send didReadData:(NSData *)data withTag:(long)tag
