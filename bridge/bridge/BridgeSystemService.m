@@ -6,6 +6,7 @@
 //  Copyright 2012 __MyCompanyName__. All rights reserved.
 //
 
+#import "BridgeService.h"
 #import "BridgeSystemService.h"
 #import "BridgeReference.h"
 #import "BridgeDispatcher.h"
@@ -28,6 +29,14 @@
   [chanRef setRoutingId:@"channel"];
   [chanRef setServiceName:channelName];
   [callback callback:channelName :chanRef];
+}
+
+-(void) getservice:(NSString*)serviceName :(BridgeReference*)callback
+{
+  BridgeService* service = [dispatcher getService:serviceName];
+  NSArray* methods = [service getMethods];
+  
+  [callback callback:methods];
 }
 
 -(void) remoteError:(NSString*)msg
