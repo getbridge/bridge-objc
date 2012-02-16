@@ -15,6 +15,7 @@
   NSString* routingId;
   NSString* serviceName;
   NSString* methodName;
+  NSArray* methods;
   
   Bridge* _bridge;
 }
@@ -23,13 +24,14 @@
 @property(nonatomic, copy) NSString* routingId;
 @property(nonatomic, copy) NSString* serviceName;
 @property(nonatomic, copy) NSString* methodName;
+@property(nonatomic, retain) NSArray* methods;
 
-- (id)initWithRoutingPrefix:(NSString*)routingPrefix andRoutingId:(NSString*)routingId andServiceName:(NSString*)serviceName andMethodName:(NSString*)methodName;
-- (NSDictionary*) dictionaryFromReference;
+-(id)initWithRoutingPrefix:(NSString*)routingPrefix andRoutingId:(NSString*)routingId andServiceName:(NSString*)serviceName andMethodName:(NSString*)methodName;
+-(NSDictionary*) dictionaryFromReference;
 
-- (NSMethodSignature*)methodSignatureForSelector:(SEL)selector;
-- (void) forwardInvocation:(NSInvocation *)anInvocation;
-- (void) setBridge:(Bridge*) bridge;
+-(NSMethodSignature*)methodSignatureForSelector:(SEL)selector;
+-(void) forwardInvocation:(NSInvocation *)anInvocation;
+-(void) setBridge:(Bridge*) bridge;
 
 + (BridgeReference*) referenceFromArray:(NSArray*) array;
 + (BridgeReference*) referenceFromCopyOfReference: (BridgeReference*) reference;

@@ -9,7 +9,7 @@
 #import "BridgeReference.h"
 
 @implementation BridgeReference
-@synthesize routingPrefix, routingId, serviceName, methodName;
+@synthesize routingPrefix, routingId, serviceName, methodName, methods;
 
 /*
  @brief Construct a reference explicitly. Internal only.
@@ -48,8 +48,9 @@
 - (NSDictionary*) dictionaryFromReference 
 {
   NSArray* ref = [NSArray arrayWithObjects:routingPrefix, routingId, serviceName, methodName, nil];
-  return [NSDictionary dictionaryWithObject:ref forKey:@"ref"];
+  return [NSDictionary dictionaryWithObjectsAndKeys:ref, @"ref", methods, @"operations", nil];
 }
+
 
 /*
  @brief Get method signature for a selector this reference responds to. Internal only.
@@ -58,7 +59,7 @@
  */
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)selector {
   // This is complete BS. We just need to return something to please ObjC runtime
-  return [NSMethodSignature signatureWithObjCTypes:"@^v^ci"];
+  return [NSMethodSignature signatureWithObjCTypes:"@^v^c^v^v^v^v^v^v^v"];
 }
 
 /*
@@ -98,6 +99,11 @@
   [destination setMethodName:methodName];
   
   [_bridge _sendMessageWithDestination:destination andArgs:args];
+}
+
+-(NSString*) description
+{
+  return [NSString stringWithFormat:@"{BridgeReference: [%@, %@, %@, %@]}", routingPrefix, routingId, serviceName, methodName];
 }
 
 /*

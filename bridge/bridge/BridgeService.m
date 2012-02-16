@@ -5,6 +5,7 @@
 //  Created by Sridatta Thatipamala on 2/6/12.
 //  Copyright 2012 __MyCompanyName__. All rights reserved.
 //
+#import <objc/runtime.h>
 
 #import "BridgeService.h"
 #import "BridgeBlockCallback.h"
@@ -19,6 +20,24 @@
     }
     
     return self;
+}
+
+-(NSArray*) getMethods
+{
+  
+  Method *methods;
+  unsigned int methodCount;
+  if ((methods = class_copyMethodList([self class], &methodCount)))
+  {
+    NSMutableArray *results = [NSMutableArray arrayWithCapacity:methodCount];
+    
+    while (methodCount--) 
+			[results addObject:[NSString stringWithCString: sel_getName(method_getName(methods[methodCount])) encoding: NSASCIIStringEncoding]];
+    
+    free(methods);	
+    return results;
+  }
+  return nil;
 }
 
 +(BridgeService*) serviceWithBlock:(bridge_block) block {

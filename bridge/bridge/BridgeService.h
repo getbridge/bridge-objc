@@ -12,6 +12,7 @@ typedef void(^bridge_block)(NSArray*);
 
 @interface BridgeService : NSObject
 
+-(NSArray*) getMethods;
 +(BridgeService*) serviceWithBlock:(bridge_block) block;
 
 @end
