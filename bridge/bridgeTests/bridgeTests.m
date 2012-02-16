@@ -7,6 +7,7 @@
 //
 
 #import "bridgeTests.h"
+#import "bridge.h"
 
 @implementation bridgeTests
 
@@ -26,7 +27,8 @@
 
 - (void)testExample
 {
-    STFail(@"Unit tests are not implemented yet in bridgeTests");
+  Bridge* bridge = [[Bridge alloc] initWithHost:@"localhost" andPort:8090 withDelegate:self];
+  [bridge connect];
 }
 
 @end

@@ -7,6 +7,8 @@
 //
 
 #import "BridgeDispatcher.h"
+#import "BridgeReference.h"
+#import "BridgeService.h"
 
 NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
@@ -23,6 +25,10 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
     }
     
     return self;
+}
+
+-(BridgeReference*) registerExistingService:(NSString*)oldName withName:(NSString*)name {
+  return [self registerService:[services objectForKey:oldName] withName:name];
 }
 
 -(BridgeReference*) registerService:(BridgeService*)service withName:(NSString*)name

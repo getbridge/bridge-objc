@@ -7,8 +7,9 @@
 //
 
 #import "bridge.h"
+
+#import "BridgeDispatcher.h"
 #import "BridgeJSONCodec.h"
-#import "BridgeReference.h"
 #import "BridgeSystemService.h"
 
 #define CONNECT_HEADER 10
@@ -37,7 +38,7 @@
     dispatcher = [[BridgeDispatcher alloc] init];
     delegate = theDelegate;
     
-    [dispatcher registerService:[[BridgeSystemService alloc] init] withName:@"system"];
+    [dispatcher registerService:[[BridgeSystemService alloc] initWithDispatcher:dispatcher andDelegate:delegate] withName:@"system"];
     reconnectBackoff = 0.1;
   }
   
@@ -64,7 +65,6 @@
 
 -(void) publishServiceWithName:(NSString*)serviceName withHandler:(BridgeService* )handler
 {
-  BridgeReference* handlerRef = [dispatcher registerService:handler withName:serviceName];
   NSData* rawMessageData = [BridgeJSONCodec constructJoinMessageWithWorkerpool:serviceName];
   [self _frameAndSendData:rawMessageData];
 }
@@ -162,8 +162,7 @@
 
 -(void) _sendMessageWithDestination:(BridgeReference *)destination andArgs:(NSArray *)args
 {
-  NSArray* references;
-  NSData* rawData = [BridgeJSONCodec constructSendMessageWithDestination:destination andArgs:args withReferenceArray:&references];
+  NSData* rawData = [BridgeJSONCodec constructSendMessageWithDestination:destination andArgs:args withDispatcher:dispatcher];
   
   [self _frameAndSendData:rawData];
 }

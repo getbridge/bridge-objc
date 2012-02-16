@@ -8,7 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import "GCDAsyncSocket.h"
-#import "BridgeDispatcher.h"
+
+#import "BridgeReference.h"
+#import "BridgeService.h"
+
+@class BridgeDispatcher;
+@class BridgeReference;
 
 @interface Bridge : NSObject {
   

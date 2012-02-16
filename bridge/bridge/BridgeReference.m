@@ -3,7 +3,7 @@
 //  bridge
 //
 //  Created by Sridatta Thatipamala on 1/27/12.
-//  Copyright 2012 __MyCompanyName__. All rights reserved.
+//  Copyright 2012 Flotype Inc. All rights reserved.
 //
 
 #import "BridgeReference.h"
@@ -11,6 +11,13 @@
 @implementation BridgeReference
 @synthesize routingPrefix, routingId, serviceName, methodName;
 
+/*
+ @brief Construct a reference explicitly. Internal only.
+ @param routingPrefix Type of reference - "client", "channel" or "named" service
+ @param routingId Identifier used to route this reference
+ @param serviceName Identifier used to dereference this reference
+ @param methodName The method this reference refers to. Can be nil
+ */
 - (id)initWithRoutingPrefix:(NSString*)routingPrefix andRoutingId:(NSString*)routingId andServiceName:(NSString*)serviceName andMethodName:(NSString*)methodName
 {
     self = [super init];
@@ -25,22 +32,39 @@
     return self;
 }
 
+/*
+ @brief Set the bridge instance for this reference to use for SENDs. Internal only.
+ @param bridge The Bridge instances that created this reference
+ */
 - (void) setBridge:(Bridge*) bridge
 {
   _bridge = bridge; // No retaining or anything. This is a ref to a grandparent
 }
 
-- (NSArray*) dictionaryFromReference 
+/*
+ @brief Get a representation of this reference for JSON encoding. Internal only.
+ @return An NSDictionary* that represents the pathchain of this reference.
+ */
+- (NSDictionary*) dictionaryFromReference 
 {
   NSArray* ref = [NSArray arrayWithObjects:routingPrefix, routingId, serviceName, methodName, nil];
   return [NSDictionary dictionaryWithObject:ref forKey:@"ref"];
 }
 
+/*
+ @brief Get method signature for a selector this reference responds to. Internal only.
+ @param selector an Objective-C selector
+ @return A dummy method signature that is not used anywhere
+ */
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)selector {
   // This is complete BS. We just need to return something to please ObjC runtime
   return [NSMethodSignature signatureWithObjCTypes:"@^v^ci"];
 }
 
+/*
+ @brief Handle an invocation that cannot be handled by a method
+ This method takes the invocation and sends it down the wire using Bridge
+ */
 - (void) forwardInvocation:(NSInvocation *)anInvocation
 {
   NSString* selectorString = NSStringFromSelector([anInvocation selector]);
@@ -76,6 +100,13 @@
   [_bridge _sendMessageWithDestination:destination andArgs:args];
 }
 
+/*
+ @brief Construct an autoreleased reference from a 3 or 4 element array
+ Each part of the array maps to the following in order of occurence: routingPrefix, routingId,
+ serviceName and (optionally) methodName
+ @param array An NSArray* whose elements represent the parts of a reference
+ @return A Bridge reference
+ */
 + (BridgeReference*) referenceFromArray:(NSArray*) array {
   NSString* routingPrefix = [array objectAtIndex:0];
   NSString* routingId = [array objectAtIndex:1];
@@ -89,6 +120,12 @@
  andServiceName:serviceName andMethodName:methodName];
 }
 
+/*
+ @brief Construct an autoreleased reference from an existing reference
+ This method is most often used to duplicate a 3-part reference and add a methodName to it
+ @param array An BridgeReference to clone
+ @return A Bridge reference whose parts are the same as the argument
+ */
 + (BridgeReference*) referenceFromCopyOfReference: (BridgeReference*) reference{
   NSString* routingPrefix = [reference routingPrefix];
   NSString* routingId = [reference routingId];
@@ -99,6 +136,9 @@
                                       andServiceName:serviceName andMethodName:methodName];
 }
 
+/*
+ @brief Construct an autoreleased BridgeReference
+ */
 + (BridgeReference*)referenceWithRoutingPrefix:(NSString*)routingPrefix andRoutingId:(NSString*)routingId andServiceName:(NSString*)serviceName andMethodName:(NSString*)methodName
 {
   return [[[BridgeReference alloc] initWithRoutingPrefix:routingPrefix andRoutingId:routingId andServiceName:serviceName andMethodName:methodName] autorelease];

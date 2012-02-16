@@ -7,21 +7,34 @@
 //
 
 #import "BridgeSystemService.h"
+#import "BridgeReference.h"
+#import "BridgeDispatcher.h"
 
 @implementation BridgeSystemService
 
-- (id)init
+- (id)initWithDispatcher:(BridgeDispatcher *)disp andDelegate:(id)del
 {
     self = [super init];
     if (self) {
-        // Initialization code here.
+      dispatcher = disp;
+      delegate = del;
     }
     
     return self;
 }
 
--(void) hook_channel_handler:(NSString*)foo :(id)bar :(id)baz {
-  NSLog(@"System service works");
+-(void) hook_channel_handler:(NSString*)channelName :(BridgeReference*)handler :(id)callback {
+  BridgeReference* chanRef = [dispatcher registerExistingService:[handler serviceName] withName:channelName];
+  [chanRef setRoutingId:@"channel"];
+  [chanRef setServiceName:channelName];
+  [callback callback:channelName :chanRef];
+}
+
+-(void) remoteError:(NSString*)msg
+{
+  if([delegate respondsToSelector:@selector(bridgeDidErrorWithMessage:)]){
+    [delegate bridgeDidErrorWithMessage:delegate];
+  }
 }
 
 @end

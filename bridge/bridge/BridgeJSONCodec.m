@@ -6,8 +6,12 @@
 //  Copyright 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "BridgeJSONCodec.h"
 #import "JSONKit.h"
+
+#import "BridgeJSONCodec.h"
+#import "BridgeDispatcher.h"
+#import "BridgeReference.h"
+#import "BridgeService.h"
 
 @implementation BridgeJSONCodec
 
@@ -56,18 +60,17 @@
   return [root JSONData];
 }
 
-+ (NSData*) constructSendMessageWithDestination:(BridgeReference *)destination andArgs:(NSArray *)args withReferenceArray:(NSArray **)references
++ (NSData*) constructSendMessageWithDestination:(BridgeReference *)destination andArgs:(NSArray *)args withDispatcher:(BridgeDispatcher *)dispatcher
 {
-  (*references) = [NSMutableArray array];
   
   NSDictionary* data = [NSDictionary dictionaryWithObjectsAndKeys: destination, @"destination", args, @"args", nil];
   NSDictionary* root = [NSDictionary dictionaryWithObjectsAndKeys:@"SEND", @"command", data, @"data", nil];
   
-  NSDictionary* encodedRoot = [BridgeJSONCodec encodeReferencesInObject:root withReferenceArray:(*references)];
+  NSDictionary* encodedRoot = [BridgeJSONCodec encodeReferencesInObject:root withDispatcher:dispatcher];
   return [encodedRoot JSONData];
 }
 
-+ (id) encodeReferencesInObject:(id)object withReferenceArray:(NSMutableArray*) references
++ (id) encodeReferencesInObject:(id)object withDispatcher:(BridgeDispatcher *)dispatcher
 {
   if([object isKindOfClass:[NSDictionary class]]){
     NSMutableDictionary* result = [NSMutableDictionary dictionaryWithDictionary:object];
@@ -77,7 +80,7 @@
     for(int keysIdx = 0; keysIdx < [keys count]; keysIdx++){
       NSString* key = [keys objectAtIndex:keysIdx];
       id oldValue = [result objectForKey:key];
-      [result setObject:[BridgeJSONCodec encodeReferencesInObject:oldValue withReferenceArray:references] forKey:key];
+      [result setObject:[BridgeJSONCodec encodeReferencesInObject:oldValue withDispatcher:dispatcher] forKey:key];
     }
     return result;
     
@@ -86,11 +89,14 @@
     
     for(int arrayIdx = 0; arrayIdx < [res count]; arrayIdx++){
       id oldValue = [res objectAtIndex:arrayIdx];
-      [res replaceObjectAtIndex:arrayIdx withObject:[BridgeJSONCodec encodeReferencesInObject:oldValue withReferenceArray:references]];
+      [res replaceObjectAtIndex:arrayIdx withObject:[BridgeJSONCodec encodeReferencesInObject:oldValue withDispatcher:dispatcher]];
     }
     return res;
   } else if ([object isKindOfClass:[BridgeReference class]]){
     return [((BridgeReference*) object) dictionaryFromReference];
+  } else if ([object isKindOfClass:[BridgeService class]]) {
+    BridgeReference* ref = [dispatcher registerRandomlyNamedService:object];
+    return [self encodeReferencesInObject:ref withDispatcher:dispatcher];
   } else {
     // Leaf node
     return object;
