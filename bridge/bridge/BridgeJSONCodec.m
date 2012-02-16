@@ -112,6 +112,7 @@
     if(nil != (ref = [result objectForKey:@"ref"])) {
       // This is a reference
       BridgeReference* reference = [BridgeReference referenceFromArray:ref];
+      [reference setMethods:[result objectForKey:@"operations"]];
       [references addObject:reference];
       return reference;
     }
