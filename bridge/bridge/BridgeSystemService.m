@@ -28,9 +28,11 @@
  @brief Takes a local, anonymous reference and rebinds it to the given channel name. Calls a success callback
 */
 -(void) hook_channel_handler:(NSString*)channelName :(BridgeReference*)handler :(id)callback {
-  BridgeReference* chanRef = [dispatcher registerExistingService:[handler serviceName] withName:channelName];
-  [chanRef setRoutingId:@"channel"];
-  [chanRef setServiceName:channelName];
+  
+  BridgeReference* chanRef = [dispatcher registerExistingService:[handler serviceName] withName:[NSString stringWithFormat:@"channel:%@", channelName]];
+  [chanRef setRoutingPrefix:@"channel"];
+  [chanRef setRoutingId:channelName];
+  
   [callback callback:channelName :chanRef];
 }
 
