@@ -62,8 +62,9 @@
   [root setValue:@"CONNECT" forKey:@"command"];
   
   NSMutableDictionary* dataObject = [NSMutableDictionary dictionary];
-  NSNumber* zero = [NSNumber numberWithInt:0];
-  NSMutableArray* session = [NSMutableArray arrayWithObjects:zero, zero, nil];
+  
+  NSNull* null = [NSNull null];
+  NSMutableArray* session = [NSMutableArray arrayWithObjects:null, null, nil];
     
   if(sessionId != nil && secret != nil) {
     [session replaceObjectAtIndex:0 withObject:session];
