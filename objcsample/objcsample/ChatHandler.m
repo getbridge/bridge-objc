@@ -12,12 +12,17 @@
 
 - (id)init
 {
-    self = [super init];
-    if (self) {
-        // Initialization code here.
-    }
-    
-    return self;
+  self = [super init];
+  if (self) {
+    // Initialization code here.
+  }
+  
+  return self;
+}
+
+-(void) msg:(NSString *)sender :(NSString *)message
+{
+  NSLog(@"MESSAGE RECEIVED| %@ : %@", sender, message);
 }
 
 @end

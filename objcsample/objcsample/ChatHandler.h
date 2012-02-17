@@ -10,4 +10,6 @@
 
 @interface ChatHandler : BridgeService
 
+-(void) msg:(NSString*)sender :(NSString*)message;
+
 @end
