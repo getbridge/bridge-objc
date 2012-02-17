@@ -3,11 +3,12 @@
 //  objcsample
 //
 //  Created by Sridatta Thatipamala on 1/27/12.
-//  Copyright 2012 __MyCompanyName__. All rights reserved.
+//  Copyright 2012 Flotype Inc. All rights reserved.
 //
 
 #import "objcsampleAppDelegate.h"
 #import "objcsampleViewController.h"
+#import "ChatHandler.h"
 
 @implementation objcsampleAppDelegate
 
@@ -29,12 +30,24 @@
 
 -(void) bridgeDidBecomeReady
 {
-  BridgeService* dummyService = [BridgeService serviceWithBlock:^(NSObject* foo, ...){
-    NSLog(@"HARRO");
+  BridgeService* successCallback = [BridgeService serviceWithBlock:^(NSArray* args){
+    // First argument is the name of the sender
+    NSString* roomName = [args objectAtIndex:0];
+    // Second argument is the message
+    BridgeReference* channel = [args objectAtIndex:1];
+    NSLog(@"Joined channel: %@", roomName);
+    [channel msg:@"Sridatta" :@"I come in peace"];
   }];
   
-  [bridge publishServiceWithName:@"FOO" withHandler:dummyService];
-  [bridge joinChannelWithName:@"4chan" withHandler:dummyService andOnJoinCallback:dummyService];
+  ChatHandler* handler = [[ChatHandler alloc] init];
+  
+  BridgeReference* chatService = [bridge getService:@"chatserver"];
+  [chatService join:@"lobby" :handler :successCallback];
+}
+
+-(void) bridgeDidErrorWithMessage:(NSString*)msg
+{
+  NSLog(@"GOT ERROR: %@", msg);
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
