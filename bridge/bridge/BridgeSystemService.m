@@ -51,7 +51,7 @@
 -(void) remoteError:(NSString*)msg
 {
   if([delegate respondsToSelector:@selector(bridgeDidErrorWithMessage:)]){
-    [delegate bridgeDidErrorWithMessage:delegate];
+    [delegate bridgeDidErrorWithMessage:msg];
   }
 }
 
