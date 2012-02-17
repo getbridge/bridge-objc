@@ -81,13 +81,17 @@
 
 -(BridgeReference*) getService:(NSString*)serviceName
 {
-  return [BridgeReference referenceWithRoutingPrefix:@"named" andRoutingId:serviceName andServiceName:serviceName andMethodName:nil];
+  BridgeReference* service= [BridgeReference referenceWithRoutingPrefix:@"named" andRoutingId:serviceName andServiceName:serviceName andMethodName:nil];
+  [service setBridge:self];
+  return service;
 }
 
 -(BridgeReference*) getChannel:(NSString*)channelName
 {
   NSString* prefixedChannelName = [NSString stringWithFormat:@"channel:%@", channelName];
-  return [BridgeReference referenceWithRoutingPrefix:@"channel" andRoutingId:prefixedChannelName andServiceName:prefixedChannelName andMethodName:nil];
+  BridgeReference* channel =  [BridgeReference referenceWithRoutingPrefix:@"channel" andRoutingId:prefixedChannelName andServiceName:prefixedChannelName andMethodName:nil];
+  [channel setBridge:self];
+  return channel;
 }
 
 /* Delegate methods and other internal methods*/
