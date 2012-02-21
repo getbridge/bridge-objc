@@ -22,11 +22,21 @@
 
 @implementation Bridge
 
+/*
+ @brief Shorthand initializer that connects to localhost and port 8080
+*/
 - (id) initWithDelegate:(id) theDelegate
 {
   return [self initWithHost:@"localhost" andPort:8080 withDelegate:theDelegate];
 }
 
+/*
+ @brief Initializer for the Bridge instance
+ This method initializes the Bridge object with the given parameters.
+ @param hostName A string representing the Bridge server to connect to. May be IPv4, IPv6 address or a domain
+ @param hostPort The port on the host to connect to
+ @param theDelegate An object that responds to bridgeDidBecomeReady selector. Optionally responds to bridgeDidErrorWithMessage
+*/
 - (id)initWithHost:(NSString *)hostName andPort:(int)hostPort withDelegate:(id)theDelegate
 {
   self = [super init];
@@ -45,6 +55,9 @@
   return self;
 }
 
+/*
+ @brief Connect to the Bridge server using the network information provided to initializer
+*/
 - (void) connect
 {
   NSError *err = nil;
