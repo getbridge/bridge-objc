@@ -31,8 +31,11 @@
   {
     NSMutableArray *results = [NSMutableArray arrayWithCapacity:methodCount];
     
-    while (methodCount--) 
-			[results addObject:[NSString stringWithCString: sel_getName(method_getName(methods[methodCount])) encoding: NSASCIIStringEncoding]];
+    while (methodCount--){
+      NSString* methodString = [NSString stringWithCString: sel_getName(method_getName(methods[methodCount])) encoding: NSASCIIStringEncoding];
+      NSString* cleanedString = [methodString stringByTrimmingCharactersInSet: [NSCharacterSet symbolCharacterSet]];
+			[results addObject:cleanedString];
+    }
     
     free(methods);	
     return results;
