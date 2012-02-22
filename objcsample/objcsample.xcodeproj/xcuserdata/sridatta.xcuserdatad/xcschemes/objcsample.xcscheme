@@ -13,6 +13,20 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "73EC795114D3397C00D7CD0D"
+               BuildableName = "libbridge.a"
+               BlueprintName = "bridge"
+               ReferencedContainer = "container:../bridge/bridge.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "73EC7B8614D348A200D7CD0D"
                BuildableName = "objcsample.app"
                BlueprintName = "objcsample"

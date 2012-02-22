@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		73BD7C3E14EC8A82006828FE /* libbridge.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 73BD7C3D14EC8A82006828FE /* libbridge.a */; };
+		73BD7C4114EC8B9E006828FE /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73BD7C4014EC8B9E006828FE /* CFNetwork.framework */; };
+		73BF7CFB14EEFCAE00ACD928 /* ChatHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 73BF7CFA14EEFCAE00ACD928 /* ChatHandler.m */; };
 		73EC7B8C14D348A200D7CD0D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EC7B8B14D348A200D7CD0D /* UIKit.framework */; };
 		73EC7B8E14D348A200D7CD0D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EC7B8D14D348A200D7CD0D /* Foundation.framework */; };
 		73EC7B9014D348A200D7CD0D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EC7B8F14D348A200D7CD0D /* CoreGraphics.framework */; };
@@ -36,6 +39,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		73BD7C3D14EC8A82006828FE /* libbridge.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libbridge.a; path = "../bridge/build/Release-iphoneos/libbridge.a"; sourceTree = "<group>"; };
+		73BD7C4014EC8B9E006828FE /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		73BF7CF914EEFCAE00ACD928 /* ChatHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatHandler.h; sourceTree = "<group>"; };
+		73BF7CFA14EEFCAE00ACD928 /* ChatHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatHandler.m; sourceTree = "<group>"; };
 		73EC7B8714D348A200D7CD0D /* objcsample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = objcsample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		73EC7B8B14D348A200D7CD0D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		73EC7B8D14D348A200D7CD0D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -63,6 +70,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				73BD7C4114EC8B9E006828FE /* CFNetwork.framework in Frameworks */,
+				73BD7C3E14EC8A82006828FE /* libbridge.a in Frameworks */,
 				73EC7B8C14D348A200D7CD0D /* UIKit.framework in Frameworks */,
 				73EC7B8E14D348A200D7CD0D /* Foundation.framework in Frameworks */,
 				73EC7B9014D348A200D7CD0D /* CoreGraphics.framework in Frameworks */,
@@ -86,6 +95,8 @@
 		73EC7B7C14D348A200D7CD0D = {
 			isa = PBXGroup;
 			children = (
+				73BD7C4014EC8B9E006828FE /* CFNetwork.framework */,
+				73BD7C3D14EC8A82006828FE /* libbridge.a */,
 				73EC7B9114D348A200D7CD0D /* objcsample */,
 				73EC7BB314D348A200D7CD0D /* objcsampleTests */,
 				73EC7B8A14D348A200D7CD0D /* Frameworks */,
@@ -118,6 +129,8 @@
 			children = (
 				73EC7B9A14D348A200D7CD0D /* objcsampleAppDelegate.h */,
 				73EC7B9B14D348A200D7CD0D /* objcsampleAppDelegate.m */,
+				73BF7CF914EEFCAE00ACD928 /* ChatHandler.h */,
+				73BF7CFA14EEFCAE00ACD928 /* ChatHandler.m */,
 				73EC7B9D14D348A200D7CD0D /* MainWindow.xib */,
 				73EC7BA014D348A200D7CD0D /* objcsampleViewController.h */,
 				73EC7BA114D348A200D7CD0D /* objcsampleViewController.m */,
@@ -265,6 +278,7 @@
 				73EC7B9814D348A200D7CD0D /* main.m in Sources */,
 				73EC7B9C14D348A200D7CD0D /* objcsampleAppDelegate.m in Sources */,
 				73EC7BA214D348A200D7CD0D /* objcsampleViewController.m in Sources */,
+				73BF7CFB14EEFCAE00ACD928 /* ChatHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -371,7 +385,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "objcsample/objcsample-Prefix.pch";
 				INFOPLIST_FILE = "objcsample/objcsample-Info.plist";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "$(BRIDGE_LIB)/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -382,7 +398,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "objcsample/objcsample-Prefix.pch";
 				INFOPLIST_FILE = "objcsample/objcsample-Info.plist";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "$(BRIDGE_LIB)/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -440,6 +458,7 @@
 				73EC7BC114D348A200D7CD0D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		73EC7BC214D348A200D7CD0D /* Build configuration list for PBXNativeTarget "objcsampleTests" */ = {
 			isa = XCConfigurationList;
@@ -448,6 +467,7 @@
 				73EC7BC414D348A200D7CD0D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

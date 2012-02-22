@@ -3,10 +3,11 @@
 //  bridgeTests
 //
 //  Created by Sridatta Thatipamala on 1/27/12.
-//  Copyright 2012 __MyCompanyName__. All rights reserved.
+//  Copyright 2012 Flotype Inc. All rights reserved.
 //
 
 #import "bridgeTests.h"
+#import "bridge.h"
 
 @implementation bridgeTests
 
@@ -26,7 +27,8 @@
 
 - (void)testExample
 {
-    STFail(@"Unit tests are not implemented yet in bridgeTests");
+  Bridge* bridge = [[Bridge alloc] initWithHost:@"localhost" andPort:8090 withDelegate:self];
+  [bridge connect];
 }
 
 @end

@@ -3,12 +3,13 @@
 //  bridge
 //
 //  Created by Sridatta Thatipamala on 1/27/12.
-//  Copyright 2012 __MyCompanyName__. All rights reserved.
+//  Copyright 2012 Flotype Inc. All rights reserved.
 //
 
 #import "bridge.h"
+
+#import "BridgeDispatcher.h"
 #import "BridgeJSONCodec.h"
-#import "BridgeReference.h"
 #import "BridgeSystemService.h"
 
 #define CONNECT_HEADER 10
@@ -21,11 +22,21 @@
 
 @implementation Bridge
 
+/*
+ @brief Shorthand initializer that connects to localhost and port 8080
+ */
 - (id) initWithDelegate:(id) theDelegate
 {
   return [self initWithHost:@"localhost" andPort:8080 withDelegate:theDelegate];
 }
 
+/*
+ @brief Initializer for the Bridge instance
+ This method initializes the Bridge object with the given parameters.
+ @param hostName A string representing the Bridge server to connect to. May be IPv4, IPv6 address or a domain
+ @param hostPort The port on the host to connect to
+ @param theDelegate An object that responds to bridgeDidBecomeReady selector. Optionally responds to bridgeDidErrorWithMessage
+ */
 - (id)initWithHost:(NSString *)hostName andPort:(int)hostPort withDelegate:(id)theDelegate
 {
   self = [super init];
@@ -37,13 +48,16 @@
     dispatcher = [[BridgeDispatcher alloc] init];
     delegate = theDelegate;
     
-    [dispatcher registerService:[[BridgeSystemService alloc] init] withName:@"system"];
+    [dispatcher registerService:[[BridgeSystemService alloc] initWithDispatcher:dispatcher andDelegate:delegate] withName:@"system"];
     reconnectBackoff = 0.1;
   }
   
   return self;
 }
 
+/*
+ @brief Connect to the Bridge server using the network information provided to initializer
+ */
 - (void) connect
 {
   NSError *err = nil;
@@ -64,18 +78,34 @@
 
 -(void) publishServiceWithName:(NSString*)serviceName withHandler:(BridgeService* )handler
 {
-  BridgeReference* handlerRef = [dispatcher registerService:handler withName:serviceName];
   NSData* rawMessageData = [BridgeJSONCodec constructJoinMessageWithWorkerpool:serviceName];
   [self _frameAndSendData:rawMessageData];
 }
 
 -(void) joinChannelWithName:(NSString*)channelName withHandler:(BridgeService* )handler andOnJoinCallback:(BridgeService*) callback
 {
-  NSString* prefixedChannelName = [NSString stringWithFormat:@"channel:%@", channelName];
   BridgeReference* handlerRef = [dispatcher registerRandomlyNamedService:handler];
+  [handlerRef setMethods:[handler getMethods]];
+  
   BridgeReference* callbackRef = [dispatcher registerRandomlyNamedService:callback];
-  NSData* rawMessageData = [BridgeJSONCodec constructJoinMessageWithChannel:prefixedChannelName handler:handlerRef callback:callbackRef];
+  NSData* rawMessageData = [BridgeJSONCodec constructJoinMessageWithChannel:channelName handler:handlerRef callback:callbackRef];
   [self _frameAndSendData:rawMessageData];
+}
+
+-(BridgeReference*) getService:(NSString*)serviceName
+{
+  BridgeReference* service= [BridgeReference referenceWithRoutingPrefix:@"named" andRoutingId:serviceName andServiceName:serviceName andMethodName:nil];
+  [service setBridge:self];
+  return service;
+}
+
+-(BridgeReference*) getChannel:(NSString*)channelName
+{
+  NSString* prefixedChannelName = [NSString stringWithFormat:@"channel:%@", channelName];
+  BridgeReference* channel =  [BridgeReference referenceWithRoutingPrefix:@"channel" andRoutingId:prefixedChannelName andServiceName:prefixedChannelName andMethodName:nil];
+  [channel setBridge:self];
+  [self _frameAndSendData:[BridgeJSONCodec constructGetChannelMessage:channelName]];
+  return channel;
 }
 
 /* Delegate methods and other internal methods*/
@@ -98,15 +128,20 @@
       
       NSArray* chunks = [connectMessage componentsSeparatedByString:@"|"];
       
-      [clientId release];
-      clientId = [[chunks objectAtIndex:0] retain];
-      [dispatcher setClientId:clientId];
-      
-      [secret release];
-      secret = [[chunks objectAtIndex:1] retain];
-      
-      if([delegate respondsToSelector:@selector(bridgeDidBecomeReady)]){
-        [delegate bridgeDidBecomeReady];
+      if ([chunks count] == 2) {
+        [clientId release];
+        clientId = [[chunks objectAtIndex:0] retain];
+        [dispatcher setClientId:clientId];
+        
+        [secret release];
+        secret = [[chunks objectAtIndex:1] retain];
+        
+        if([delegate respondsToSelector:@selector(bridgeDidBecomeReady)]){
+          [delegate bridgeDidBecomeReady];
+        }
+      } else {
+        // Probably a remote error. Handle it again as such
+        [self socket:send didReadData:data withTag:MESSAGE_BODY];
       }
       
       [sock readDataToLength:4 withTimeout:-1 tag:MESSAGE_HEADER];
@@ -163,8 +198,7 @@
 
 -(void) _sendMessageWithDestination:(BridgeReference *)destination andArgs:(NSArray *)args
 {
-  NSArray* references;
-  NSData* rawData = [BridgeJSONCodec constructSendMessageWithDestination:destination andArgs:args withReferenceArray:&references];
+  NSData* rawData = [BridgeJSONCodec constructSendMessageWithDestination:destination andArgs:args withDispatcher:dispatcher];
   
   [self _frameAndSendData:rawData];
 }
