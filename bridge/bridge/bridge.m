@@ -24,7 +24,7 @@
 
 /*
  @brief Shorthand initializer that connects to localhost and port 8080
-*/
+ */
 - (id) initWithDelegate:(id) theDelegate
 {
   return [self initWithHost:@"localhost" andPort:8080 withDelegate:theDelegate];
@@ -36,7 +36,7 @@
  @param hostName A string representing the Bridge server to connect to. May be IPv4, IPv6 address or a domain
  @param hostPort The port on the host to connect to
  @param theDelegate An object that responds to bridgeDidBecomeReady selector. Optionally responds to bridgeDidErrorWithMessage
-*/
+ */
 - (id)initWithHost:(NSString *)hostName andPort:(int)hostPort withDelegate:(id)theDelegate
 {
   self = [super init];
@@ -57,7 +57,7 @@
 
 /*
  @brief Connect to the Bridge server using the network information provided to initializer
-*/
+ */
 - (void) connect
 {
   NSError *err = nil;
@@ -128,15 +128,20 @@
       
       NSArray* chunks = [connectMessage componentsSeparatedByString:@"|"];
       
-      [clientId release];
-      clientId = [[chunks objectAtIndex:0] retain];
-      [dispatcher setClientId:clientId];
-      
-      [secret release];
-      secret = [[chunks objectAtIndex:1] retain];
-      
-      if([delegate respondsToSelector:@selector(bridgeDidBecomeReady)]){
-        [delegate bridgeDidBecomeReady];
+      if ([chunks count] == 2) {
+        [clientId release];
+        clientId = [[chunks objectAtIndex:0] retain];
+        [dispatcher setClientId:clientId];
+        
+        [secret release];
+        secret = [[chunks objectAtIndex:1] retain];
+        
+        if([delegate respondsToSelector:@selector(bridgeDidBecomeReady)]){
+          [delegate bridgeDidBecomeReady];
+        }
+      } else {
+        // Probably a remote error. Handle it again as such
+        [self socket:send didReadData:data withTag:MESSAGE_BODY];
       }
       
       [sock readDataToLength:4 withTimeout:-1 tag:MESSAGE_HEADER];
