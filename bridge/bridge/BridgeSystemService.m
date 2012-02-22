@@ -24,6 +24,11 @@
     return self;
 }
 
+-(void) hook_channel_handler:(NSString*)channeName :(BridgeReference*)handler
+{
+  [self hook_channel_handler:channeName :handler :nil];
+}
+
 /*
  @brief Takes a local, anonymous reference and rebinds it to the given channel name. Calls a success callback
 */

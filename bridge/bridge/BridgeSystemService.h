@@ -17,6 +17,7 @@
 }
 
 -(id) initWithDispatcher:(BridgeDispatcher*)disp andDelegate:(id) del;
+-(void) hook_channel_handler:(NSString*)channeName :(BridgeReference*)handler;
 -(void) hook_channel_handler:(NSString*)channeName :(BridgeReference*)handler :(BridgeReference*)callback;
 
 @end
