@@ -39,6 +39,17 @@
 }
 
 /*
+ @brief Constructs a command message of type "GETCHANNEL" according to the Bridge specification 
+ @param workerpool Name of worker pool to join
+ */
++ (NSData*) constructGetChannelMessage:(NSString *)channel
+{
+  NSDictionary* data = [NSDictionary dictionaryWithObjectsAndKeys: channel, @"name", nil];
+  NSDictionary* root = [NSDictionary dictionaryWithObjectsAndKeys:@"GETCHANNEL", @"command", data, @"data", nil];
+  return [root JSONData];
+}
+
+/*
  @brief Constructs a command message of type "JOINCHANNEL" according to the Bridge specification 
  @param channel Name of channel to join
  */

@@ -14,7 +14,7 @@
 @interface BridgeJSONCodec : NSObject
 
 + (NSDictionary*) parseRequestString:(NSString*)bridgeRequestString withReferenceArray:(NSArray**) references;
-
++ (NSData*) constructGetChannelMessage:(NSString *)channel;
 + (NSData*) constructJoinMessageWithWorkerpool:(NSString*)workerpool;
 + (NSData*) constructJoinMessageWithChannel: (NSString*)channel handler: (BridgeReference*) handler callback:(BridgeReference*) callback;
 + (NSData*) constructSendMessageWithDestination:(BridgeReference*)destination andArgs:(NSArray*) args withDispatcher:(BridgeDispatcher*) dispatcher;

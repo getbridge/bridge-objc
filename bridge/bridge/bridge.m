@@ -104,6 +104,7 @@
   NSString* prefixedChannelName = [NSString stringWithFormat:@"channel:%@", channelName];
   BridgeReference* channel =  [BridgeReference referenceWithRoutingPrefix:@"channel" andRoutingId:prefixedChannelName andServiceName:prefixedChannelName andMethodName:nil];
   [channel setBridge:self];
+  [self _frameAndSendData:[BridgeJSONCodec constructGetChannelMessage:channelName]];
   return channel;
 }
 
