@@ -19,6 +19,11 @@
 @private
   //Networking stuff
   GCDAsyncSocket* sock;
+  
+  NSURL* redirectorURL;
+  NSString* key;
+  NSMutableData* responseData;
+  
   NSString* host;
   int port;
   
@@ -31,9 +36,11 @@
   float reconnectBackoff;
 }
 
--(id) initWithHost:(NSString*)hostName andPort:(int) port withDelegate:(id) theDelegate;
+- (id) initWithAPIKey:(NSString*)apiKey withDelegate:(id) theDelegate;
+- (id) initWithHost:(NSString*)hostName andPort:(int)port withAPIKey:(NSString*)apiKey withDelegate:(id)theDelegate;
+- (id) initWithURL:(NSURL*)url withAPIKey:(NSString*)apiKey withDelegate:(id)theDelegate;
+
 -(void) connect;
--(void) socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag;
 -(void) publishServiceWithName:(NSString*)serviceName withHandler:(BridgeService* )handler;
 -(void) publishServiceWithName:(NSString*)serviceName withHandler:(BridgeService* )handler;
 -(void) joinChannelWithName:(NSString*)serviceName withHandler:(BridgeService* )handler andOnJoinCallback:(BridgeService*) callback;
