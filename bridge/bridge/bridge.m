@@ -55,6 +55,14 @@
   return self;
 }
 
+- (void) dealloc
+{
+  [sock release];
+  [host release];
+  [dispatcher release];
+  [super dealloc];
+}
+
 /*
  @brief Connect to the Bridge server using the network information provided to initializer
  */

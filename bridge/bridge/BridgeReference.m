@@ -32,6 +32,16 @@
     return self;
 }
 
+-(void) dealloc
+{
+  [self setRoutingPrefix:nil];
+  [self setRoutingId:nil];
+  [self setServiceName:nil];
+  [self setMethodName:nil];
+  
+  [super dealloc];
+}
+
 /*
  @brief Set the bridge instance for this reference to use for SENDs. Internal only.
  @param bridge The Bridge instances that created this reference

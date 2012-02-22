@@ -21,6 +21,12 @@
     return self;
 }
 
+-(void) dealloc
+{
+  [_block release];
+  [super dealloc];
+}
+
 -(void) callback:(NSArray*)array {
   _block(array);
 }

@@ -28,6 +28,12 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
   return self;
 }
 
+-(void) dealloc
+{
+  [services release];
+  [super dealloc];
+}
+
 -(BridgeReference*) registerExistingService:(NSString*)oldName withName:(NSString*)name {
   return [self registerService:[services objectForKey:oldName] withName:name];
 }
