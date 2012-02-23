@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "GCDAsyncSocket.h"
+#import "BridgeDispatcher.h"
 
 #import "BridgeReference.h"
 #import "BridgeService.h"

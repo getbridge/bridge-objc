@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "BridgeReference.h"
 
 @class BridgeReference;
 @class BridgeDispatcher;
