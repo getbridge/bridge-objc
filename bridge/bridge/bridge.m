@@ -172,7 +172,7 @@
   // Once this method is invoked, "responseData" contains the complete result
   NSDictionary* result = [responseData objectFromJSONData];
   host = [result objectForKey:@"bridge_host"];
-  port = [((NSNumber*)[result objectForKey:@"bridge_port"]) intValue];
+  port = [((NSString*)[result objectForKey:@"bridge_port"]) intValue];
   
   [self connect];
 }
