@@ -139,7 +139,7 @@
     BridgeReference* ref = [dispatcher registerRandomlyNamedService:object];
     NSArray* methods = [((BridgeService*) object) getMethods];
     [ref setMethods:methods];
-    return [self encodeReferencesInObject:ref withDispatcher:dispatcher];
+    return [BridgeJSONCodec encodeReferencesInObject:ref withDispatcher:dispatcher];
   } else {
     // Leaf node
     return object;
