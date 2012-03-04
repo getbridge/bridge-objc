@@ -31,9 +31,9 @@
  @brief Constructs a command message of type "JOINWORKERPOOL" according to the Bridge specification 
  @param workerpool Name of worker pool to join
 */
-+ (NSData*) constructJoinMessageWithWorkerpool:(NSString *)workerpool
++ (NSData*) constructJoinMessageWithWorkerpool:(NSString *)workerpool callback:(BridgeReference *)callback
 {
-  NSDictionary* data = [NSDictionary dictionaryWithObjectsAndKeys: workerpool, @"name", nil];
+  NSDictionary* data = [NSDictionary dictionaryWithObjectsAndKeys: workerpool, @"name", [callback dictionaryFromReference], @"callback", nil];
   NSDictionary* root = [NSDictionary dictionaryWithObjectsAndKeys:@"JOINWORKERPOOL", @"command", data, @"data", nil];
   return [root JSONData];
 }

@@ -16,10 +16,10 @@
 
 + (NSDictionary*) parseRequestString:(NSString*)bridgeRequestString withReferenceArray:(NSArray**) references;
 + (NSData*) constructGetChannelMessage:(NSString *)channel;
-+ (NSData*) constructJoinMessageWithWorkerpool:(NSString*)workerpool;
++ (NSData*) constructJoinMessageWithWorkerpool:(NSString*)workerpool callback:(BridgeReference*)callback;
 + (NSData*) constructJoinMessageWithChannel: (NSString*)channel handler: (BridgeReference*) handler callback:(BridgeReference*) callback;
 + (NSData*) constructSendMessageWithDestination:(BridgeReference*)destination andArgs:(NSArray*) args withDispatcher:(BridgeDispatcher*) dispatcher;
-+ (NSData*) constructConnectMessageWithId: (NSString*)sessionId secret: (NSString*) secret;
++ (NSData*) constructConnectMessageWithId:(NSString *)sessionId secret:(NSString *)secret apiKey:(NSString*)key; 
 + (NSData*) constructConnectMessage;
 
 + (id) decodeReferencesInObject:(id)object withReferenceArray:(NSArray*) references;

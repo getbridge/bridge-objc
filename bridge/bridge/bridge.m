@@ -114,20 +114,46 @@
   }
 }
 
--(void) publishServiceWithName:(NSString*)serviceName withHandler:(BridgeService* )handler
+-(void) publishService:(NSString*)serviceName withHandler:(BridgeService* )handler 
 {
-  NSData* rawMessageData = [BridgeJSONCodec constructJoinMessageWithWorkerpool:serviceName];
+  [self publishService:serviceName withHandler:handler andCallback:nil];
+}
+
+-(void) publishService:(NSString*)serviceName withHandler:(BridgeService* )handler andCallback:(BridgeService *)callback
+{
+  BridgeReference* callbackRef = [dispatcher registerRandomlyNamedService:callback];
+  [callbackRef setMethods:[callback getMethods]];
+  
+  NSData* rawMessageData = [BridgeJSONCodec constructJoinMessageWithWorkerpool:serviceName callback:callbackRef];
+  [dispatcher registerService:handler withName:serviceName];
   [self _frameAndSendData:rawMessageData];
 }
 
--(void) joinChannelWithName:(NSString*)channelName withHandler:(BridgeService* )handler andOnJoinCallback:(BridgeService*) callback
+-(void) joinChannel:(NSString*)channelName withHandler:(BridgeService* )handler
+{
+  [self joinChannel:channelName withHandler:handler andCallback:nil];
+}
+
+-(void) joinChannel:(NSString*)channelName withHandler:(BridgeService* )handler andCallback:(BridgeService*) callback
 {
   BridgeReference* handlerRef = [dispatcher registerRandomlyNamedService:handler];
   [handlerRef setMethods:[handler getMethods]];
   
   BridgeReference* callbackRef = [dispatcher registerRandomlyNamedService:callback];
+  [callbackRef setMethods:[callback getMethods]];
+
   NSData* rawMessageData = [BridgeJSONCodec constructJoinMessageWithChannel:channelName handler:handlerRef callback:callbackRef];
   [self _frameAndSendData:rawMessageData];
+}
+
+-(void) leaveChannel:(NSString*)serviceName withHandler:(BridgeService* )handler
+{
+  
+}
+
+-(void) leaveChannel:(NSString*)serviceName withHandler:(BridgeService* )handler andCallback:(BridgeService*) callback
+{
+  
 }
 
 -(BridgeReference*) getService:(NSString*)serviceName
@@ -140,7 +166,7 @@
 -(BridgeReference*) getChannel:(NSString*)channelName
 {
   NSString* prefixedChannelName = [NSString stringWithFormat:@"channel:%@", channelName];
-  BridgeReference* channel =  [BridgeReference referenceWithRoutingPrefix:@"channel" andRoutingId:prefixedChannelName andServiceName:prefixedChannelName andMethodName:nil];
+  BridgeReference* channel =  [BridgeReference referenceWithRoutingPrefix:@"channel" andRoutingId:channelName andServiceName:prefixedChannelName andMethodName:nil];
   [channel setBridge:self];
   [self _frameAndSendData:[BridgeJSONCodec constructGetChannelMessage:channelName]];
   return channel;

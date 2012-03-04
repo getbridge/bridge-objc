@@ -42,9 +42,15 @@
 - (id) initWithURL:(NSURL*)url withAPIKey:(NSString*)apiKey withDelegate:(id)theDelegate;
 
 -(void) connect;
--(void) publishServiceWithName:(NSString*)serviceName withHandler:(BridgeService* )handler;
--(void) publishServiceWithName:(NSString*)serviceName withHandler:(BridgeService* )handler;
--(void) joinChannelWithName:(NSString*)serviceName withHandler:(BridgeService* )handler andOnJoinCallback:(BridgeService*) callback;
+-(void) publishService:(NSString*)serviceName withHandler:(BridgeService* )handler;
+-(void) publishService:(NSString*)serviceName withHandler:(BridgeService* )handler andCallback:(BridgeService*) callback;
+
+-(void) joinChannel:(NSString*)serviceName withHandler:(BridgeService* )handler;
+-(void) joinChannel:(NSString*)serviceName withHandler:(BridgeService* )handler andCallback:(BridgeService*) callback;
+
+-(void) leaveChannel:(NSString*)serviceName withHandler:(BridgeService* )handler;
+-(void) leaveChannel:(NSString*)serviceName withHandler:(BridgeService* )handler andCallback:(BridgeService*) callback;
+
 -(BridgeReference*) getService:(NSString*)serviceName;
 -(BridgeReference*) getChannel:(NSString*)channelName;
 
