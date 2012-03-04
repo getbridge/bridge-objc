@@ -40,6 +40,10 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
 
 -(BridgeReference*) registerService:(BridgeService*)service withName:(NSString*)name
 {
+  if(service == nil) {
+    return nil;
+  }
+  
   [services setObject:service forKey:name];
   return [BridgeReference referenceWithRoutingPrefix:@"client" andRoutingId:clientId andServiceName:name andMethodName:nil];
 }
