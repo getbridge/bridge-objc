@@ -33,8 +33,11 @@
     
     while (methodCount--){
       NSString* methodString = [NSString stringWithCString: sel_getName(method_getName(methods[methodCount])) encoding: NSASCIIStringEncoding];
-      NSString* cleanedString = [methodString stringByTrimmingCharactersInSet: [NSCharacterSet symbolCharacterSet]];
-			[results addObject:cleanedString];
+      NSString* cleanedString = [methodString stringByTrimmingCharactersInSet: [NSCharacterSet characterSetWithCharactersInString:@":"]];
+      
+      if (![cleanedString isEqualToString:@"dealloc"] && ![cleanedString hasPrefix:@"init"]) {
+        [results addObject:cleanedString];
+      }
     }
     
     free(methods);	
