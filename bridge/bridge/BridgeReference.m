@@ -69,7 +69,22 @@
  */
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)selector {
   // This is complete BS. We just need to return something to please ObjC runtime
-  return [NSMethodSignature signatureWithObjCTypes:"@^v^c^v^v^v^v^v^v^v"];
+  NSString* selectorString = NSStringFromSelector(selector);
+  NSMutableString* signatureString = [NSMutableString stringWithString:@"@^v^c"];
+  
+  NSUInteger length = [selectorString length];
+  NSRange range = NSMakeRange(0, length);
+  while(range.location != NSNotFound)
+  {
+    range = [selectorString rangeOfString:@":" options:0 range:range];
+    if(range.location != NSNotFound)
+    {
+      range = NSMakeRange(range.location + range.length, length - (range.location + range.length));
+      [signatureString appendString:@"^v"];
+    }
+  }
+  
+  return [NSMethodSignature signatureWithObjCTypes:[signatureString UTF8String]];
 }
 
 /*
