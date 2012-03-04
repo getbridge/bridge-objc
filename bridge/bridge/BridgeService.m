@@ -47,7 +47,7 @@
 }
 
 +(BridgeService*) serviceWithBlock:(bridge_block) block {
-  return [[BridgeBlockCallback alloc] initWithBlock:block];
+  return [[[BridgeBlockCallback alloc] initWithBlock:block] autorelease];
 }
 
 
