@@ -65,10 +65,10 @@
  */
 + (NSData*) constructConnectMessage 
 {
-  return [self constructConnectMessageWithId:nil secret:nil];
+  return [self constructConnectMessageWithId:nil secret:nil apiKey:nil];
 }
 
-+ (NSData*) constructConnectMessageWithId:(NSString *)sessionId secret:(NSString *)secret {
++ (NSData*) constructConnectMessageWithId:(NSString *)sessionId secret:(NSString *)secret apiKey:(NSString*)key {
   NSMutableDictionary* root = [NSMutableDictionary dictionary];
   [root setValue:@"CONNECT" forKey:@"command"];
   
@@ -83,6 +83,7 @@
   }
   
   [dataObject setObject:session forKey:@"session"];
+  [dataObject setObject:key forKey:@"api_key"];
   
   [root setObject:dataObject forKey:@"data"];
     

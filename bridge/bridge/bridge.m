@@ -99,7 +99,7 @@
     } else {
       NSLog(@"Didn't fail. May work");
       // Send a connect message
-      NSData* rawMessageData = [BridgeJSONCodec constructConnectMessageWithId:clientId secret:secret];
+      NSData* rawMessageData = [BridgeJSONCodec constructConnectMessageWithId:clientId secret:secret apiKey:key];
       [self _frameAndSendData:rawMessageData];
       
       // Read the client id message
