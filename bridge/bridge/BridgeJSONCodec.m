@@ -75,17 +75,18 @@
   NSMutableDictionary* dataObject = [NSMutableDictionary dictionary];
   
   NSNull* null = [NSNull null];
-  NSMutableArray* session = [NSMutableArray arrayWithObjects:null, null, nil];
+  NSMutableArray* sessionObj = [NSMutableArray arrayWithObjects:null, null, nil];
     
   if(sessionId != nil && secret != nil) {
-    [session replaceObjectAtIndex:0 withObject:session];
-    [session replaceObjectAtIndex:1 withObject:secret];
+    [sessionObj replaceObjectAtIndex:0 withObject:sessionId];
+    [sessionObj replaceObjectAtIndex:1 withObject:secret];
   }
   
-  [dataObject setObject:session forKey:@"session"];
+  [dataObject setObject:sessionObj forKey:@"session"];
   [dataObject setObject:key forKey:@"api_key"];
   
   [root setObject:dataObject forKey:@"data"];
+  NSLog(@"%@", root);
     
   return [root JSONData];
 }
