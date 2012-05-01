@@ -6,25 +6,25 @@
 //  Copyright 2012 Flotype Inc. All rights reserved.
 //
 
-#import "BridgeService.h"
+#import "bridge.h"
 #import "BridgeSystemService.h"
-#import "BridgeReference.h"
+#import "BridgeRemoteObject.h"
 #import "BridgeDispatcher.h"
+#import "BridgeUtils.h"
 
 @implementation BridgeSystemService
 
-- (id)initWithDispatcher:(BridgeDispatcher *)disp andDelegate:(id)del
+- (id)initWithBridge:(Bridge*) aBridge
 {
     self = [super init];
     if (self) {
-      dispatcher = disp;
-      delegate = del;
+      bridge = aBridge;
     }
     
     return self;
 }
 
--(void) hook_channel_handler:(NSString*)channeName :(BridgeReference*)handler
+-(void) hook_channel_handler:(NSString*)channeName :(BridgeRemoteObject*)handler
 {
   [self hook_channel_handler:channeName :handler :nil];
 }
@@ -32,9 +32,9 @@
 /*
  @brief Takes a local, anonymous reference and rebinds it to the given channel name. Calls a success callback
 */
--(void) hook_channel_handler:(NSString*)channelName :(BridgeReference*)handler :(id)callback {
+-(void) hook_channel_handler:(NSString*)channelName :(BridgeRemoteObject*)handler :(id)callback {
   
-  BridgeReference* chanRef = [dispatcher registerExistingService:[handler serviceName] withName:[NSString stringWithFormat:@"channel:%@", channelName]];
+  BridgeRemoteObject* chanRef = [bridge.dispatcher storeExistingObject:[handler serviceName] withKey:[NSString stringWithFormat:@"channel:%@", channelName]];
   [chanRef setRoutingPrefix:@"channel"];
   [chanRef setRoutingId:channelName];
   
@@ -44,10 +44,10 @@
 /*
  @brief Retrieves all instance methods of a given BridgeService and passes to callback
 */
--(void) getservice:(NSString*)serviceName :(BridgeReference*)callback
+-(void) getservice:(NSString*)serviceName :(BridgeRemoteObject*)callback
 {
-  BridgeService* service = [dispatcher getService:serviceName];
-  NSArray* methods = [service getMethods];
+  NSObject* object = [bridge.dispatcher getObjectWithName:serviceName];
+  NSArray* methods = [BridgeUtils getMethods:object];
   
   [callback callback:methods];
 }
@@ -57,9 +57,7 @@
 */
 -(void) remoteError:(NSString*)msg
 {
-  if([delegate respondsToSelector:@selector(bridgeDidErrorWithMessage:)]){
-    [delegate bridgeDidErrorWithMessage:msg];
-  }
+  [bridge _onError:msg];
 }
 
 @end

@@ -8,19 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
-@class BridgeReference;
-@class BridgeService;
+@class Bridge, BridgeRemoteObject;
+@protocol BridgeObjectBase;
 
 @interface BridgeDispatcher : NSObject {
   NSMutableDictionary* services;
-  NSString* clientId;
+  Bridge* bridge;
 }
 
-@property(nonatomic, copy) NSString* clientId;
+-(id)initWithBridge:(Bridge*)aBridge;
 
--(BridgeReference*) registerExistingService:(NSString*)oldName withName:(NSString*)name;
--(BridgeReference*) registerService:(BridgeService*)service withName:(NSString*)name;
--(BridgeReference*) registerRandomlyNamedService:(BridgeService*)service;
--(void) executeUsingReference:(BridgeReference*)reference withArguments:(NSArray*) arguments;
+-(BridgeRemoteObject*) storeExistingObject:(NSString*)oldName withKey:(NSString*)name;
+-(BridgeRemoteObject*) storeObject:(NSObject <BridgeObjectBase> *)service withName:(NSString*)name;
+-(BridgeRemoteObject*) storeRandomObject:(NSObject<BridgeObjectBase>*)service;
+-(NSObject<BridgeObjectBase> *) getObjectWithName:(NSString*)name;
+-(void) executeUsingReference:(BridgeRemoteObject *)reference withArguments:(NSArray*) arguments;
 
 @end

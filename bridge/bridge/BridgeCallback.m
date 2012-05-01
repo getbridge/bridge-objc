@@ -6,9 +6,9 @@
 //  Copyright 2012 Flotype Inc. All rights reserved.
 //
 
-#import "BridgeBlockCallback.h"
+#import "BridgeCallback.h"
 
-@implementation BridgeBlockCallback
+@implementation BridgeCallback
 
 - (id)initWithBlock:(bridge_block) block
 {
@@ -27,8 +27,13 @@
   [super dealloc];
 }
 
--(void) callback:(NSArray*)array {
-  _block(array);
+-(void) callback:(NSArray*)args {
+  _block(args);
+}
+
++(BridgeCallback*) callbackWithBlock:(bridge_block)block
+{
+  return [[[BridgeCallback alloc] initWithBlock:block] autorelease];
 }
 
 @end

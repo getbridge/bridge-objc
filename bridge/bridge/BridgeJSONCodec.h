@@ -7,22 +7,22 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "BridgeReference.h"
 
-@class BridgeReference;
-@class BridgeDispatcher;
+@class BridgeRemoteObject, BridgeDispatcher, Bridge;
 
 @interface BridgeJSONCodec : NSObject
 
-+ (NSDictionary*) parseRequestString:(NSString*)bridgeRequestString withReferenceArray:(NSArray**) references;
-+ (NSData*) constructGetChannelMessage:(NSString *)channel;
-+ (NSData*) constructJoinMessageWithWorkerpool:(NSString*)workerpool callback:(BridgeReference*)callback;
-+ (NSData*) constructJoinMessageWithChannel: (NSString*)channel handler: (BridgeReference*) handler callback:(BridgeReference*) callback;
-+ (NSData*) constructSendMessageWithDestination:(BridgeReference*)destination andArgs:(NSArray*) args withDispatcher:(BridgeDispatcher*) dispatcher;
-+ (NSData*) constructConnectMessageWithId:(NSString *)sessionId secret:(NSString *)secret apiKey:(NSString*)key; 
-+ (NSData*) constructConnectMessage;
++ (NSDictionary*) parseRequestString:(NSString*)requestString bridge:(Bridge*)bridge;
 
-+ (id) decodeReferencesInObject:(id)object withReferenceArray:(NSArray*) references;
-+ (id) encodeReferencesInObject:(id)object withDispatcher:(BridgeDispatcher*) dispatcher;
++ (NSData*) createSENDWithDestination:(BridgeRemoteObject *)destination args:(NSArray *)args bridge:(Bridge*)bridge;
++ (NSData*) createJWPWithPool:(NSString*)workerpool callback:(BridgeRemoteObject*)callback;
++ (NSData*) createJCWithChannel: (NSString*)channel handler: (BridgeRemoteObject*) handler callback:(BridgeRemoteObject*) callback;
++ (NSData*) createGETCHANNEL:(NSString *)channel;
++ (NSData*) createCONNECTWithId:(NSString *)sessionId secret:(NSString *)secret apiKey:(NSString*)key; 
++ (NSData*) createCONNECT;
++ (NSDictionary*) parseRedirector:(NSData*)data;
+
++ (id) decodeReferencesInObject:(id)object bridge:(Bridge*)bridge;
++ (id) encodeReferencesInObject:(id)object bridge:(Bridge*)bridge;
 
 @end

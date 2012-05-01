@@ -1,33 +1,33 @@
 //
-//  BridgeService.m
+//  BridgeUtils.m
 //  bridge
 //
-//  Created by Sridatta Thatipamala on 2/6/12.
-//  Copyright 2012 Flotype Inc. All rights reserved.
+//  Created by Sridatta Thatipamala on 4/26/12.
+//  Copyright 2012 __MyCompanyName__. All rights reserved.
 //
+
+#import "BridgeUtils.h"
 #import <objc/runtime.h>
 
-#import "BridgeService.h"
-#import "BridgeBlockCallback.h"
+NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
-@implementation BridgeService
+@implementation BridgeUtils
 
-- (id)init
++(NSString*)generateRandomId
 {
-    self = [super init];
-    if (self) {
-        // Initialization code here.
-    }
-    
-    return self;
+  NSMutableString* randomString = [NSMutableString stringWithCapacity: 10];
+  
+  for (int i=0; i<10; i++) {
+    [randomString appendFormat: @"%c", [letters characterAtIndex: rand()%[letters length]]];
+  }
+  return randomString;
 }
 
--(NSArray*) getMethods
++ (NSArray*) getMethods:(NSObject*)anObject
 {
-  
   Method *methods;
   unsigned int methodCount;
-  if ((methods = class_copyMethodList([self class], &methodCount)))
+  if ((methods = class_copyMethodList([anObject class], &methodCount)))
   {
     NSMutableArray *results = [NSMutableArray arrayWithCapacity:methodCount];
     
@@ -40,15 +40,10 @@
       }
     }
     
-    free(methods);	
+    free(methods);      
     return results;
   }
   return nil;
 }
-
-+(BridgeService*) serviceWithBlock:(bridge_block) block {
-  return [[[BridgeBlockCallback alloc] initWithBlock:block] autorelease];
-}
-
 
 @end

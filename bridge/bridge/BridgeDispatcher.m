@@ -7,22 +7,20 @@
 //
 
 #import "BridgeDispatcher.h"
-#import "BridgeReference.h"
-#import "BridgeService.h"
-#import "BridgeBlockCallback.h"
-
-NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+#import "BridgeRemoteObject.h"
+#import "BridgeObjectBase.h"
+#import "BridgeCallback.h"
+#import "BridgeUtils.h"
 
 @implementation BridgeDispatcher
 
-@synthesize clientId;
-
-- (id)init
+- (id)initWithBridge:(Bridge*)aBridge
 {
   self = [super init];
   if (self) {
     // Initialization code here.
     services = [[NSMutableDictionary dictionary] retain];
+    bridge = aBridge;
   }
   
   return self;
@@ -34,35 +32,10 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
   [super dealloc];
 }
 
--(BridgeReference*) registerExistingService:(NSString*)oldName withName:(NSString*)name {
-  return [self registerService:[services objectForKey:oldName] withName:name];
-}
-
--(BridgeReference*) registerService:(BridgeService*)service withName:(NSString*)name
+-(void) executeUsingReference:(BridgeRemoteObject*)reference withArguments:(NSArray*) arguments
 {
-  if(service == nil) {
-    return nil;
-  }
-  
-  [services setObject:service forKey:name];
-  return [BridgeReference referenceWithRoutingPrefix:@"client" andRoutingId:clientId andServiceName:name andMethodName:nil];
-}
-
--(BridgeReference*) registerRandomlyNamedService:(BridgeService*)service
-{
-  NSMutableString *randomString = [NSMutableString stringWithCapacity: 10];
-  
-  for (int i=0; i<10; i++) {
-    [randomString appendFormat: @"%c", [letters characterAtIndex: rand()%[letters length]]];
-  }
-  
-  return [self registerService:service withName:randomString];
-}
-
--(void) executeUsingReference:(BridgeReference*)reference withArguments:(NSArray*) arguments
-{
-  BridgeService* service = [services objectForKey:[reference serviceName]];
-  BOOL isCallback = [service isKindOfClass:[BridgeBlockCallback class]];
+  NSObject<BridgeObjectBase>* service = [services objectForKey:[reference serviceName]];
+  BOOL isCallback = [service isKindOfClass:[BridgeCallback class]];
   
   NSMutableString* selectorString = [NSMutableString stringWithString:[reference methodName]];
   
@@ -77,7 +50,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
   
   SEL selector = NSSelectorFromString(selectorString);
   NSMethodSignature* signature = [service methodSignatureForSelector:selector];
-  
+    
   if(signature != nil){
     NSInvocation* invocation = [NSInvocation invocationWithMethodSignature:signature];
     [invocation setSelector:selector];
@@ -95,6 +68,33 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
     
     [invocation invoke];
   }
+}
+
+-(BridgeRemoteObject*) storeObject:(NSObject <BridgeObjectBase> *)service withName:(NSString *)name
+{
+  if(service == nil) {
+    return nil;
+  }
+    
+  [services setObject:service forKey:name];
+  return [BridgeRemoteObject clientReference:name bridge:bridge methods:[BridgeUtils getMethods:service]];
+}
+
+-(BridgeRemoteObject*) storeExistingObject:(NSString *)oldName withKey:(NSString *)name
+{
+  id obj = [services objectForKey:oldName];
+  return [self storeObject:obj withName:name];
+}
+
+-(BridgeRemoteObject*) storeRandomObject:(NSObject <BridgeObjectBase> *)service
+{
+  NSString* randomString = [BridgeUtils generateRandomId];
+  return [self storeObject:service withName:randomString];
+}
+
+-(NSObject<BridgeObjectBase> *) getObjectWithName:(NSString*)name
+{
+  return (NSObject<BridgeObjectBase> *) [services objectForKey:name];
 }
 
 @end

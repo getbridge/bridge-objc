@@ -10,10 +10,17 @@
 
 #import "BridgeJSONCodec.h"
 #import "BridgeDispatcher.h"
-#import "BridgeReference.h"
-#import "BridgeService.h"
+#import "BridgeRemoteObject.h"
+#import "bridge.h"
+#import "BridgeObject.h"
+#import "BridgeUtils.h"
 
 @implementation BridgeJSONCodec
+
++(NSDictionary*) parseRedirector:(NSData *)data
+{
+  return [data objectFromJSONData];
+}
 
 /*
   @brief Take a string from the connection and parse as JSON, traversing the structure for references
@@ -21,17 +28,16 @@
   @param bridgeRequestString A JSON string
   @param references A pointer to an NSArray pointer
  */
-+ (NSDictionary*) parseRequestString:(NSString*)bridgeRequestString withReferenceArray:(NSArray**) references
++ (NSDictionary*) parseRequestString:(NSString*)requestString bridge:(Bridge*)bridge
 {
-  (*references) = [NSMutableArray array];
-  return [BridgeJSONCodec decodeReferencesInObject:[bridgeRequestString objectFromJSONString] withReferenceArray:(*references)];
+  return [BridgeJSONCodec decodeReferencesInObject:[requestString objectFromJSONString] bridge:bridge];
 }
 
 /*
  @brief Constructs a command message of type "JOINWORKERPOOL" according to the Bridge specification 
  @param workerpool Name of worker pool to join
 */
-+ (NSData*) constructJoinMessageWithWorkerpool:(NSString *)workerpool callback:(BridgeReference *)callback
++(NSData*) createJWPWithPool:(NSString *)workerpool callback:(BridgeRemoteObject *)callback
 {
   NSDictionary* data = [NSDictionary dictionaryWithObjectsAndKeys: workerpool, @"name", [callback dictionaryFromReference], @"callback", nil];
   NSDictionary* root = [NSDictionary dictionaryWithObjectsAndKeys:@"JOINWORKERPOOL", @"command", data, @"data", nil];
@@ -42,7 +48,7 @@
  @brief Constructs a command message of type "GETCHANNEL" according to the Bridge specification 
  @param workerpool Name of worker pool to join
  */
-+ (NSData*) constructGetChannelMessage:(NSString *)channel
++ (NSData*) createGETCHANNEL:(NSString *)channel
 {
   NSDictionary* data = [NSDictionary dictionaryWithObjectsAndKeys: channel, @"name", nil];
   NSDictionary* root = [NSDictionary dictionaryWithObjectsAndKeys:@"GETCHANNEL", @"command", data, @"data", nil];
@@ -53,7 +59,7 @@
  @brief Constructs a command message of type "JOINCHANNEL" according to the Bridge specification 
  @param channel Name of channel to join
  */
-+ (NSData*) constructJoinMessageWithChannel:(NSString *)channel handler:(BridgeReference *)handler callback:(BridgeReference *)callback
++ (NSData*) createJCWithChannel:(NSString *)channel handler:(BridgeRemoteObject *)handler callback:(BridgeRemoteObject *)callback
 {
   NSDictionary* data = [NSDictionary dictionaryWithObjectsAndKeys: channel, @"name", [handler dictionaryFromReference], @"handler", [callback dictionaryFromReference], @"callback", nil];
   NSDictionary* root = [NSDictionary dictionaryWithObjectsAndKeys:@"JOINCHANNEL", @"command", data, @"data", nil];
@@ -63,12 +69,13 @@
 /*
  @brief Constructs a command message of type "CONNECT" according to the Bridge specification 
  */
-+ (NSData*) constructConnectMessage 
++ (NSData*) createCONNECT
 {
-  return [self constructConnectMessageWithId:nil secret:nil apiKey:nil];
+  return [self createCONNECTWithId:nil secret:nil apiKey:nil];
 }
 
-+ (NSData*) constructConnectMessageWithId:(NSString *)sessionId secret:(NSString *)secret apiKey:(NSString*)key {
++ (NSData*) createCONNECTWithId:(NSString *)sessionId secret:(NSString *)secret apiKey:(NSString *)key
+{
   NSMutableDictionary* root = [NSMutableDictionary dictionary];
   [root setValue:@"CONNECT" forKey:@"command"];
   
@@ -98,21 +105,21 @@
  @param args Arguments to the remote procedure call
  @param dispatcher The Bridge object's dispatcher with which to register any BridgeService objects that are encountered
 */
-+ (NSData*) constructSendMessageWithDestination:(BridgeReference *)destination andArgs:(NSArray *)args withDispatcher:(BridgeDispatcher *)dispatcher
++ (NSData*) createSENDWithDestination:(BridgeRemoteObject *)destination args:(NSArray *)args bridge:(Bridge*)bridge
 {
   
   NSDictionary* data = [NSDictionary dictionaryWithObjectsAndKeys: destination, @"destination", args, @"args", nil];
   NSDictionary* root = [NSDictionary dictionaryWithObjectsAndKeys:@"SEND", @"command", data, @"data", nil];
   
-  NSDictionary* encodedRoot = [BridgeJSONCodec encodeReferencesInObject:root withDispatcher:dispatcher];
+  NSDictionary* encodedRoot = [BridgeJSONCodec encodeReferencesInObject:root bridge:bridge];
   return [encodedRoot JSONData];
 }
 
 /*
- Traverses the structure for BridgeService objects and replaces them with BridgeReference objects.
+ Traverses the structure for BridgeService objects and replaces them with BridgeRemoteObject objects.
  All BridgeService objects are registered with the provided dispatcher
 */
-+ (id) encodeReferencesInObject:(id)object withDispatcher:(BridgeDispatcher *)dispatcher
++ (id) encodeReferencesInObject:(id)object bridge:(Bridge *)bridge
 {
   if([object isKindOfClass:[NSDictionary class]]){
     NSMutableDictionary* result = [NSMutableDictionary dictionaryWithDictionary:object];
@@ -122,7 +129,7 @@
     for(int keysIdx = 0; keysIdx < [keys count]; keysIdx++){
       NSString* key = [keys objectAtIndex:keysIdx];
       id oldValue = [result objectForKey:key];
-      [result setObject:[BridgeJSONCodec encodeReferencesInObject:oldValue withDispatcher:dispatcher] forKey:key];
+      [result setObject:[BridgeJSONCodec encodeReferencesInObject:oldValue bridge:bridge] forKey:key];
     }
     return result;
     
@@ -131,16 +138,15 @@
     
     for(int arrayIdx = 0; arrayIdx < [res count]; arrayIdx++){
       id oldValue = [res objectAtIndex:arrayIdx];
-      [res replaceObjectAtIndex:arrayIdx withObject:[BridgeJSONCodec encodeReferencesInObject:oldValue withDispatcher:dispatcher]];
+      [res replaceObjectAtIndex:arrayIdx withObject:[BridgeJSONCodec encodeReferencesInObject:oldValue bridge:bridge]];
     }
     return res;
-  } else if ([object isKindOfClass:[BridgeReference class]]){
-    return [((BridgeReference*) object) dictionaryFromReference];
-  } else if ([object isKindOfClass:[BridgeService class]]) {
-    BridgeReference* ref = [dispatcher registerRandomlyNamedService:object];
-    NSArray* methods = [((BridgeService*) object) getMethods];
-    [ref setMethods:methods];
-    return [BridgeJSONCodec encodeReferencesInObject:ref withDispatcher:dispatcher];
+  } else if ([object isKindOfClass:[BridgeRemoteObject class]]){
+    return [((BridgeRemoteObject*) object) dictionaryFromReference];
+  } else if ([object conformsToProtocol:@protocol(BridgeObject)]) {
+    BridgeRemoteObject* ref = [bridge.dispatcher storeRandomObject:object];
+    [ref setMethods:[BridgeUtils getMethods:object]];
+    return [BridgeJSONCodec encodeReferencesInObject:ref bridge:bridge];
   } else {
     // Leaf node
     return object;
@@ -148,10 +154,10 @@
 }
 
 /*
- Traverses the structure for any objects and replaces any objects of format '{ref:[Array]}'with a BridgeReference. These references are also inserted
+ Traverses the structure for any objects and replaces any objects of format '{ref:[Array]}'with a BridgeRemoteObject. These references are also inserted
  into an array the caller provides
 */
-+ (id) decodeReferencesInObject:(id)object withReferenceArray:(NSMutableArray*) references
++ (id) decodeReferencesInObject:(id)object bridge:(Bridge *)bridge
 {
   if([object isKindOfClass:[NSDictionary class]]){
     NSMutableDictionary* result = [NSMutableDictionary dictionaryWithDictionary:object];
@@ -159,9 +165,7 @@
     NSArray* ref;
     if(nil != (ref = [result objectForKey:@"ref"])) {
       // This is a reference
-      BridgeReference* reference = [BridgeReference referenceFromArray:ref];
-      [reference setMethods:[result objectForKey:@"operations"]];
-      [references addObject:reference];
+      BridgeRemoteObject* reference = [BridgeRemoteObject referenceFromArray:ref bridge:bridge methods:[result objectForKey:@"operations"]];
       return reference;
     }
     
@@ -170,7 +174,7 @@
     for(int keysIdx = 0; keysIdx < [keys count]; keysIdx++){
       NSString* key = [keys objectAtIndex:keysIdx];
       id oldValue = [result objectForKey:key];
-      [result setObject:[BridgeJSONCodec decodeReferencesInObject:oldValue withReferenceArray:references] forKey:key];
+      [result setObject:[BridgeJSONCodec decodeReferencesInObject:oldValue bridge:bridge] forKey:key];
     }
     return result;
     
@@ -179,7 +183,7 @@
     
     for(int arrayIdx = 0; arrayIdx < [res count]; arrayIdx++){
       id oldValue = [res objectAtIndex:arrayIdx];
-      [res replaceObjectAtIndex:arrayIdx withObject:[BridgeJSONCodec decodeReferencesInObject:oldValue withReferenceArray:references]];
+      [res replaceObjectAtIndex:arrayIdx withObject:[BridgeJSONCodec decodeReferencesInObject:oldValue bridge:bridge]];
     }
     return res;
   } else {

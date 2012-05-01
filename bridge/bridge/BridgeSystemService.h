@@ -8,15 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-@class BridgeReference;
-@class BridgeDispatcher;
+@class BridgeReference, Bridge;
 
 @interface BridgeSystemService : NSObject {
-  BridgeDispatcher* dispatcher;
-  id delegate;
+  Bridge* bridge;
 }
 
--(id) initWithDispatcher:(BridgeDispatcher*)disp andDelegate:(id) del;
+-(id)initWithBridge:(Bridge*)bridge;
 -(void) hook_channel_handler:(NSString*)channeName :(BridgeReference*)handler;
 -(void) hook_channel_handler:(NSString*)channeName :(BridgeReference*)handler :(BridgeReference*)callback;
 
