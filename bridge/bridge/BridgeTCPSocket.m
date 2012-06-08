@@ -19,7 +19,7 @@
 
 @implementation BridgeTCPSocket
 
-- (id)initWithConnection:(BridgeConnection*)aConnection
+- (id)initWithConnection:(BridgeConnection*)aConnection isSecure:(BOOL)secure
 {
     self = [super init];
     if (self) {
@@ -32,6 +32,25 @@
         NSLog(@"Could not connect: %@", err);
       } else {
         // Schedule a read
+        if(secure) {
+          NSBundle* bundle = [NSBundle bundleForClass:[self class]];
+          NSString* certPath = [bundle pathForResource:@"flotype" ofType:@"crt"];
+          NSData* certData = [NSData dataWithContentsOfFile:certPath];
+          SecCertificateRef cert = SecCertificateCreateWithData(kCFAllocatorDefault, certData); 
+          CFArrayRef ca = CFArrayCreate(NULL, (const void **)&cert, 1, NULL);
+                    
+          NSDictionary* sslProperties =
+          [NSDictionary dictionaryWithObjectsAndKeys: (NSString *)
+           kCFStreamSocketSecurityLevelNegotiatedSSL, kCFStreamSSLLevel,
+           kCFBooleanTrue, kCFStreamSSLAllowsAnyRoot,
+           kCFBooleanFalse, kCFStreamSSLValidatesCertificateChain,
+           kCFNull, kCFStreamSSLPeerName,
+           kCFBooleanFalse, kCFStreamSSLIsServer,
+           nil];
+          
+          [sock startTLS:sslProperties];
+        }
+        
         [sock readDataToLength:4 withTimeout:-1 tag:CONNECT_HEADER];
       }
     }
