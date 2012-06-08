@@ -24,15 +24,15 @@
     return self;
 }
 
--(void) hook_channel_handler:(NSString*)channeName :(BridgeRemoteObject*)handler
+-(void) hookChannelHandler:(NSString*)channelName :(BridgeRemoteObject*)handler
 {
-  [self hook_channel_handler:channeName :handler :nil];
+  [self hook_channel_handler:channelName :handler :nil];
 }
 
 /*
  @brief Takes a local, anonymous reference and rebinds it to the given channel name. Calls a success callback
 */
--(void) hook_channel_handler:(NSString*)channelName :(BridgeRemoteObject*)handler :(id)callback {
+-(void) hookChannelHandler:(NSString*)channelName :(BridgeRemoteObject*)handler :(id)callback {
   
   BridgeRemoteObject* chanRef = [bridge.dispatcher storeExistingObject:[handler serviceName] withKey:[NSString stringWithFormat:@"channel:%@", channelName]];
   [chanRef setRoutingPrefix:@"channel"];
@@ -44,7 +44,7 @@
 /*
  @brief Retrieves all instance methods of a given BridgeService and passes to callback
 */
--(void) getservice:(NSString*)serviceName :(BridgeRemoteObject*)callback
+-(void) getService:(NSString*)serviceName :(BridgeRemoteObject*)callback
 {
   NSObject* object = [bridge.dispatcher getObjectWithName:serviceName];
   NSArray* methods = [BridgeUtils getMethods:object];

@@ -8,14 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-@class BridgeReference, Bridge;
+@class BridgeRemoteObject, Bridge;
 
 @interface BridgeSystemService : NSObject {
   Bridge* bridge;
 }
 
 -(id)initWithBridge:(Bridge*)bridge;
--(void) hook_channel_handler:(NSString*)channeName :(BridgeReference*)handler;
--(void) hook_channel_handler:(NSString*)channeName :(BridgeReference*)handler :(BridgeReference*)callback;
+-(void) hookChannelHandler:(NSString*)channeName :(BridgeRemoteObject*)handler;
+-(void) hookChannelHandler:(NSString*)channeName :(BridgeRemoteObject*)handler :(BridgeRemoteObject*)callback;
 
 @end
