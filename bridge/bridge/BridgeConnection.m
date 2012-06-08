@@ -20,19 +20,36 @@
 
 @synthesize host, port, clientId, secret;
 
-- (id)initWithApiKey:(NSString*) anApiKey reconnect:(BOOL)reconnectOption bridge:(Bridge*)aBridge
+- (id)initWithApiKey:(NSString*)anApiKey options:(NSDictionary*)options bridge:(Bridge*)aBridge
 {
     self = [super init];
     if (self) {
-      host = nil;
-      port = -1;
-      reconnect = reconnectOption;
+      host = [options objectForKey:@"host"];
+      NSNumber* portOption = [options objectForKey:@"port"];
+      if(portOption == nil) {
+        port = -1;
+      } else {
+        port = [portOption intValue];
+      }
+      
+      reconnect = [[options objectForKey:@"reconnect"] boolValue];
       
       apiKey = [anApiKey copy];
-      redirectorURL = [[NSURL URLWithString:@"http://redirector.flotype.com/"] retain];
+      
+      NSString* redirectorString = [options objectForKey:@"redirector"];
+      secure = NO;
+      if([[options objectForKey:@"secure"] boolValue] == YES) {
+        secure = YES;
+        redirectorString = [options objectForKey:@"secureRedirector"];
+      }
+      
+      redirectorURL = [[NSURL URLWithString:redirectorString] retain];
       
       bridge = aBridge;
       responseData = [[NSMutableData dataWithLength:0] retain];
+      
+      socket_buffer = [[BridgeSocketBuffer alloc] init];
+      sock = socket_buffer;
       
       reconnectBackoff = 0.1;
     }
@@ -43,8 +60,12 @@
 -(void) dealloc
 {  
   [host release];
+  
+  [clientId release];
   [secret release];
   [apiKey release];
+  
+  [redirectorURL release];
   [responseData release];
   [super dealloc];
 }
@@ -72,8 +93,7 @@
   NSLog(@"Starting TCP connection %@ , %d", host, port);
   
   // Initialize a TCP connection. It will call back once ready.
-  [[BridgeTCPSocket alloc] initWithConnection:self];
-
+  [[BridgeTCPSocket alloc] initWithConnection:self isSecure:secure];
 }
 
 -(void) send:(NSData*) data
@@ -115,7 +135,6 @@
     NSLog(@"Could not find host and port in JSON body");
     return;
   }
-
 }
 
 -(void)onOpenFromSocket:(id<BridgeSocket>)socket

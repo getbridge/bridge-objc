@@ -28,6 +28,7 @@
   
   NSMutableData* responseData;
   
+  BOOL secure;
   BOOL reconnect;
   float reconnectBackoff;
 }
@@ -38,7 +39,7 @@
 @property (nonatomic, retain) NSString* clientId;
 @property (nonatomic, retain) NSString* secret;
 
-- (id)initWithApiKey:(NSString*) anApiKey reconnect:(BOOL)reconnectOption bridge:(Bridge*)aBridge;
+-(id)initWithApiKey:(NSString*)anApiKey options:(NSDictionary*)options bridge:(Bridge*)bridge;
 -(void)start;
 -(void)send:(NSData*) data;
 
