@@ -32,8 +32,8 @@
   for(int i = [queue count] - 1; i >= 0 ; i--)
   {
     NSString* messageString = [queue objectAtIndex:i];
-    NSString* replacementString = [NSString stringWithFormat:@"client, %@", anId];
-    NSString* replacedString = [messageString stringByReplacingOccurrencesOfString:@"\"client\",null/" withString:replacementString];
+    NSString* replacementString = [NSString stringWithFormat:@"\"client\",\"%@\"", anId];
+    NSString* replacedString = [messageString stringByReplacingOccurrencesOfString:@"\"client\",null" withString:replacementString];
     [socket send:[replacedString dataUsingEncoding:NSUTF8StringEncoding]];
   }
   
