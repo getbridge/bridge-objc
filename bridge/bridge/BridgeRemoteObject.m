@@ -61,7 +61,11 @@
  */
 - (NSDictionary*) dictionaryFromReference 
 {
-  NSArray* ref = [NSArray arrayWithObjects:routingPrefix, routingId, serviceName, methodName, nil];
+  NSObject* theId = routingId;
+  if(theId == nil) {
+    theId = [NSNull null];
+  }
+  NSArray* ref = [NSArray arrayWithObjects:routingPrefix, theId, serviceName, methodName, nil];
   return [NSDictionary dictionaryWithObjectsAndKeys:ref, @"ref", methods, @"operations", nil];
 }
 
