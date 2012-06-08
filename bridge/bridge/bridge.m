@@ -24,11 +24,18 @@
 /*
  @brief Shorthand initializer that connects to localhost and port 8080
  */
-- (id) initWithAPIKey:(NSString*)apiKey withDelegate:(id) theDelegate
+
+-(id) initWithAPIKey:(NSString*)apiKey andDelegate:(id)theDelegate options:(NSDictionary*)options
 {
   self = [super init];
   if (self) {
-    connection = [[BridgeConnection alloc] initWithApiKey:apiKey reconnect:YES bridge:self];
+    NSMutableDictionary* defaultOptions = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                                                @"http://redirector.flotype.com", @"redirector", 
+                                                                @"https://redirector.flotype.com", @"secureRedirector",
+                                                                [NSNumber numberWithBool:YES], @"reconnect",
+                                                                [NSNumber numberWithBool:NO], @"secure",nil];
+    [defaultOptions addEntriesFromDictionary:options];
+    connection = [[BridgeConnection alloc] initWithApiKey:apiKey options:defaultOptions bridge:self];
     dispatcher = [[BridgeDispatcher alloc] initWithBridge:self];
     delegate = theDelegate;
     
@@ -36,6 +43,16 @@
   }
   
   return self;
+}
+
+- (id) initWithAPIKey:(NSString*)apiKey andDelegate:(id) theDelegate
+{
+  return [self initWithAPIKey:apiKey andDelegate:theDelegate options:nil];
+}
+
+-(id) initWithApiKey:(NSString*)apiKey
+{
+  return [self initWithAPIKey:apiKey andDelegate:nil];
 }
 
 - (void) dealloc

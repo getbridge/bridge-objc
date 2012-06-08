@@ -17,6 +17,6 @@
   BridgeConnection* connection;
 }
 
--(id)initWithConnection:(BridgeConnection*)aConnection;
+-(id)initWithConnection:(BridgeConnection*)aConnection isSecure:(BOOL)secure;
 
 @end

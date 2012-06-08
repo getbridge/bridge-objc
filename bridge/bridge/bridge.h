@@ -25,7 +25,10 @@
 @property(nonatomic, readonly) NSString* clientId;
 @property(nonatomic, retain) BridgeDispatcher* dispatcher;
 
-- (id) initWithAPIKey:(NSString*)apiKey withDelegate:(id) theDelegate;
+-(id) initWithAPIKey:(NSString*)apiKey andDelegate:(id)theDelegate options:(NSDictionary*)options;
+-(id) initWithAPIKey:(NSString*)apiKey andDelegate:(id)theDelegate;
+-(id) initWithApiKey:(NSString*)apiKey;
+
 
 -(void) connect;
 -(void) publishService:(NSString*)serviceName withHandler:(NSObject<BridgeObjectBase>* )handler;
