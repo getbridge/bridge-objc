@@ -10,6 +10,7 @@
 
 #import "BridgeRemoteObject.h"
 #import "BridgeObject.h"
+#import "BridgeCallback.h"
 
 @class BridgeDispatcher, BridgeConnection;
 
