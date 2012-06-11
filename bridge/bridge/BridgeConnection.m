@@ -15,6 +15,7 @@
 #import "BridgeSocket.h"
 #import "BridgeTCPSocket.h"
 #import "BridgeSocketBuffer.h"
+#import "BridgeClient.h"
 
 @implementation BridgeConnection
 
@@ -198,10 +199,16 @@
   BridgeRemoteObject* destination = [root objectForKey:@"destination"];
   if(destination == nil) {
     NSLog(@"No destination in message %@", message);
-  } else {
-    NSArray* arguments = [root objectForKey:@"args"];
-    [bridge.dispatcher executeUsingReference:destination withArguments:arguments];
+    return;
   }
+  
+  NSString* source = [root objectForKey:@"source"];
+  if (source != nil) {
+    [bridge setContext:[[BridgeClient alloc] initWithBridge:bridge clientId:source]];
+  }
+  
+  NSArray* arguments = [root objectForKey:@"args"];
+  [bridge.dispatcher executeUsingReference:destination withArguments:arguments];
 
 }
 

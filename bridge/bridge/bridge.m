@@ -19,7 +19,7 @@
 
 @implementation Bridge
 
-@synthesize dispatcher;
+@synthesize dispatcher, context;
 
 /*
  @brief Shorthand initializer that connects to localhost and port 8080

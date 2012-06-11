@@ -11,6 +11,7 @@
 #import "BridgeRemoteObject.h"
 #import "BridgeObject.h"
 #import "BridgeCallback.h"
+#import "BridgeClient.h"
 
 @class BridgeDispatcher, BridgeConnection;
 
@@ -20,11 +21,13 @@
   //Networking stuff
   BridgeConnection* connection;
   BridgeDispatcher* dispatcher;
+  BridgeClient* context;
   id delegate;
 }
 
 @property(nonatomic, readonly) NSString* clientId;
 @property(nonatomic, retain) BridgeDispatcher* dispatcher;
+@property(nonatomic, retain) BridgeClient* context;
 
 -(id) initWithAPIKey:(NSString*)apiKey andDelegate:(id)theDelegate options:(NSDictionary*)options;
 -(id) initWithAPIKey:(NSString*)apiKey andDelegate:(id)theDelegate;
