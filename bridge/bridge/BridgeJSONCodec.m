@@ -65,7 +65,7 @@
                                         channel, @"name",
                                         [handler dictionaryFromReference], @"handler",
                                         [callback dictionaryFromReference], @"callback",
-                                        [NSNumber numberWithBool:isWriteable], @"writeable"
+                                        [NSNumber numberWithBool:isWriteable], @"writeable",
                                         nil];
   NSDictionary* root = [NSDictionary dictionaryWithObjectsAndKeys:@"JOINCHANNEL", @"command", data, @"data", nil];
   return [root JSONData];
