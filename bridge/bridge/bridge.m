@@ -129,10 +129,15 @@
 
 -(void) joinChannel:(NSString*)channelName withHandler:(NSObject<BridgeObjectBase>* )handler
 {
-  [self joinChannel:channelName withHandler:handler andCallback:nil];
+  [self joinChannel:channelName withHandler:handler isWriteable:YES andCallback:nil];
 }
 
 -(void) joinChannel:(NSString*)channelName withHandler:(NSObject<BridgeObjectBase>* )handler andCallback:(NSObject<BridgeObjectBase>*) callback
+{
+  [self joinChannel:channelName withHandler:handler isWriteable:YES andCallback:callback]; 
+}
+
+-(void) joinChannel:(NSString*)channelName withHandler:(NSObject<BridgeObjectBase>* )handler isWriteable:(BOOL)writeable andCallback:(NSObject<BridgeObjectBase>*) callback
 {
   BridgeRemoteObject* handlerRef;
   if([handler conformsToProtocol:@protocol(BridgeObject)]) {
@@ -148,7 +153,7 @@
     callbackRef = (BridgeRemoteObject*) callback;
   }
 
-  NSData* msg = [BridgeJSONCodec createJCWithChannel:channelName handler:handlerRef callback:callbackRef];
+  NSData* msg = [BridgeJSONCodec createJCWithChannel:channelName handler:handlerRef writeable:writeable callback:callbackRef];
   [connection send:msg];
 }
 
