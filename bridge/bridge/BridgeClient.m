@@ -12,11 +12,12 @@
 
 @implementation BridgeClient
 
-- (id)initWithBridge:(Bridge*) bridge clientId:(NSString *)aClientId
+- (id)initWithBridge:(Bridge*) aBridge clientId:(NSString *)aClientId
 {
     self = [super init];
     if (self) {
         // Initialization code here.
+      bridge = aBridge;
       clientId = [aClientId copy];
     }
     
