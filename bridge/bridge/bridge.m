@@ -102,7 +102,7 @@
     [dispatcher storeObject:bridgeObject withName:name];
   }
 
-  BridgeRemoteObject* callbackRef;
+  BridgeRemoteObject* callbackRef = nil;
   if([callback conformsToProtocol:@protocol(BridgeObject)]) {
     callbackRef = [dispatcher storeRandomObject:callback];
   } else if ([callback isKindOfClass:[BridgeRemoteObject class]]) {
@@ -134,14 +134,14 @@
 
 -(void) joinChannel:(NSString*)channelName withHandler:(NSObject<BridgeObjectBase>* )handler andCallback:(NSObject<BridgeObjectBase>*) callback
 {
-  BridgeRemoteObject* handlerRef;
+  BridgeRemoteObject* handlerRef = nil;
   if([handler conformsToProtocol:@protocol(BridgeObject)]) {
     handlerRef = [dispatcher storeRandomObject:handler];
   } else if ([callback isKindOfClass:[BridgeRemoteObject class]]) {
     handlerRef = (BridgeRemoteObject*) handler;
   }
   
-  BridgeRemoteObject* callbackRef;
+  BridgeRemoteObject* callbackRef = nil;
   if([callback conformsToProtocol:@protocol(BridgeObject)]) {
     callbackRef = [dispatcher storeRandomObject:callback];
   } else if ([callback isKindOfClass:[BridgeRemoteObject class]]) {
