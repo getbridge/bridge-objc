@@ -59,9 +59,14 @@
  @brief Constructs a command message of type "JOINCHANNEL" according to the Bridge specification 
  @param channel Name of channel to join
  */
-+ (NSData*) createJCWithChannel:(NSString *)channel handler:(BridgeRemoteObject *)handler callback:(BridgeRemoteObject *)callback
++ (NSData*) createJCWithChannel:(NSString *)channel handler:(BridgeRemoteObject *)handler writeable:(BOOL)isWriteable callback:(BridgeRemoteObject *)callback
 {
-  NSDictionary* data = [NSDictionary dictionaryWithObjectsAndKeys: channel, @"name", [handler dictionaryFromReference], @"handler", [callback dictionaryFromReference], @"callback", nil];
+  NSDictionary* data = [NSDictionary dictionaryWithObjectsAndKeys: 
+                                        channel, @"name",
+                                        [handler dictionaryFromReference], @"handler",
+                                        [callback dictionaryFromReference], @"callback",
+                                        [NSNumber numberWithBool:isWriteable], @"writeable",
+                                        nil];
   NSDictionary* root = [NSDictionary dictionaryWithObjectsAndKeys:@"JOINCHANNEL", @"command", data, @"data", nil];
   return [root JSONData];
 }

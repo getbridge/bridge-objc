@@ -16,7 +16,7 @@
 
 + (NSData*) createSENDWithDestination:(BridgeRemoteObject *)destination args:(NSArray *)args bridge:(Bridge*)bridge;
 + (NSData*) createJWPWithPool:(NSString*)workerpool callback:(BridgeRemoteObject*)callback;
-+ (NSData*) createJCWithChannel: (NSString*)channel handler: (BridgeRemoteObject*) handler callback:(BridgeRemoteObject*) callback;
++ (NSData*) createJCWithChannel: (NSString*)channel handler: (BridgeRemoteObject*) handler writeable:(BOOL)isWriteable callback:(BridgeRemoteObject*) callback;
 + (NSData*) createGETCHANNEL:(NSString *)channel;
 + (NSData*) createCONNECTWithId:(NSString *)sessionId secret:(NSString *)secret apiKey:(NSString*)key; 
 + (NSData*) createCONNECT;
