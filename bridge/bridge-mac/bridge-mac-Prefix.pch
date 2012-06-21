@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'bridge-mac' target in the 'bridge-mac' project
+//
+
+#ifdef __OBJC__
+  #import <Cocoa/Cocoa.h>
+#endif

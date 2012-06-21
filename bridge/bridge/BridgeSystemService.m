@@ -49,7 +49,7 @@
   NSObject* object = [bridge.dispatcher getObjectWithName:serviceName];
   NSArray* methods = [BridgeUtils getMethods:object];
   
-  [callback callback:methods];
+  [callback callback:[bridge.dispatcher getObjectWithName:serviceName] :serviceName];
 }
 
 /*

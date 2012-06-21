@@ -113,6 +113,17 @@
   [connection send:msg];
 }
 
+-(void) storeService:(NSString*)name withHandler:(NSObject<BridgeObjectBase>* )bridgeObject
+{
+  if([name isEqualToString:@"system"]) {
+    NSLog(@"Invalid service %@", name);
+  }
+  
+  if([bridgeObject conformsToProtocol:@protocol(BridgeObject)]) {
+    [dispatcher storeObject:bridgeObject withName:name];
+  }
+}
+
 -(BridgeRemoteObject*) getService:(NSString*)serviceName
 {
   BridgeRemoteObject* service = [BridgeRemoteObject serviceReference:serviceName bridge:self methods:nil];

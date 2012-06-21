@@ -38,6 +38,8 @@
 -(void) publishService:(NSString*)serviceName withHandler:(NSObject<BridgeObjectBase>* )handler;
 -(void) publishService:(NSString*)serviceName withHandler:(NSObject<BridgeObjectBase>* )handler andCallback:(NSObject<BridgeObjectBase>*) callback;
 
+-(void) storeService:(NSString*)name withHandler:(NSObject<BridgeObjectBase>* )bridgeObject;
+
 -(void) joinChannel:(NSString*)serviceName withHandler:(NSObject<BridgeObjectBase>* )handler;
 -(void) joinChannel:(NSString*)serviceName withHandler:(NSObject<BridgeObjectBase>* )handler andCallback:(NSObject<BridgeObjectBase>*) callback;
 -(void) joinChannel:(NSString*)channelName withHandler:(NSObject<BridgeObjectBase>* )handler isWriteable:(BOOL)writeable andCallback:(NSObject<BridgeObjectBase>*) callback;
