@@ -1,0 +1,922 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		73875C731591520200930C4F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 73875C711591520200930C4F /* InfoPlist.strings */; };
+		73875C8A1591522400930C4F /* bridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 738B284D155B64D200B32F3B /* bridge.m */; };
+		73875C8B1591522400930C4F /* BridgeClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 73DDC4161585B1320098DD9F /* BridgeClient.m */; };
+		73875C8C1591522400930C4F /* BridgeCallback.m in Sources */ = {isa = PBXBuildFile; fileRef = 738B284F155B64D200B32F3B /* BridgeCallback.m */; };
+		73875C8D1591522400930C4F /* BridgeConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 738B2851155B64D200B32F3B /* BridgeConnection.m */; };
+		73875C8E1591522400930C4F /* BridgeDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 738B2853155B64D200B32F3B /* BridgeDispatcher.m */; };
+		73875C8F1591522400930C4F /* BridgeJSONCodec.m in Sources */ = {isa = PBXBuildFile; fileRef = 738B2855155B64D200B32F3B /* BridgeJSONCodec.m */; };
+		73875C901591522400930C4F /* BridgeRemoteObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 738B2859155B64D200B32F3B /* BridgeRemoteObject.m */; };
+		73875C911591522400930C4F /* BridgeSocketBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 738B285C155B64D200B32F3B /* BridgeSocketBuffer.m */; };
+		73875C921591522400930C4F /* BridgeSystemService.m in Sources */ = {isa = PBXBuildFile; fileRef = 738B285E155B64D200B32F3B /* BridgeSystemService.m */; };
+		73875C931591522400930C4F /* BridgeTCPSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 738B2860155B64D200B32F3B /* BridgeTCPSocket.m */; };
+		73875C941591522400930C4F /* BridgeUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 738B2862155B64D200B32F3B /* BridgeUtils.m */; };
+		73875C961591522400930C4F /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 738B28C8155B64D200B32F3B /* JSONKit.m */; };
+		73875C981591522400930C4F /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 738B2869155B64D200B32F3B /* GCDAsyncSocket.m */; };
+		73875C991591528000930C4F /* bridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 738B284C155B64D200B32F3B /* bridge.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		73875C9A1591528000930C4F /* BridgeClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 73DDC4151585B1320098DD9F /* BridgeClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		73875C9B1591528000930C4F /* BridgeCallback.h in Headers */ = {isa = PBXBuildFile; fileRef = 738B284E155B64D200B32F3B /* BridgeCallback.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		73875C9C1591528000930C4F /* BridgeObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 738B2856155B64D200B32F3B /* BridgeObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		73875C9D1591528000930C4F /* BridgeObjectBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 738B2857155B64D200B32F3B /* BridgeObjectBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		73875C9E1591528800930C4F /* BridgeConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 738B2850155B64D200B32F3B /* BridgeConnection.h */; };
+		73875C9F1591528800930C4F /* BridgeDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 738B2852155B64D200B32F3B /* BridgeDispatcher.h */; };
+		73875CA01591528800930C4F /* BridgeJSONCodec.h in Headers */ = {isa = PBXBuildFile; fileRef = 738B2854155B64D200B32F3B /* BridgeJSONCodec.h */; };
+		73875CA11591528800930C4F /* BridgeRemoteObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 738B2858155B64D200B32F3B /* BridgeRemoteObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		73875CA21591528800930C4F /* BridgeSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 738B285A155B64D200B32F3B /* BridgeSocket.h */; };
+		73875CA31591528800930C4F /* BridgeSocketBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 738B285B155B64D200B32F3B /* BridgeSocketBuffer.h */; };
+		73875CA41591528800930C4F /* BridgeSystemService.h in Headers */ = {isa = PBXBuildFile; fileRef = 738B285D155B64D200B32F3B /* BridgeSystemService.h */; };
+		73875CA51591528800930C4F /* BridgeTCPSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 738B285F155B64D200B32F3B /* BridgeTCPSocket.h */; };
+		73875CA61591528800930C4F /* BridgeUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 738B2861155B64D200B32F3B /* BridgeUtils.h */; };
+		73875CA7159152B800930C4F /* JSONKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 738B28C7155B64D200B32F3B /* JSONKit.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		73875CA8159152B800930C4F /* GCDAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 738B2868155B64D200B32F3B /* GCDAsyncSocket.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		73875CB6159153E800930C4F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73875CB5159153E800930C4F /* Cocoa.framework */; };
+		73875CB8159153FC00930C4F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73875CB7159153FC00930C4F /* Security.framework */; };
+		738B2842155B643800B32F3B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 738B2840155B643800B32F3B /* InfoPlist.strings */; };
+		738B28E8155B64D300B32F3B /* bridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 738B284C155B64D200B32F3B /* bridge.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		738B28E9155B64D300B32F3B /* bridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 738B284D155B64D200B32F3B /* bridge.m */; };
+		738B28EA155B64D300B32F3B /* BridgeCallback.h in Headers */ = {isa = PBXBuildFile; fileRef = 738B284E155B64D200B32F3B /* BridgeCallback.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		738B28EB155B64D300B32F3B /* BridgeCallback.m in Sources */ = {isa = PBXBuildFile; fileRef = 738B284F155B64D200B32F3B /* BridgeCallback.m */; };
+		738B28EC155B64D300B32F3B /* BridgeConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 738B2850155B64D200B32F3B /* BridgeConnection.h */; };
+		738B28ED155B64D300B32F3B /* BridgeConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 738B2851155B64D200B32F3B /* BridgeConnection.m */; };
+		738B28EE155B64D300B32F3B /* BridgeDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 738B2852155B64D200B32F3B /* BridgeDispatcher.h */; };
+		738B28EF155B64D300B32F3B /* BridgeDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 738B2853155B64D200B32F3B /* BridgeDispatcher.m */; };
+		738B28F0155B64D300B32F3B /* BridgeJSONCodec.h in Headers */ = {isa = PBXBuildFile; fileRef = 738B2854155B64D200B32F3B /* BridgeJSONCodec.h */; };
+		738B28F1155B64D300B32F3B /* BridgeJSONCodec.m in Sources */ = {isa = PBXBuildFile; fileRef = 738B2855155B64D200B32F3B /* BridgeJSONCodec.m */; };
+		738B28F2155B64D300B32F3B /* BridgeObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 738B2856155B64D200B32F3B /* BridgeObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		738B28F3155B64D300B32F3B /* BridgeObjectBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 738B2857155B64D200B32F3B /* BridgeObjectBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		738B28F4155B64D300B32F3B /* BridgeRemoteObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 738B2858155B64D200B32F3B /* BridgeRemoteObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		738B28F5155B64D300B32F3B /* BridgeRemoteObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 738B2859155B64D200B32F3B /* BridgeRemoteObject.m */; };
+		738B28F6155B64D300B32F3B /* BridgeSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 738B285A155B64D200B32F3B /* BridgeSocket.h */; };
+		738B28F7155B64D300B32F3B /* BridgeSocketBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 738B285B155B64D200B32F3B /* BridgeSocketBuffer.h */; };
+		738B28F8155B64D300B32F3B /* BridgeSocketBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 738B285C155B64D200B32F3B /* BridgeSocketBuffer.m */; };
+		738B28F9155B64D300B32F3B /* BridgeSystemService.h in Headers */ = {isa = PBXBuildFile; fileRef = 738B285D155B64D200B32F3B /* BridgeSystemService.h */; };
+		738B28FA155B64D300B32F3B /* BridgeSystemService.m in Sources */ = {isa = PBXBuildFile; fileRef = 738B285E155B64D200B32F3B /* BridgeSystemService.m */; };
+		738B28FB155B64D300B32F3B /* BridgeTCPSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 738B285F155B64D200B32F3B /* BridgeTCPSocket.h */; };
+		738B28FC155B64D300B32F3B /* BridgeTCPSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 738B2860155B64D200B32F3B /* BridgeTCPSocket.m */; };
+		738B28FD155B64D300B32F3B /* BridgeUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 738B2861155B64D200B32F3B /* BridgeUtils.h */; };
+		738B28FE155B64D300B32F3B /* BridgeUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 738B2862155B64D200B32F3B /* BridgeUtils.m */; };
+		738B2901155B64D300B32F3B /* GCDAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 738B2868155B64D200B32F3B /* GCDAsyncSocket.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		738B2902155B64D300B32F3B /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 738B2869155B64D200B32F3B /* GCDAsyncSocket.m */; };
+		738B290A155B64D300B32F3B /* JSONKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 738B28C7155B64D200B32F3B /* JSONKit.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		738B290B155B64D300B32F3B /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 738B28C8155B64D200B32F3B /* JSONKit.m */; };
+		73D6BD92155BD542007F7A62 /* flotype.crt in Resources */ = {isa = PBXBuildFile; fileRef = 73D6BD91155BD542007F7A62 /* flotype.crt */; };
+		73DDC4171585B1320098DD9F /* BridgeClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 73DDC4151585B1320098DD9F /* BridgeClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		73DDC4181585B1320098DD9F /* BridgeClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 73DDC4161585B1320098DD9F /* BridgeClient.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		7354232A158C1AAC00B82278 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
+		7354232D158C1AAC00B82278 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		7354232E158C1AAC00B82278 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		7354232F158C1AAC00B82278 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		73875C6C1591520200930C4F /* bridge-mac.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "bridge-mac.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		73875C701591520200930C4F /* bridge-mac-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "bridge-mac-Info.plist"; sourceTree = "<group>"; };
+		73875C721591520200930C4F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		73875C741591520200930C4F /* bridge-mac-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "bridge-mac-Prefix.pch"; sourceTree = "<group>"; };
+		73875CB5159153E800930C4F /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
+		73875CB7159153FC00930C4F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
+		738B283B155B643800B32F3B /* bridge.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = bridge.framework; path = "bridge-ios.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		738B283F155B643800B32F3B /* bridge-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "bridge-Info.plist"; sourceTree = "<group>"; };
+		738B2841155B643800B32F3B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		738B2843155B643800B32F3B /* bridge-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "bridge-Prefix.pch"; sourceTree = "<group>"; };
+		738B284C155B64D200B32F3B /* bridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bridge.h; sourceTree = "<group>"; };
+		738B284D155B64D200B32F3B /* bridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = bridge.m; sourceTree = "<group>"; };
+		738B284E155B64D200B32F3B /* BridgeCallback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BridgeCallback.h; sourceTree = "<group>"; };
+		738B284F155B64D200B32F3B /* BridgeCallback.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BridgeCallback.m; sourceTree = "<group>"; };
+		738B2850155B64D200B32F3B /* BridgeConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BridgeConnection.h; sourceTree = "<group>"; };
+		738B2851155B64D200B32F3B /* BridgeConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BridgeConnection.m; sourceTree = "<group>"; };
+		738B2852155B64D200B32F3B /* BridgeDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BridgeDispatcher.h; sourceTree = "<group>"; };
+		738B2853155B64D200B32F3B /* BridgeDispatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BridgeDispatcher.m; sourceTree = "<group>"; };
+		738B2854155B64D200B32F3B /* BridgeJSONCodec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BridgeJSONCodec.h; sourceTree = "<group>"; };
+		738B2855155B64D200B32F3B /* BridgeJSONCodec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BridgeJSONCodec.m; sourceTree = "<group>"; };
+		738B2856155B64D200B32F3B /* BridgeObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BridgeObject.h; sourceTree = "<group>"; };
+		738B2857155B64D200B32F3B /* BridgeObjectBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BridgeObjectBase.h; sourceTree = "<group>"; };
+		738B2858155B64D200B32F3B /* BridgeRemoteObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BridgeRemoteObject.h; sourceTree = "<group>"; };
+		738B2859155B64D200B32F3B /* BridgeRemoteObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BridgeRemoteObject.m; sourceTree = "<group>"; };
+		738B285A155B64D200B32F3B /* BridgeSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BridgeSocket.h; sourceTree = "<group>"; };
+		738B285B155B64D200B32F3B /* BridgeSocketBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BridgeSocketBuffer.h; sourceTree = "<group>"; };
+		738B285C155B64D200B32F3B /* BridgeSocketBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BridgeSocketBuffer.m; sourceTree = "<group>"; };
+		738B285D155B64D200B32F3B /* BridgeSystemService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BridgeSystemService.h; sourceTree = "<group>"; };
+		738B285E155B64D200B32F3B /* BridgeSystemService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BridgeSystemService.m; sourceTree = "<group>"; };
+		738B285F155B64D200B32F3B /* BridgeTCPSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BridgeTCPSocket.h; sourceTree = "<group>"; };
+		738B2860155B64D200B32F3B /* BridgeTCPSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BridgeTCPSocket.m; sourceTree = "<group>"; };
+		738B2861155B64D200B32F3B /* BridgeUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BridgeUtils.h; sourceTree = "<group>"; };
+		738B2862155B64D200B32F3B /* BridgeUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BridgeUtils.m; sourceTree = "<group>"; };
+		738B2868155B64D200B32F3B /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
+		738B2869155B64D200B32F3B /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
+		738B286E155B64D200B32F3B /* BonjourClient.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = BonjourClient.xcodeproj; sourceTree = "<group>"; };
+		738B2872155B64D200B32F3B /* BonjourServer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = BonjourServer.xcodeproj; sourceTree = "<group>"; };
+		738B2876155B64D200B32F3B /* CertTest.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = CertTest.xcodeproj; sourceTree = "<group>"; };
+		738B287B155B64D200B32F3B /* ConnectTest.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = ConnectTest.xcodeproj; sourceTree = "<group>"; };
+		738B287F155B64D200B32F3B /* ConnectTest.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = ConnectTest.xcodeproj; sourceTree = "<group>"; };
+		738B2883155B64D200B32F3B /* EchoServer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = EchoServer.xcodeproj; sourceTree = "<group>"; };
+		738B2888155B64D200B32F3B /* SimpleHTTPClient.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = SimpleHTTPClient.xcodeproj; sourceTree = "<group>"; };
+		738B288C155B64D200B32F3B /* SimpleHTTPClient.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = SimpleHTTPClient.xcodeproj; sourceTree = "<group>"; };
+		738B2890155B64D200B32F3B /* UdpEchoClient.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = UdpEchoClient.xcodeproj; sourceTree = "<group>"; };
+		738B2894155B64D200B32F3B /* UdpEchoServer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = UdpEchoServer.xcodeproj; sourceTree = "<group>"; };
+		738B28C7155B64D200B32F3B /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
+		738B28C8155B64D200B32F3B /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
+		73D6BD91155BD542007F7A62 /* flotype.crt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = flotype.crt; sourceTree = "<group>"; };
+		73DDC4151585B1320098DD9F /* BridgeClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BridgeClient.h; sourceTree = "<group>"; };
+		73DDC4161585B1320098DD9F /* BridgeClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BridgeClient.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		73875C681591520200930C4F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73875CB6159153E800930C4F /* Cocoa.framework in Frameworks */,
+				73875CB8159153FC00930C4F /* Security.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		738B2835155B643800B32F3B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		73542329158C1AAC00B82278 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				73875CB7159153FC00930C4F /* Security.framework */,
+				73875CB5159153E800930C4F /* Cocoa.framework */,
+				7354232A158C1AAC00B82278 /* Cocoa.framework */,
+				7354232C158C1AAC00B82278 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7354232C158C1AAC00B82278 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7354232D158C1AAC00B82278 /* AppKit.framework */,
+				7354232E158C1AAC00B82278 /* CoreData.framework */,
+				7354232F158C1AAC00B82278 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		73875C6E1591520200930C4F /* bridge-mac */ = {
+			isa = PBXGroup;
+			children = (
+				73875C6F1591520200930C4F /* Supporting Files */,
+			);
+			path = "bridge-mac";
+			sourceTree = "<group>";
+		};
+		73875C6F1591520200930C4F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				73875C701591520200930C4F /* bridge-mac-Info.plist */,
+				73875C711591520200930C4F /* InfoPlist.strings */,
+				73875C741591520200930C4F /* bridge-mac-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		738B282C155B643800B32F3B = {
+			isa = PBXGroup;
+			children = (
+				738B283D155B643800B32F3B /* Bridge */,
+				73875C6E1591520200930C4F /* bridge-mac */,
+				73542329158C1AAC00B82278 /* Frameworks */,
+				738B283C155B643800B32F3B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		738B283C155B643800B32F3B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				738B283B155B643800B32F3B /* bridge.framework */,
+				73875C6C1591520200930C4F /* bridge-mac.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		738B283D155B643800B32F3B /* Bridge */ = {
+			isa = PBXGroup;
+			children = (
+				73D6BD21155B6590007F7A62 /* Header files */,
+				738B291C155B64E900B32F3B /* Source files */,
+				738B283E155B643800B32F3B /* Supporting Files */,
+			);
+			name = Bridge;
+			path = bridge;
+			sourceTree = "<group>";
+		};
+		738B283E155B643800B32F3B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				73D6BD22155B68C7007F7A62 /* SSL */,
+				738B28C7155B64D200B32F3B /* JSONKit.h */,
+				738B28C8155B64D200B32F3B /* JSONKit.m */,
+				738B2866155B64D200B32F3B /* GCD */,
+				738B283F155B643800B32F3B /* bridge-Info.plist */,
+				738B2840155B643800B32F3B /* InfoPlist.strings */,
+				738B2843155B643800B32F3B /* bridge-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		738B2866155B64D200B32F3B /* GCD */ = {
+			isa = PBXGroup;
+			children = (
+				738B2868155B64D200B32F3B /* GCDAsyncSocket.h */,
+				738B2869155B64D200B32F3B /* GCDAsyncSocket.m */,
+				738B286C155B64D200B32F3B /* Xcode */,
+			);
+			path = GCD;
+			sourceTree = "<group>";
+		};
+		738B286C155B64D200B32F3B /* Xcode */ = {
+			isa = PBXGroup;
+			children = (
+				738B286D155B64D200B32F3B /* BonjourClient */,
+				738B2871155B64D200B32F3B /* BonjourServer */,
+				738B2875155B64D200B32F3B /* CertTest */,
+				738B2879155B64D200B32F3B /* ConnectTest */,
+				738B2882155B64D200B32F3B /* EchoServer */,
+				738B2886155B64D200B32F3B /* SimpleHTTPClient */,
+				738B288F155B64D200B32F3B /* UdpEchoClient */,
+				738B2893155B64D200B32F3B /* UdpEchoServer */,
+			);
+			path = Xcode;
+			sourceTree = "<group>";
+		};
+		738B286D155B64D200B32F3B /* BonjourClient */ = {
+			isa = PBXGroup;
+			children = (
+				738B286E155B64D200B32F3B /* BonjourClient.xcodeproj */,
+			);
+			path = BonjourClient;
+			sourceTree = "<group>";
+		};
+		738B286F155B64D200B32F3B /* Products */ = {
+			isa = PBXGroup;
+			name = Products;
+			sourceTree = "<group>";
+		};
+		738B2871155B64D200B32F3B /* BonjourServer */ = {
+			isa = PBXGroup;
+			children = (
+				738B2872155B64D200B32F3B /* BonjourServer.xcodeproj */,
+			);
+			path = BonjourServer;
+			sourceTree = "<group>";
+		};
+		738B2873155B64D200B32F3B /* Products */ = {
+			isa = PBXGroup;
+			name = Products;
+			sourceTree = "<group>";
+		};
+		738B2875155B64D200B32F3B /* CertTest */ = {
+			isa = PBXGroup;
+			children = (
+				738B2876155B64D200B32F3B /* CertTest.xcodeproj */,
+			);
+			path = CertTest;
+			sourceTree = "<group>";
+		};
+		738B2877155B64D200B32F3B /* Products */ = {
+			isa = PBXGroup;
+			name = Products;
+			sourceTree = "<group>";
+		};
+		738B2879155B64D200B32F3B /* ConnectTest */ = {
+			isa = PBXGroup;
+			children = (
+				738B287A155B64D200B32F3B /* Desktop */,
+				738B287E155B64D200B32F3B /* Mobile */,
+			);
+			path = ConnectTest;
+			sourceTree = "<group>";
+		};
+		738B287A155B64D200B32F3B /* Desktop */ = {
+			isa = PBXGroup;
+			children = (
+				738B287B155B64D200B32F3B /* ConnectTest.xcodeproj */,
+			);
+			path = Desktop;
+			sourceTree = "<group>";
+		};
+		738B287C155B64D200B32F3B /* Products */ = {
+			isa = PBXGroup;
+			name = Products;
+			sourceTree = "<group>";
+		};
+		738B287E155B64D200B32F3B /* Mobile */ = {
+			isa = PBXGroup;
+			children = (
+				738B287F155B64D200B32F3B /* ConnectTest.xcodeproj */,
+			);
+			path = Mobile;
+			sourceTree = "<group>";
+		};
+		738B2880155B64D200B32F3B /* Products */ = {
+			isa = PBXGroup;
+			name = Products;
+			sourceTree = "<group>";
+		};
+		738B2882155B64D200B32F3B /* EchoServer */ = {
+			isa = PBXGroup;
+			children = (
+				738B2883155B64D200B32F3B /* EchoServer.xcodeproj */,
+			);
+			path = EchoServer;
+			sourceTree = "<group>";
+		};
+		738B2884155B64D200B32F3B /* Products */ = {
+			isa = PBXGroup;
+			name = Products;
+			sourceTree = "<group>";
+		};
+		738B2886155B64D200B32F3B /* SimpleHTTPClient */ = {
+			isa = PBXGroup;
+			children = (
+				738B2887155B64D200B32F3B /* Desktop */,
+				738B288B155B64D200B32F3B /* Mobile */,
+			);
+			path = SimpleHTTPClient;
+			sourceTree = "<group>";
+		};
+		738B2887155B64D200B32F3B /* Desktop */ = {
+			isa = PBXGroup;
+			children = (
+				738B2888155B64D200B32F3B /* SimpleHTTPClient.xcodeproj */,
+			);
+			path = Desktop;
+			sourceTree = "<group>";
+		};
+		738B2889155B64D200B32F3B /* Products */ = {
+			isa = PBXGroup;
+			name = Products;
+			sourceTree = "<group>";
+		};
+		738B288B155B64D200B32F3B /* Mobile */ = {
+			isa = PBXGroup;
+			children = (
+				738B288C155B64D200B32F3B /* SimpleHTTPClient.xcodeproj */,
+			);
+			path = Mobile;
+			sourceTree = "<group>";
+		};
+		738B288D155B64D200B32F3B /* Products */ = {
+			isa = PBXGroup;
+			name = Products;
+			sourceTree = "<group>";
+		};
+		738B288F155B64D200B32F3B /* UdpEchoClient */ = {
+			isa = PBXGroup;
+			children = (
+				738B2890155B64D200B32F3B /* UdpEchoClient.xcodeproj */,
+			);
+			path = UdpEchoClient;
+			sourceTree = "<group>";
+		};
+		738B2891155B64D200B32F3B /* Products */ = {
+			isa = PBXGroup;
+			name = Products;
+			sourceTree = "<group>";
+		};
+		738B2893155B64D200B32F3B /* UdpEchoServer */ = {
+			isa = PBXGroup;
+			children = (
+				738B2894155B64D200B32F3B /* UdpEchoServer.xcodeproj */,
+			);
+			path = UdpEchoServer;
+			sourceTree = "<group>";
+		};
+		738B2895155B64D200B32F3B /* Products */ = {
+			isa = PBXGroup;
+			name = Products;
+			sourceTree = "<group>";
+		};
+		738B291C155B64E900B32F3B /* Source files */ = {
+			isa = PBXGroup;
+			children = (
+				738B284D155B64D200B32F3B /* bridge.m */,
+				73DDC4161585B1320098DD9F /* BridgeClient.m */,
+				738B284F155B64D200B32F3B /* BridgeCallback.m */,
+				738B2851155B64D200B32F3B /* BridgeConnection.m */,
+				738B2853155B64D200B32F3B /* BridgeDispatcher.m */,
+				738B2855155B64D200B32F3B /* BridgeJSONCodec.m */,
+				738B2859155B64D200B32F3B /* BridgeRemoteObject.m */,
+				738B285C155B64D200B32F3B /* BridgeSocketBuffer.m */,
+				738B285E155B64D200B32F3B /* BridgeSystemService.m */,
+				738B2860155B64D200B32F3B /* BridgeTCPSocket.m */,
+				738B2862155B64D200B32F3B /* BridgeUtils.m */,
+			);
+			name = "Source files";
+			sourceTree = "<group>";
+		};
+		73D6BD21155B6590007F7A62 /* Header files */ = {
+			isa = PBXGroup;
+			children = (
+				738B284C155B64D200B32F3B /* bridge.h */,
+				73DDC4151585B1320098DD9F /* BridgeClient.h */,
+				738B284E155B64D200B32F3B /* BridgeCallback.h */,
+				738B2850155B64D200B32F3B /* BridgeConnection.h */,
+				738B2852155B64D200B32F3B /* BridgeDispatcher.h */,
+				738B2854155B64D200B32F3B /* BridgeJSONCodec.h */,
+				738B2856155B64D200B32F3B /* BridgeObject.h */,
+				738B2857155B64D200B32F3B /* BridgeObjectBase.h */,
+				738B2858155B64D200B32F3B /* BridgeRemoteObject.h */,
+				738B285A155B64D200B32F3B /* BridgeSocket.h */,
+				738B285B155B64D200B32F3B /* BridgeSocketBuffer.h */,
+				738B285D155B64D200B32F3B /* BridgeSystemService.h */,
+				738B285F155B64D200B32F3B /* BridgeTCPSocket.h */,
+				738B2861155B64D200B32F3B /* BridgeUtils.h */,
+			);
+			name = "Header files";
+			sourceTree = "<group>";
+		};
+		73D6BD22155B68C7007F7A62 /* SSL */ = {
+			isa = PBXGroup;
+			children = (
+				73D6BD91155BD542007F7A62 /* flotype.crt */,
+			);
+			name = SSL;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		73875C691591520200930C4F /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73875CA11591528800930C4F /* BridgeRemoteObject.h in Headers */,
+				73875C991591528000930C4F /* bridge.h in Headers */,
+				73875C9A1591528000930C4F /* BridgeClient.h in Headers */,
+				73875C9B1591528000930C4F /* BridgeCallback.h in Headers */,
+				73875C9C1591528000930C4F /* BridgeObject.h in Headers */,
+				73875C9D1591528000930C4F /* BridgeObjectBase.h in Headers */,
+				73875CA7159152B800930C4F /* JSONKit.h in Headers */,
+				73875CA8159152B800930C4F /* GCDAsyncSocket.h in Headers */,
+				73875C9E1591528800930C4F /* BridgeConnection.h in Headers */,
+				73875C9F1591528800930C4F /* BridgeDispatcher.h in Headers */,
+				73875CA01591528800930C4F /* BridgeJSONCodec.h in Headers */,
+				73875CA21591528800930C4F /* BridgeSocket.h in Headers */,
+				73875CA31591528800930C4F /* BridgeSocketBuffer.h in Headers */,
+				73875CA41591528800930C4F /* BridgeSystemService.h in Headers */,
+				73875CA51591528800930C4F /* BridgeTCPSocket.h in Headers */,
+				73875CA61591528800930C4F /* BridgeUtils.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		738B2836155B643800B32F3B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				738B28E8155B64D300B32F3B /* bridge.h in Headers */,
+				738B28F2155B64D300B32F3B /* BridgeObject.h in Headers */,
+				738B28F4155B64D300B32F3B /* BridgeRemoteObject.h in Headers */,
+				738B28F3155B64D300B32F3B /* BridgeObjectBase.h in Headers */,
+				73DDC4171585B1320098DD9F /* BridgeClient.h in Headers */,
+				738B28EA155B64D300B32F3B /* BridgeCallback.h in Headers */,
+				738B2901155B64D300B32F3B /* GCDAsyncSocket.h in Headers */,
+				738B290A155B64D300B32F3B /* JSONKit.h in Headers */,
+				738B28EC155B64D300B32F3B /* BridgeConnection.h in Headers */,
+				738B28EE155B64D300B32F3B /* BridgeDispatcher.h in Headers */,
+				738B28F0155B64D300B32F3B /* BridgeJSONCodec.h in Headers */,
+				738B28F6155B64D300B32F3B /* BridgeSocket.h in Headers */,
+				738B28F7155B64D300B32F3B /* BridgeSocketBuffer.h in Headers */,
+				738B28F9155B64D300B32F3B /* BridgeSystemService.h in Headers */,
+				738B28FB155B64D300B32F3B /* BridgeTCPSocket.h in Headers */,
+				738B28FD155B64D300B32F3B /* BridgeUtils.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		73875C6B1591520200930C4F /* bridge-mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 73875C7A1591520300930C4F /* Build configuration list for PBXNativeTarget "bridge-mac" */;
+			buildPhases = (
+				73875C671591520200930C4F /* Sources */,
+				73875C681591520200930C4F /* Frameworks */,
+				73875C691591520200930C4F /* Headers */,
+				73875C6A1591520200930C4F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "bridge-mac";
+			productName = "bridge-mac";
+			productReference = 73875C6C1591520200930C4F /* bridge-mac.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		738B283A155B643800B32F3B /* bridge-ios */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 738B2846155B643800B32F3B /* Build configuration list for PBXNativeTarget "bridge-ios" */;
+			buildPhases = (
+				738B2833155B643800B32F3B /* ShellScript */,
+				738B2834155B643800B32F3B /* Sources */,
+				738B2835155B643800B32F3B /* Frameworks */,
+				738B2836155B643800B32F3B /* Headers */,
+				738B2837155B643800B32F3B /* Resources */,
+				738B2838155B643800B32F3B /* ShellScript */,
+				738B2839155B643800B32F3B /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "bridge-ios";
+			productName = bridge;
+			productReference = 738B283B155B643800B32F3B /* bridge.framework */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		738B282E155B643800B32F3B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0430;
+			};
+			buildConfigurationList = 738B2831155B643800B32F3B /* Build configuration list for PBXProject "bridge" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 738B282C155B643800B32F3B;
+			productRefGroup = 738B283C155B643800B32F3B /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 738B286F155B64D200B32F3B /* Products */;
+					ProjectRef = 738B286E155B64D200B32F3B /* BonjourClient.xcodeproj */;
+				},
+				{
+					ProductGroup = 738B2873155B64D200B32F3B /* Products */;
+					ProjectRef = 738B2872155B64D200B32F3B /* BonjourServer.xcodeproj */;
+				},
+				{
+					ProductGroup = 738B2877155B64D200B32F3B /* Products */;
+					ProjectRef = 738B2876155B64D200B32F3B /* CertTest.xcodeproj */;
+				},
+				{
+					ProductGroup = 738B2880155B64D200B32F3B /* Products */;
+					ProjectRef = 738B287F155B64D200B32F3B /* ConnectTest.xcodeproj */;
+				},
+				{
+					ProductGroup = 738B287C155B64D200B32F3B /* Products */;
+					ProjectRef = 738B287B155B64D200B32F3B /* ConnectTest.xcodeproj */;
+				},
+				{
+					ProductGroup = 738B2884155B64D200B32F3B /* Products */;
+					ProjectRef = 738B2883155B64D200B32F3B /* EchoServer.xcodeproj */;
+				},
+				{
+					ProductGroup = 738B2889155B64D200B32F3B /* Products */;
+					ProjectRef = 738B2888155B64D200B32F3B /* SimpleHTTPClient.xcodeproj */;
+				},
+				{
+					ProductGroup = 738B288D155B64D200B32F3B /* Products */;
+					ProjectRef = 738B288C155B64D200B32F3B /* SimpleHTTPClient.xcodeproj */;
+				},
+				{
+					ProductGroup = 738B2891155B64D200B32F3B /* Products */;
+					ProjectRef = 738B2890155B64D200B32F3B /* UdpEchoClient.xcodeproj */;
+				},
+				{
+					ProductGroup = 738B2895155B64D200B32F3B /* Products */;
+					ProjectRef = 738B2894155B64D200B32F3B /* UdpEchoServer.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				738B283A155B643800B32F3B /* bridge-ios */,
+				73875C6B1591520200930C4F /* bridge-mac */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		73875C6A1591520200930C4F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73875C731591520200930C4F /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		738B2837155B643800B32F3B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73D6BD92155BD542007F7A62 /* flotype.crt in Resources */,
+				738B2842155B643800B32F3B /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		738B2833155B643800B32F3B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\nset +u\nif [[ $UFW_MASTER_SCRIPT_RUNNING ]]\nthen\n    # Nothing for the slave script to do\n    exit 0\nfi\nset -u\n\nif [[ \"$SDK_NAME\" =~ ([A-Za-z]+) ]]\nthen\n    UFW_SDK_PLATFORM=${BASH_REMATCH[1]}\nelse\n    echo \"Could not find platform name from SDK_NAME: $SDK_NAME\"\n    exit 1\nfi\n\nif [[ \"$SDK_NAME\" =~ ([0-9]+.*$) ]]\nthen\n\tUFW_SDK_VERSION=${BASH_REMATCH[1]}\nelse\n    echo \"Could not find sdk version  from SDK_NAME: $SDK_NAME\"\n    exit 1\nfi\n\nif [[ \"$UFW_SDK_PLATFORM\" = \"iphoneos\" ]]\nthen\n    UFW_OTHER_PLATFORM=iphonesimulator\nelse\n    UFW_OTHER_PLATFORM=iphoneos\nfi\n\nif [[ \"$BUILT_PRODUCTS_DIR\" =~ (.*)$UFW_SDK_PLATFORM$ ]]\nthen\n    UFW_OTHER_BUILT_PRODUCTS_DIR=\"${BASH_REMATCH[1]}${UFW_OTHER_PLATFORM}\"\nelse\n    echo \"Could not find $UFW_SDK_PLATFORM in $BUILT_PRODUCTS_DIR\"\n    exit 1\nfi\n\n\n# Short-circuit if all binaries are up to date\n\nif [[ -f \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" ]] && \\\n   [[ -f \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/${EXECUTABLE_PATH}\" ]] && \\\n   [[ ! \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" -nt \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/${EXECUTABLE_PATH}\" ]]\n   [[ -f \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" ]] && \\\n   [[ -f \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/${EXECUTABLE_PATH}\" ]] && \\\n   [[ ! \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" -nt \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/${EXECUTABLE_PATH}\" ]]\nthen\n    exit 0\nfi\n\n\n# Clean other platform if needed\n\nif [[ ! -f \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" ]]\nthen\n\techo \"Platform \\\"$UFW_SDK_PLATFORM\\\" was cleaned recently. Cleaning \\\"$UFW_OTHER_PLATFORM\\\" as well\"\n\techo xcodebuild -project \"${PROJECT_FILE_PATH}\" -target \"${TARGET_NAME}\" -configuration \"${CONFIGURATION}\" -sdk ${UFW_OTHER_PLATFORM}${UFW_SDK_VERSION} BUILD_DIR=\"${BUILD_DIR}\" CONFIGURATION_TEMP_DIR=\"${PROJECT_TEMP_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\" clean\n\txcodebuild -project \"${PROJECT_FILE_PATH}\" -target \"${TARGET_NAME}\" -configuration \"${CONFIGURATION}\" -sdk ${UFW_OTHER_PLATFORM}${UFW_SDK_VERSION} BUILD_DIR=\"${BUILD_DIR}\" CONFIGURATION_TEMP_DIR=\"${PROJECT_TEMP_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\" clean\nfi\n\n\n# Make sure we are building from fresh binaries\n\nrm -rf \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework\"\nrm -rf \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\"\nrm -rf \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework\"\n";
+		};
+		738B2838155B643800B32F3B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "HEADERS_ROOT=$SRCROOT/$PRODUCT_NAME\nFRAMEWORK_HEADERS_DIR=\"$BUILT_PRODUCTS_DIR/$WRAPPER_NAME/Versions/$FRAMEWORK_VERSION/Headers\"\n\n## only header files expected at this point\nPUBLIC_HEADERS=$(find $FRAMEWORK_HEADERS_DIR/. -not -type d 2> /dev/null | sed -e \"s@.*/@@g\")\n\nFIND_OPTS=\"\"\nfor PUBLIC_HEADER in $PUBLIC_HEADERS; do\n  if [ -n \"$FIND_OPTS\" ]; then\n    FIND_OPTS=\"$FIND_OPTS -o\"\n  fi\n  FIND_OPTS=\"$FIND_OPTS -name '$PUBLIC_HEADER'\"\ndone\n\nif [ -n \"$FIND_OPTS\" ]; then\n  for ORIG_HEADER in $(eval \"find $HEADERS_ROOT/. $FIND_OPTS\" 2> /dev/null | sed -e \"s@^$HEADERS_ROOT/./@@g\"); do\n    PUBLIC_HEADER=$(basename $ORIG_HEADER)\n    RELATIVE_PATH=$(dirname $ORIG_HEADER)\n    if [ -e $FRAMEWORK_HEADERS_DIR/$PUBLIC_HEADER ]; then\n      mkdir -p \"$FRAMEWORK_HEADERS_DIR/$RELATIVE_PATH\"\n      mv \"$FRAMEWORK_HEADERS_DIR/$PUBLIC_HEADER\" \"$FRAMEWORK_HEADERS_DIR/$RELATIVE_PATH/$PUBLIC_HEADER\"\n    fi\n  done\nfi\n";
+		};
+		738B2839155B643800B32F3B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\nset +u\nif [[ $UFW_MASTER_SCRIPT_RUNNING ]]\nthen\n    # Nothing for the slave script to do\n    exit 0\nfi\nset -u\nexport UFW_MASTER_SCRIPT_RUNNING=1\n\n\n# Functions\n\n## List files in the specified directory, storing to the specified array.\n#\n# @param $1 The path to list\n# @param $2 The name of the array to fill\n#\n##\nlist_files ()\n{\n    filelist=$(ls \"$1\")\n    while read line\n    do\n        eval \"$2[\\${#$2[*]}]=\\\"\\$line\\\"\"\n    done <<< \"$filelist\"\n}\n\n\n# Sanity check\n\nif [[ ! -f \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" ]]\nthen\n    echo \"Framework target \\\"${TARGET_NAME}\\\" had no source files to build from. Make sure your source files have the correct target membership\"\n    exit 1\nfi\n\n\n# Gather information\n\nif [[ \"$SDK_NAME\" =~ ([A-Za-z]+) ]]\nthen\n    UFW_SDK_PLATFORM=${BASH_REMATCH[1]}\nelse\n    echo \"Could not find platform name from SDK_NAME: $SDK_NAME\"\n    exit 1\nfi\n\nif [[ \"$SDK_NAME\" =~ ([0-9]+.*$) ]]\nthen\n    UFW_SDK_VERSION=${BASH_REMATCH[1]}\nelse\n    echo \"Could not find sdk version from SDK_NAME: $SDK_NAME\"\n    exit 1\nfi\n\nif [[ \"$UFW_SDK_PLATFORM\" = \"iphoneos\" ]]\nthen\n    UFW_OTHER_PLATFORM=iphonesimulator\nelse\n    UFW_OTHER_PLATFORM=iphoneos\nfi\n\nif [[ \"$BUILT_PRODUCTS_DIR\" =~ (.*)$UFW_SDK_PLATFORM$ ]]\nthen\n    UFW_OTHER_BUILT_PRODUCTS_DIR=\"${BASH_REMATCH[1]}${UFW_OTHER_PLATFORM}\"\nelse\n    echo \"Could not find $UFW_SDK_PLATFORM in $BUILT_PRODUCTS_DIR\"\n    exit 1\nfi\n\n\n# Short-circuit if all binaries are up to date.\n# We already checked the other platform in the prerun script.\n\nif [[ -f \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" ]] && [[ -f \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/${EXECUTABLE_PATH}\" ]] && [[ ! \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" -nt \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/${EXECUTABLE_PATH}\" ]]\nthen\n    exit 0\nfi\n\n\n# Make sure the other platform gets built\n\necho \"Build other platform\"\n\necho xcodebuild -project \"${PROJECT_FILE_PATH}\" -target \"${TARGET_NAME}\" -configuration \"${CONFIGURATION}\" -sdk ${UFW_OTHER_PLATFORM}${UFW_SDK_VERSION} BUILD_DIR=\"${BUILD_DIR}\" CONFIGURATION_TEMP_DIR=\"${PROJECT_TEMP_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\" $ACTION\nxcodebuild -project \"${PROJECT_FILE_PATH}\" -target \"${TARGET_NAME}\" -configuration \"${CONFIGURATION}\" -sdk ${UFW_OTHER_PLATFORM}${UFW_SDK_VERSION} BUILD_DIR=\"${BUILD_DIR}\" CONFIGURATION_TEMP_DIR=\"${PROJECT_TEMP_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\" $ACTION\n\n\n# Build the fat static library binary\n\necho \"Create universal static library\"\n\necho \"$PLATFORM_DEVELOPER_BIN_DIR/libtool\" -static \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" -o \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}.temp\"\n\"$PLATFORM_DEVELOPER_BIN_DIR/libtool\" -static \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" -o \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}.temp\"\n\necho mv \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}.temp\" \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\"\nmv \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}.temp\" \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\"\n\n\n# Build framework structure\n\necho \"Build symlinks\"\n\necho ln -sfh A \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Versions/Current\"\nln -sfh A \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Versions/Current\"\necho ln -sfh Versions/Current/Headers \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Headers\"\nln -sfh Versions/Current/Headers \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Headers\"\necho ln -sfh Versions/Current/Resources \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Resources\"\nln -sfh Versions/Current/Resources \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Resources\"\necho ln -sfh \"Versions/Current/${EXECUTABLE_NAME}\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${EXECUTABLE_NAME}\"\nln -sfh \"Versions/Current/${EXECUTABLE_NAME}\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${EXECUTABLE_NAME}\"\n\n\n# Link to binary for unit tests\n\nmkdir -p \"${BUILT_PRODUCTS_DIR}/.fake_fw_testing.framework\"\nln -sfh \"../${WRAPPER_NAME}/${EXECUTABLE_NAME}\" \"${BUILT_PRODUCTS_DIR}/.fake_fw_testing.framework/.fake_fw_testing\"\n\n\n# Build embedded framework structure\n\necho \"Build Embedded Framework\"\n\necho rm -rf \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework\"\necho mkdir -p \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/Resources\"\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/Resources\"\necho cp -a \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/\"\ncp -a \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/\"\n\ndeclare -a UFW_FILE_LIST\nlist_files \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\" UFW_FILE_LIST\nfor filename in \"${UFW_FILE_LIST[@]}\"\ndo\n    if [[ \"${filename}\" != \"Info.plist\" ]] && [[ ! \"${filename}\" =~ .*\\.lproj$ ]]\n    then\n        echo ln -sfh \"../${WRAPPER_NAME}/Resources/${filename}\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/Resources/${filename}\"\n        ln -sfh \"../${WRAPPER_NAME}/Resources/${filename}\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/Resources/${filename}\"\n    fi\ndone\n\n\n# Replace other platform's framework with a copy of this one (so that both have the same universal binary)\n\necho \"Copy from $UFW_SDK_PLATFORM to $UFW_OTHER_PLATFORM\"\n\necho rm -rf \"${BUILD_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\"\nrm -rf \"${BUILD_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\"\necho cp -a \"${BUILD_DIR}/${CONFIGURATION}-${UFW_SDK_PLATFORM}\" \"${BUILD_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\"\ncp -a \"${BUILD_DIR}/${CONFIGURATION}-${UFW_SDK_PLATFORM}\" \"${BUILD_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		73875C671591520200930C4F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73875C8A1591522400930C4F /* bridge.m in Sources */,
+				73875C8B1591522400930C4F /* BridgeClient.m in Sources */,
+				73875C8C1591522400930C4F /* BridgeCallback.m in Sources */,
+				73875C8D1591522400930C4F /* BridgeConnection.m in Sources */,
+				73875C8E1591522400930C4F /* BridgeDispatcher.m in Sources */,
+				73875C8F1591522400930C4F /* BridgeJSONCodec.m in Sources */,
+				73875C901591522400930C4F /* BridgeRemoteObject.m in Sources */,
+				73875C911591522400930C4F /* BridgeSocketBuffer.m in Sources */,
+				73875C921591522400930C4F /* BridgeSystemService.m in Sources */,
+				73875C931591522400930C4F /* BridgeTCPSocket.m in Sources */,
+				73875C941591522400930C4F /* BridgeUtils.m in Sources */,
+				73875C961591522400930C4F /* JSONKit.m in Sources */,
+				73875C981591522400930C4F /* GCDAsyncSocket.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		738B2834155B643800B32F3B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				738B28E9155B64D300B32F3B /* bridge.m in Sources */,
+				738B28EB155B64D300B32F3B /* BridgeCallback.m in Sources */,
+				738B28ED155B64D300B32F3B /* BridgeConnection.m in Sources */,
+				738B28EF155B64D300B32F3B /* BridgeDispatcher.m in Sources */,
+				738B28F1155B64D300B32F3B /* BridgeJSONCodec.m in Sources */,
+				738B28F5155B64D300B32F3B /* BridgeRemoteObject.m in Sources */,
+				738B28F8155B64D300B32F3B /* BridgeSocketBuffer.m in Sources */,
+				738B28FA155B64D300B32F3B /* BridgeSystemService.m in Sources */,
+				738B28FC155B64D300B32F3B /* BridgeTCPSocket.m in Sources */,
+				738B28FE155B64D300B32F3B /* BridgeUtils.m in Sources */,
+				738B2902155B64D300B32F3B /* GCDAsyncSocket.m in Sources */,
+				738B290B155B64D300B32F3B /* JSONKit.m in Sources */,
+				73DDC4181585B1320098DD9F /* BridgeClient.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		73875C711591520200930C4F /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				73875C721591520200930C4F /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		738B2840155B643800B32F3B /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				738B2841155B643800B32F3B /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		73875C781591520300930C4F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
+				);
+				FRAMEWORK_VERSION = A;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "bridge-mac/bridge-mac-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				INFOPLIST_FILE = "bridge-mac/bridge-mac-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SDKROOT)/usr/lib/system\"",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Debug;
+		};
+		73875C791591520300930C4F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
+				);
+				FRAMEWORK_VERSION = A;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "bridge-mac/bridge-mac-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				INFOPLIST_FILE = "bridge-mac/bridge-mac-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SDKROOT)/usr/lib/system\"",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Release;
+		};
+		738B2844155B643800B32F3B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		738B2845155B643800B32F3B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		738B2847155B643800B32F3B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CONTENTS_FOLDER_PATH = "$(WRAPPER_NAME)/Versions/$(FRAMEWORK_VERSION)";
+				DEAD_CODE_STRIPPING = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "bridge/bridge-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INFOPLIST_FILE = "bridge/bridge-Info.plist";
+				INFOPLIST_PATH = "$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/Info.plist";
+				INSTALL_PATH = "$(BUILT_PRODUCTS_DIR)";
+				LINK_WITH_STANDARD_LIBRARIES = NO;
+				MACH_O_TYPE = mh_object;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				UNLOCALIZED_RESOURCES_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/Resources";
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Debug;
+		};
+		738B2848155B643800B32F3B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CONTENTS_FOLDER_PATH = "$(WRAPPER_NAME)/Versions/$(FRAMEWORK_VERSION)";
+				DEAD_CODE_STRIPPING = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "bridge/bridge-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INFOPLIST_FILE = "bridge/bridge-Info.plist";
+				INFOPLIST_PATH = "$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/Info.plist";
+				INSTALL_PATH = "$(BUILT_PRODUCTS_DIR)";
+				LINK_WITH_STANDARD_LIBRARIES = NO;
+				MACH_O_TYPE = mh_object;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				UNLOCALIZED_RESOURCES_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/Resources";
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		73875C7A1591520300930C4F /* Build configuration list for PBXNativeTarget "bridge-mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				73875C781591520300930C4F /* Debug */,
+				73875C791591520300930C4F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		738B2831155B643800B32F3B /* Build configuration list for PBXProject "bridge" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				738B2844155B643800B32F3B /* Debug */,
+				738B2845155B643800B32F3B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		738B2846155B643800B32F3B /* Build configuration list for PBXNativeTarget "bridge-ios" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				738B2847155B643800B32F3B /* Debug */,
+				738B2848155B643800B32F3B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 738B282E155B643800B32F3B /* Project object */;
+}
