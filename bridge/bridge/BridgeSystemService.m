@@ -26,7 +26,7 @@
 
 -(void) hookChannelHandler:(NSString*)channelName :(BridgeRemoteObject*)handler
 {
-  [self hook_channel_handler:channelName :handler :nil];
+  [self hookChannelHandler:channelName :handler :nil];
 }
 
 /*
