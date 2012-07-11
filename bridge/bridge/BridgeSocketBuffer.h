@@ -10,10 +10,9 @@
 
 @protocol BridgeSocket;
 
-@interface BridgeSocketBuffer : NSObject<BridgeSocket>
-{
-  NSMutableArray* queue;
+@interface BridgeSocketBuffer : NSObject<BridgeSocket> {
 }
+
 
 -(void)processQueueIntoSocket:(id<BridgeSocket>)socket withClientId:(NSString*)anId;
 

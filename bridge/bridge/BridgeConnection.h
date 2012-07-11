@@ -8,36 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
-@class Bridge, BridgeSocketBuffer;
+@class Bridge, BridgeSocketBuffer, BridgeTCPSocket;
 @protocol BridgeSocket;
 
 @interface BridgeConnection : NSObject {
-  Bridge* bridge;
-  
-  id<BridgeSocket> sock;
-  BridgeSocketBuffer* socket_buffer;
-  
-  NSString* host;
-  int port;
 
-  NSString* clientId;
-  NSString* secret;
-  NSString* apiKey;
-  
-  NSURL* redirectorURL;
-  
-  NSMutableData* responseData;
-  
-  BOOL secure;
-  BOOL reconnect;
-  float reconnectBackoff;
 }
 
-@property (nonatomic, readonly) NSString* host;
-@property (nonatomic, readonly) int port;
-
-@property (nonatomic, retain) NSString* clientId;
-@property (nonatomic, retain) NSString* secret;
+@property (nonatomic, copy, readonly) NSString* host;
+@property (nonatomic, assign, readonly) int port;
 
 -(id)initWithApiKey:(NSString*)anApiKey options:(NSDictionary*)options bridge:(Bridge*)bridge;
 -(void)start;

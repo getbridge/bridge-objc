@@ -12,8 +12,6 @@
 @protocol BridgeObjectBase;
 
 @interface BridgeDispatcher : NSObject {
-  NSMutableDictionary* services;
-  Bridge* bridge;
 }
 
 -(id)initWithBridge:(Bridge*)aBridge;

@@ -9,8 +9,22 @@
 #import "bridge.h"
 #import "BridgeRemoteObject.h"
 
+
 @implementation BridgeRemoteObject
-@synthesize routingPrefix, routingId, serviceName, methodName, methods;
+@synthesize routingPrefix=routingPrefix_, routingId=routingId_, serviceName=serviceName_, methodName=methodName_, methods=methods_, bridge=bridge_;
+
+-(void) dealloc
+{
+  [self setRoutingPrefix:nil];
+  [self setRoutingId:nil];
+  [self setServiceName:nil];
+  [self setMethodName:nil];
+    
+  [self setBridge:nil];
+  [self setMethods:nil];
+  
+  [super dealloc];
+}
 
 /*
  @brief Construct a reference explicitly. Internal only.
@@ -35,38 +49,18 @@
     return self;
 }
 
--(void) dealloc
-{
-  [self setRoutingPrefix:nil];
-  [self setRoutingId:nil];
-  [self setServiceName:nil];
-  [self setMethodName:nil];
-  [self setMethods:nil];
-  
-  [super dealloc];
-}
-
-/*
- @brief Set the bridge instance for this reference to use for SENDs. Internal only.
- @param bridge The Bridge instances that created this reference
- */
-- (void) setBridge:(Bridge*) bridge
-{
-  _bridge = bridge; // No retaining or anything. This is a ref to a grandparent
-}
-
 /*
  @brief Get a representation of this reference for JSON encoding. Internal only.
  @return An NSDictionary* that represents the pathchain of this reference.
  */
 - (NSDictionary*) dictionaryFromReference 
 {
-  NSObject* theId = routingId;
+  NSObject* theId = self.routingId;
   if(theId == nil) {
     theId = [NSNull null];
   }
-  NSArray* ref = [NSArray arrayWithObjects:routingPrefix, theId, serviceName, methodName, nil];
-  return [NSDictionary dictionaryWithObjectsAndKeys:ref, @"ref", methods, @"operations", nil];
+  NSArray* ref = [NSArray arrayWithObjects:self.routingPrefix, theId, self.serviceName, self.methodName, nil];
+  return [NSDictionary dictionaryWithObjectsAndKeys:ref, @"ref", self.methods, @"operations", nil];
 }
 
 
@@ -128,29 +122,46 @@
     [args addObject:theArg];
   }
   
-  BridgeRemoteObject* destination = [BridgeRemoteObject referenceFromCopyOfReference:self bridge:_bridge methods:methods];
+  BridgeRemoteObject* destination = [BridgeRemoteObject referenceFromCopyOfReference:self];
   [destination setMethodName:methName];
   
-  [_bridge _sendWithDestination:destination andArgs:args];
+  [self.bridge _sendWithDestination:destination andArgs:args];
 }
 
 -(NSString*) description
 {
-  return [NSString stringWithFormat:@"{BridgeRemoteObject: [%@, %@, %@, %@]}", routingPrefix, routingId, serviceName, methodName];
+  return [NSString stringWithFormat:@"{BridgeRemoteObject: [%@, %@, %@, %@]}", self.routingPrefix, self.routingId, self.serviceName, self.methodName];
 }
 
 + (BridgeRemoteObject*) channelReference:(NSString*)channelName bridge:(Bridge*)bridge methods:(NSArray*)methods
 {
   NSString* prefixedChannelName = [NSString stringWithFormat:@"channel:%@", channelName];
-  return [BridgeRemoteObject referenceWithRoutingPrefix:@"channel" andRoutingId:channelName andServiceName:prefixedChannelName andMethodName:nil bridge:bridge methods:methods];
+  return [BridgeRemoteObject referenceWithRoutingPrefix:@"channel" 
+                             andRoutingId:channelName 
+                             andServiceName:prefixedChannelName 
+                             andMethodName:nil 
+                             bridge:bridge 
+                             methods:methods];
 }
+
 + (BridgeRemoteObject*) serviceReference:(NSString*)serviceName bridge:(Bridge*)bridge methods:(NSArray*)methods
 {
-  return [BridgeRemoteObject referenceWithRoutingPrefix:@"named" andRoutingId:serviceName andServiceName:serviceName andMethodName:nil bridge:bridge methods:methods];
+  return [BridgeRemoteObject referenceWithRoutingPrefix:@"named"
+                                           andRoutingId:serviceName
+                                           andServiceName:serviceName
+                                           andMethodName:nil 
+                                           bridge:bridge
+                                           methods:methods];
 }
+
 + (BridgeRemoteObject*) clientReference:(NSString*)objectName bridge:(Bridge*)bridge methods:(NSArray*)methods
 {
-  return [BridgeRemoteObject referenceWithRoutingPrefix:@"client" andRoutingId:[bridge clientId] andServiceName:objectName andMethodName:nil bridge:bridge methods:methods];
+    return [BridgeRemoteObject referenceWithRoutingPrefix:@"named"
+                                           andRoutingId:[bridge clientId]
+                                           andServiceName:objectName
+                                           andMethodName:nil 
+                                           bridge:bridge
+                                           methods:methods];
 }
 
 /*
@@ -161,16 +172,22 @@
  @return A Bridge reference
  */
 + (BridgeRemoteObject*) referenceFromArray:(NSArray*) array bridge:(Bridge*)bridge methods:(NSArray*)methods {
+  
   NSString* routingPrefix = [array objectAtIndex:0];
   NSString* routingId = [array objectAtIndex:1];
   NSString* serviceName = [array objectAtIndex:2];
   NSString* methodName = nil;
+  
   if([array count] == 4){
     methodName = [array objectAtIndex:3];
   }
   
-  return [BridgeRemoteObject referenceWithRoutingPrefix:routingPrefix andRoutingId:routingId
-                                      andServiceName:serviceName andMethodName:methodName bridge:bridge methods:methods];
+  return [BridgeRemoteObject referenceWithRoutingPrefix:routingPrefix
+                                           andRoutingId:routingId
+                                           andServiceName:serviceName 
+                                           andMethodName:methodName 
+                                           bridge:bridge
+                                           methods:methods];
 }
 
 
@@ -180,16 +197,15 @@
  @param array An BridgeRemoteObject to clone
  @return A Bridge reference whose parts are the same as the argument
  */
-+ (BridgeRemoteObject*) referenceFromCopyOfReference: (BridgeRemoteObject*) reference bridge:(Bridge*)bridge methods:(NSArray*)methods
++ (BridgeRemoteObject*) referenceFromCopyOfReference: (BridgeRemoteObject*) reference 
 {
-  NSString* routingPrefix = [reference routingPrefix];
-  NSString* routingId = [reference routingId];
-  NSString* serviceName = [reference serviceName];
-  NSString* methodName = [reference methodName];
-  
-  return [BridgeRemoteObject referenceWithRoutingPrefix:routingPrefix andRoutingId:routingId
-                                      andServiceName:serviceName andMethodName:methodName bridge:bridge
-                                             methods:methods];
+ 
+  return [BridgeRemoteObject referenceWithRoutingPrefix:reference.routingPrefix 
+                                         andRoutingId:reference.routingId
+                                         andServiceName:reference.serviceName 
+                                         andMethodName:reference.methodName 
+                                         bridge:reference.bridge
+                                         methods:reference.methods];
 }
 
 /*
@@ -197,7 +213,12 @@
  */
 + (BridgeRemoteObject*)referenceWithRoutingPrefix:(NSString*)routingPrefix andRoutingId:(NSString*)routingId andServiceName:(NSString*)serviceName andMethodName:(NSString*)methodName bridge:(Bridge*)bridge methods:(NSArray*)methods
 {
-  return [[[BridgeRemoteObject alloc] initWithRoutingPrefix:routingPrefix andRoutingId:routingId andServiceName:serviceName andMethodName:methodName bridge:bridge methods:methods] autorelease];
+  return [[[BridgeRemoteObject alloc] initWithRoutingPrefix:routingPrefix 
+                                               andRoutingId:routingId
+                                               andServiceName:serviceName 
+                                               andMethodName:methodName 
+                                               bridge:bridge 
+                                               methods:methods] autorelease];
 }
 
 @end

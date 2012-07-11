@@ -12,29 +12,39 @@
 #import "BridgeCallback.h"
 #import "BridgeUtils.h"
 
+@interface BridgeDispatcher () {
+  
+}
+
+@property(nonatomic, retain) NSMutableDictionary* services;
+@property(nonatomic, assign) Bridge* bridge;
+
+@end
+
 @implementation BridgeDispatcher
+  @synthesize services=services_, bridge=bridge_;
+
+-(void) dealloc
+{
+  [self setServices:nil];
+  [super dealloc];
+}
 
 - (id)initWithBridge:(Bridge*)aBridge
 {
   self = [super init];
   if (self) {
     // Initialization code here.
-    services = [[NSMutableDictionary dictionary] retain];
-    bridge = aBridge;
+    [self setServices:[NSMutableDictionary dictionary]];
+    [self setBridge:aBridge];
   }
   
   return self;
 }
 
--(void) dealloc
-{
-  [services release];
-  [super dealloc];
-}
-
 -(void) executeUsingReference:(BridgeRemoteObject*)reference withArguments:(NSArray*) arguments
 {
-  NSObject<BridgeObjectBase>* service = [services objectForKey:[reference serviceName]];
+  NSObject<BridgeObjectBase>* service = [self.services objectForKey:[reference serviceName]];
   BOOL isCallback = [service isKindOfClass:[BridgeCallback class]];
   
   NSMutableString* selectorString = [NSMutableString stringWithString:[reference methodName]];
@@ -76,13 +86,13 @@
     return nil;
   }
     
-  [services setObject:service forKey:name];
-  return [BridgeRemoteObject clientReference:name bridge:bridge methods:[BridgeUtils getMethods:service]];
+  [self.services setObject:service forKey:name];
+  return [BridgeRemoteObject clientReference:name bridge:self.bridge methods:[BridgeUtils getMethods:service]];
 }
 
 -(BridgeRemoteObject*) storeExistingObject:(NSString *)oldName withKey:(NSString *)name
 {
-  id obj = [services objectForKey:oldName];
+  id obj = [self.services objectForKey:oldName];
   return [self storeObject:obj withName:name];
 }
 
@@ -94,7 +104,7 @@
 
 -(NSObject<BridgeObjectBase> *) getObjectWithName:(NSString*)name
 {
-  return (NSObject<BridgeObjectBase> *) [services objectForKey:name];
+  return (NSObject<BridgeObjectBase> *) [self.services objectForKey:name];
 }
 
 @end

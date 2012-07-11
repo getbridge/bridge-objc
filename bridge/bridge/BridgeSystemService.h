@@ -11,7 +11,6 @@
 @class BridgeRemoteObject, Bridge;
 
 @interface BridgeSystemService : NSObject {
-  Bridge* bridge;
 }
 
 -(id)initWithBridge:(Bridge*)bridge;

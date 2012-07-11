@@ -13,8 +13,6 @@
 
 @interface BridgeTCPSocket : NSObject <BridgeSocket>
 {
-  GCDAsyncSocket* sock;
-  BridgeConnection* connection;
 }
 
 -(id)initWithConnection:(BridgeConnection*)aConnection isSecure:(BOOL)secure;

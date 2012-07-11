@@ -12,13 +12,23 @@
 #import "BridgeDispatcher.h"
 #import "BridgeUtils.h"
 
+@interface BridgeSystemService () {
+  
+}
+
+@property(nonatomic, assign) Bridge* bridge;
+
+@end
+
 @implementation BridgeSystemService
+
+@synthesize bridge=bridge_;
 
 - (id)initWithBridge:(Bridge*) aBridge
 {
     self = [super init];
     if (self) {
-      bridge = aBridge;
+      [self setBridge:aBridge];
     }
     
     return self;
@@ -34,7 +44,7 @@
 */
 -(void) hookChannelHandler:(NSString*)channelName :(BridgeRemoteObject*)handler :(id)callback {
   
-  BridgeRemoteObject* chanRef = [bridge.dispatcher storeExistingObject:[handler serviceName] withKey:[NSString stringWithFormat:@"channel:%@", channelName]];
+  BridgeRemoteObject* chanRef = [self.bridge.dispatcher storeExistingObject:[handler serviceName] withKey:[NSString stringWithFormat:@"channel:%@", channelName]];
   [chanRef setRoutingPrefix:@"channel"];
   [chanRef setRoutingId:channelName];
   
@@ -46,10 +56,7 @@
 */
 -(void) getService:(NSString*)serviceName :(BridgeRemoteObject*)callback
 {
-  NSObject* object = [bridge.dispatcher getObjectWithName:serviceName];
-  NSArray* methods = [BridgeUtils getMethods:object];
-  
-  [callback callback:[bridge.dispatcher getObjectWithName:serviceName] :serviceName];
+  [callback callback:[self.bridge.dispatcher getObjectWithName:serviceName] :serviceName];
 }
 
 /*
@@ -57,7 +64,7 @@
 */
 -(void) remoteError:(NSString*)msg
 {
-  [bridge _onError:msg];
+  [self.bridge _onError:msg];
 }
 
 @end
