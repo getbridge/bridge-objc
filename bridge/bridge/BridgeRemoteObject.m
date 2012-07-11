@@ -156,7 +156,7 @@
 
 + (BridgeRemoteObject*) clientReference:(NSString*)objectName bridge:(Bridge*)bridge methods:(NSArray*)methods
 {
-    return [BridgeRemoteObject referenceWithRoutingPrefix:@"named"
+    return [BridgeRemoteObject referenceWithRoutingPrefix:@"client"
                                            andRoutingId:[bridge clientId]
                                            andServiceName:objectName
                                            andMethodName:nil 
