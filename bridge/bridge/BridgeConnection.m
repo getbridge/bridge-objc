@@ -98,6 +98,8 @@
   
   [self setSock:nil];
   [self setSocketBuffer:nil];
+ 
+  [self.tcpSock setConnection:nil];
   [self setTcpSock:nil];
   
   [self setHost:nil];

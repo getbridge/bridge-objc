@@ -15,6 +15,8 @@
 {
 }
 
+@property(nonatomic, assign) BridgeConnection* connection;
+
 -(id)initWithConnection:(BridgeConnection*)aConnection isSecure:(BOOL)secure;
 
 @end

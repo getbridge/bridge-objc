@@ -20,7 +20,6 @@
 }
 
 @property(nonatomic, retain) GCDAsyncSocket* sock;
-@property(nonatomic, assign) BridgeConnection* connection;
 
 @end
 
