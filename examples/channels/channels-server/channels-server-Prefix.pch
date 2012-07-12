@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'channels-server' target in the 'channels-server' project
+//
+
+#ifdef __OBJC__
+  #import <Foundation/Foundation.h>
+#endif
