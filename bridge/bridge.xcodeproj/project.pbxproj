@@ -88,9 +88,7 @@
 		73875CB5159153E800930C4F /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		73875CB7159153FC00930C4F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		738B283B155B643800B32F3B /* bridge-ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "bridge-ios.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		738B283F155B643800B32F3B /* bridge-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "bridge-Info.plist"; sourceTree = "<group>"; };
 		738B2841155B643800B32F3B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		738B2843155B643800B32F3B /* bridge-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "bridge-Prefix.pch"; sourceTree = "<group>"; };
 		738B284C155B64D200B32F3B /* bridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bridge.h; sourceTree = "<group>"; };
 		738B284D155B64D200B32F3B /* bridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = bridge.m; sourceTree = "<group>"; };
 		738B284E155B64D200B32F3B /* BridgeCallback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BridgeCallback.h; sourceTree = "<group>"; };
@@ -234,9 +232,7 @@
 				738B28C7155B64D200B32F3B /* JSONKit.h */,
 				738B28C8155B64D200B32F3B /* JSONKit.m */,
 				738B2866155B64D200B32F3B /* GCD */,
-				738B283F155B643800B32F3B /* bridge-Info.plist */,
 				738B2840155B643800B32F3B /* InfoPlist.strings */,
-				738B2843155B643800B32F3B /* bridge-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
