@@ -67,6 +67,9 @@
 		738B2902155B64D300B32F3B /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 738B2869155B64D200B32F3B /* GCDAsyncSocket.m */; settings = {COMPILER_FLAGS = "-fno-obj-arc"; }; };
 		738B290A155B64D300B32F3B /* JSONKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 738B28C7155B64D200B32F3B /* JSONKit.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		738B290B155B64D300B32F3B /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 738B28C8155B64D200B32F3B /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-obj-arc"; }; };
+		739E8F0215AE506A0072F02A /* bridge-ios-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 739E8EFE15AE506A0072F02A /* bridge-ios-Info.plist */; };
+		739E8F0315AE506A0072F02A /* bridge-ios-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 739E8EFF15AE506A0072F02A /* bridge-ios-Prefix.pch */; };
+		739E8F0415AE506A0072F02A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 739E8F0015AE506A0072F02A /* InfoPlist.strings */; };
 		739ECF6315ACA6A300BDB929 /* bridge-ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 738B283B155B643800B32F3B /* bridge-ios.framework */; };
 		73D6BD92155BD542007F7A62 /* flotype.crt in Resources */ = {isa = PBXBuildFile; fileRef = 73D6BD91155BD542007F7A62 /* flotype.crt */; };
 		73DDC4171585B1320098DD9F /* BridgeClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 73DDC4151585B1320098DD9F /* BridgeClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -125,6 +128,9 @@
 		738B2894155B64D200B32F3B /* UdpEchoServer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = UdpEchoServer.xcodeproj; sourceTree = "<group>"; };
 		738B28C7155B64D200B32F3B /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		738B28C8155B64D200B32F3B /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
+		739E8EFE15AE506A0072F02A /* bridge-ios-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "bridge-ios-Info.plist"; sourceTree = "<group>"; };
+		739E8EFF15AE506A0072F02A /* bridge-ios-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "bridge-ios-Prefix.pch"; sourceTree = "<group>"; };
+		739E8F0115AE506A0072F02A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		73D6BD91155BD542007F7A62 /* flotype.crt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = flotype.crt; sourceTree = "<group>"; };
 		73DDC4151585B1320098DD9F /* BridgeClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BridgeClient.h; sourceTree = "<group>"; };
 		73DDC4161585B1320098DD9F /* BridgeClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BridgeClient.m; sourceTree = "<group>"; };
@@ -194,6 +200,7 @@
 			isa = PBXGroup;
 			children = (
 				738B283D155B643800B32F3B /* Bridge */,
+				739E8EFD15AE506A0072F02A /* bridge-ios */,
 				73875C6E1591520200930C4F /* bridge-mac */,
 				73542329158C1AAC00B82278 /* Frameworks */,
 				738B283C155B643800B32F3B /* Products */,
@@ -425,6 +432,16 @@
 			name = "Source files";
 			sourceTree = "<group>";
 		};
+		739E8EFD15AE506A0072F02A /* bridge-ios */ = {
+			isa = PBXGroup;
+			children = (
+				739E8EFE15AE506A0072F02A /* bridge-ios-Info.plist */,
+				739E8EFF15AE506A0072F02A /* bridge-ios-Prefix.pch */,
+				739E8F0015AE506A0072F02A /* InfoPlist.strings */,
+			);
+			path = "bridge-ios";
+			sourceTree = SOURCE_ROOT;
+		};
 		73D6BD21155B6590007F7A62 /* Header files */ = {
 			isa = PBXGroup;
 			children = (
@@ -500,6 +517,7 @@
 				738B28F9155B64D300B32F3B /* BridgeSystemService.h in Headers */,
 				738B28FB155B64D300B32F3B /* BridgeTCPSocket.h in Headers */,
 				738B28FD155B64D300B32F3B /* BridgeUtils.h in Headers */,
+				739E8F0315AE506A0072F02A /* bridge-ios-Prefix.pch in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -628,6 +646,8 @@
 			files = (
 				73D6BD92155BD542007F7A62 /* flotype.crt in Resources */,
 				738B2842155B643800B32F3B /* InfoPlist.strings in Resources */,
+				739E8F0215AE506A0072F02A /* bridge-ios-Info.plist in Resources */,
+				739E8F0415AE506A0072F02A /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -731,6 +751,14 @@
 			isa = PBXVariantGroup;
 			children = (
 				738B2841155B643800B32F3B /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		739E8F0015AE506A0072F02A /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				739E8F0115AE506A0072F02A /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -850,9 +878,9 @@
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "bridge/bridge-Prefix.pch";
+				GCC_PREFIX_HEADER = "bridge-ios/bridge-ios-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				INFOPLIST_FILE = "bridge/bridge-Info.plist";
+				INFOPLIST_FILE = "bridge-ios/bridge-ios-Info.plist";
 				INFOPLIST_PATH = "$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/Info.plist";
 				INSTALL_PATH = "$(BUILT_PRODUCTS_DIR)";
 				LINK_WITH_STANDARD_LIBRARIES = NO;
@@ -875,9 +903,9 @@
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "bridge/bridge-Prefix.pch";
+				GCC_PREFIX_HEADER = "bridge-ios/bridge-ios-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				INFOPLIST_FILE = "bridge/bridge-Info.plist";
+				INFOPLIST_FILE = "bridge-ios/bridge-ios-Info.plist";
 				INFOPLIST_PATH = "$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/Info.plist";
 				INSTALL_PATH = "$(BUILT_PRODUCTS_DIR)";
 				LINK_WITH_STANDARD_LIBRARIES = NO;
