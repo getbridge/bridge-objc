@@ -70,7 +70,6 @@
 		739E8F0315AE506A0072F02A /* bridge-ios-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 739E8EFF15AE506A0072F02A /* bridge-ios-Prefix.pch */; };
 		739E8F0415AE506A0072F02A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 739E8F0015AE506A0072F02A /* InfoPlist.strings */; };
 		739ECF6315ACA6A300BDB929 /* bridge-ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 738B283B155B643800B32F3B /* bridge-ios.framework */; };
-		73D6BD92155BD542007F7A62 /* flotype.crt in Resources */ = {isa = PBXBuildFile; fileRef = 73D6BD91155BD542007F7A62 /* flotype.crt */; };
 		73DDC4171585B1320098DD9F /* BridgeClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 73DDC4151585B1320098DD9F /* BridgeClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		73DDC4181585B1320098DD9F /* BridgeClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 73DDC4161585B1320098DD9F /* BridgeClient.m */; settings = {COMPILER_FLAGS = "-fno-obj-arc"; }; };
 /* End PBXBuildFile section */
@@ -128,7 +127,6 @@
 		739E8EFE15AE506A0072F02A /* bridge-ios-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "bridge-ios-Info.plist"; sourceTree = "<group>"; };
 		739E8EFF15AE506A0072F02A /* bridge-ios-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "bridge-ios-Prefix.pch"; sourceTree = "<group>"; };
 		739E8F0115AE506A0072F02A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		73D6BD91155BD542007F7A62 /* flotype.crt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = flotype.crt; sourceTree = "<group>"; };
 		73DDC4151585B1320098DD9F /* BridgeClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BridgeClient.h; sourceTree = "<group>"; };
 		73DDC4161585B1320098DD9F /* BridgeClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BridgeClient.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -227,7 +225,6 @@
 		738B283E155B643800B32F3B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				73D6BD22155B68C7007F7A62 /* SSL */,
 				738B28C7155B64D200B32F3B /* JSONKit.h */,
 				738B28C8155B64D200B32F3B /* JSONKit.m */,
 				738B2866155B64D200B32F3B /* GCD */,
@@ -458,14 +455,6 @@
 			name = "Header files";
 			sourceTree = "<group>";
 		};
-		73D6BD22155B68C7007F7A62 /* SSL */ = {
-			isa = PBXGroup;
-			children = (
-				73D6BD91155BD542007F7A62 /* flotype.crt */,
-			);
-			name = SSL;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -639,7 +628,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				73D6BD92155BD542007F7A62 /* flotype.crt in Resources */,
 				738B2842155B643800B32F3B /* InfoPlist.strings in Resources */,
 				739E8F0415AE506A0072F02A /* InfoPlist.strings in Resources */,
 			);
