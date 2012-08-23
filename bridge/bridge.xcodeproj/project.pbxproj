@@ -67,7 +67,6 @@
 		738B2902155B64D300B32F3B /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 738B2869155B64D200B32F3B /* GCDAsyncSocket.m */; settings = {COMPILER_FLAGS = "-fno-obj-arc"; }; };
 		738B290A155B64D300B32F3B /* JSONKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 738B28C7155B64D200B32F3B /* JSONKit.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		738B290B155B64D300B32F3B /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 738B28C8155B64D200B32F3B /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-obj-arc"; }; };
-		739E8F0215AE506A0072F02A /* bridge-ios-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 739E8EFE15AE506A0072F02A /* bridge-ios-Info.plist */; };
 		739E8F0315AE506A0072F02A /* bridge-ios-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 739E8EFF15AE506A0072F02A /* bridge-ios-Prefix.pch */; };
 		739E8F0415AE506A0072F02A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 739E8F0015AE506A0072F02A /* InfoPlist.strings */; };
 		739ECF6315ACA6A300BDB929 /* bridge-ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 738B283B155B643800B32F3B /* bridge-ios.framework */; };
@@ -642,7 +641,6 @@
 			files = (
 				73D6BD92155BD542007F7A62 /* flotype.crt in Resources */,
 				738B2842155B643800B32F3B /* InfoPlist.strings in Resources */,
-				739E8F0215AE506A0072F02A /* bridge-ios-Info.plist in Resources */,
 				739E8F0415AE506A0072F02A /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
