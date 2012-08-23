@@ -30,8 +30,8 @@
   self = [super init];
   if (self) {
     NSMutableDictionary* defaultOptions = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                                                @"http://redirector.flotype.com", @"redirector", 
-                                                                @"https://redirector.flotype.com", @"secureRedirector",
+                                                                @"http://redirector.getbridge.com", @"redirector", 
+                                                                @"https://redirector.getbridge.com", @"secureRedirector",
                                                                 [NSNumber numberWithBool:YES], @"reconnect",
                                                                 [NSNumber numberWithBool:NO], @"secure",nil];
     [defaultOptions addEntriesFromDictionary:options];
