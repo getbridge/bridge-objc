@@ -4,6 +4,16 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>chat-client.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>9</integer>
+		</dict>
+		<key>chat-server.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>10</integer>
+		</dict>
 		<key>chat.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -13,6 +23,16 @@
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>739E8F3415AE57010072F02A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>739E901215AE73C70072F02A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>739E902915AE76760072F02A</key>
 		<dict>
 			<key>primary</key>
 			<true/>

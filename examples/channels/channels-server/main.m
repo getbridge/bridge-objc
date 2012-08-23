@@ -53,7 +53,12 @@ int main (int argc, const char * argv[])
 {
   
   @autoreleasepool {
-    Bridge* bridge = [[Bridge alloc] initWithApiKey:@"myprivkey" ];
+    NSDictionary* options = [[NSDictionary alloc] initWithObjectsAndKeys:
+                             [NSNumber numberWithBool:YES], @"secure",
+                             @"localhost", @"host",
+                             [NSNumber numberWithInt:8093], @"port"
+                             , nil];
+    Bridge* bridge = [[Bridge alloc] initWithAPIKey:@"abcdefgh" andDelegate:nil options:options];
     [bridge publishService:@"auth" withHandler:[[AuthObj alloc] initWithBridge:bridge]];
     [bridge connect];
     
